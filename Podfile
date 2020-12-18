@@ -11,4 +11,7 @@ target 'CauseCure' do
   pod 'Firebase/Storage'
   pod 'Firebase/Firestore'
   pod 'URLImage'
+  pod 'FirebaseFirestoreSwift'
+  pod ‘SDWebImageSwiftUI’
+  
 end

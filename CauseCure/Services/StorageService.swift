@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
+import FirebaseFirestoreSwift
 
 class StorageService {
     
@@ -49,8 +50,8 @@ class StorageService {
                     }
                     
                     let firestoreUserId = AuthService.getUserId(userId: userId)
-                    let user = User.init(uid: userId, email: email, profileImageUrl: metaImageUrl, username: username, searchName: username.splitStringtoArray(), bio: "")
-                    
+                    let user = User.init(uid: userId, email: email, profileImageUrl: metaImageUrl, username: username, searchName: username.splitStringtoArray(), bio: "", challenges: [""], loggedInDates: [""])
+                     
                     guard let dict = try?user.asDictionary() else { return }
                     
                     firestoreUserId.setData(dict) {

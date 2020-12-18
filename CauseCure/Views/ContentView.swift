@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var sharedInt: SharedInt
     
     func listen() {
         session.listen()
@@ -17,9 +18,16 @@ struct ContentView: View {
     var body: some View {
         Group {
             if (session.session != nil) {
-                HomeView()
+                TabBar().environmentObject(SessionStore())
+                    .environmentObject(SharedInt())
+                
             } else {
-                SignInView()
+                if self.sharedInt.myInt == 1{
+                    TabBar().environmentObject(SessionStore())
+                        .environmentObject(SharedInt())
+                } else {
+                    SignInView().environmentObject(SharedInt())
+                }
             }
         }.onAppear(perform: listen)
         

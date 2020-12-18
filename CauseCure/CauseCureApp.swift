@@ -15,6 +15,7 @@ struct CauseCureApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(SessionStore())
+                .environmentObject(SharedInt())
         }
     }
 }
@@ -26,4 +27,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         return true
     }
+}
+
+class SharedInt: ObservableObject {
+    @Published var myInt = 0
 }

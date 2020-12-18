@@ -16,4 +16,5 @@ struct User: Encodable, Decodable {
     var searchName: [String]
     var bio: String
     var challenges: [String]
+    var loggedInDates: [String]
 }

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SignInView: View {
+    @EnvironmentObject var sharedInt:SharedInt
+
+    
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -41,6 +44,9 @@ struct SignInView: View {
         AuthService.signIn(email: email, password: password, onSuccess: {
             (user) in
             self.clear()
+            print("changing shared Int")
+            self.sharedInt.myInt = 1
+            
         }) {
             (errorMessage) in
             print("Error \(errorMessage)")
@@ -90,8 +96,8 @@ struct SignInView: View {
     }
 }
 
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView()
-    }
-}
+//struct SignInView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignInView()
+//    }
+//}
