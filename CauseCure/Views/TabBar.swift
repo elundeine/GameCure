@@ -10,7 +10,6 @@ import SwiftUI
 
 struct TabBar: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var userModel = UserRepository()
     @EnvironmentObject var sharedInt: SharedInt
     //@EnvironmentObject var model: Model
     

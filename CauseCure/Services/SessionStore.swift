@@ -56,6 +56,10 @@ class SessionStore: ObservableObject {
         }
     }
     
+    func addChallengeToUserCompletedChallenges() {
+        
+    }
+    
     //TODO: FIX hacky array implementation, at the moment array contains on user, the current user
 
 //

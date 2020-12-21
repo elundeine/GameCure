@@ -25,7 +25,8 @@ struct HomeView: View {
 //    @ObservedObject var userModel = UserRepository()
     @State var presentAddNewItem = false
     
-    @State var presentProfilOverview = false
+    @State var menuOpen: Bool = false
+
     
     
     func homeViewSetup() {
@@ -39,10 +40,14 @@ struct HomeView: View {
         session.listen()
     }
     
+    func openMenu() {
+           self.menuOpen.toggle()
+       }
     
     var body: some View {
         
         //TODO: If challenge is empty case
+        ZStack{
         
         NavigationView {
             VStack (alignment: .leading) {
@@ -53,34 +58,11 @@ struct HomeView: View {
                         }
                     }
                     
-                //new list entry to add a challenge
-                    if presentAddNewItem {
-                        ChallengeCell(challengeCellVM: ChallengeCellViewModel.newChallenge()) { result in
-                            if case .success(let challenge) = result {
-                                print("success")
-                              self.challengeListVM.addChallenge(challenge: challenge)
-                            }
-                            self.presentAddNewItem.toggle()
-                          }
-                        
-                    }
+                //
                 }.listStyle(PlainListStyle())
-                    
-                    
-                // Add new Challenge Button
-//                Button(action: { self.presentAddNewItem.toggle()
-//                    print("toggled")
-//                }) {
-//                    HStack {
-//                        Image(systemName: "plus.circle.fill")
-//                        .resizable()
-//                        .frame(width: 20, height: 20)
-//                    Text("Add new Challenge")
-//                    }
-//                }.padding()
             }.navigationBarItems(leading:
                        HStack {
-                        Button(action:  {self.presentProfilOverview.toggle()}) {
+                        Button(action:  {self.openMenu()}) {
                             if session.session?.profileImageUrl != nil {
                                 WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
                                    .resizable().clipShape(Circle())
@@ -99,8 +81,13 @@ struct HomeView: View {
                        })
                         
                            .navigationBarTitle(Text("Challenges"))
-                   } .onAppear(perform: listen)
-        
+                   }
+            
+        SideMenuView(width: 270,
+                        isOpen: self.menuOpen,
+                        menuClose: self.openMenu)
+        .onAppear(perform: listen)
+        }
     }
 }
 enum InputError: Error {
@@ -166,6 +153,8 @@ struct ProductCard: View {
         .padding(.all, 10)
     }
 }
+
+
 
 
 struct CardModifier: ViewModifier {

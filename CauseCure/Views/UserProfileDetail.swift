@@ -11,9 +11,10 @@ import SDWebImageSwiftUI
 
 struct UserProfileDetail: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var userModel = UserRepository()
     @State private var imageURL = URL(string: "")
     @EnvironmentObject var sharedInt: SharedInt
+    
+    @State private var selectedTab: Int = 0
     
     func performOnAppear() {
         listen()
@@ -29,53 +30,82 @@ struct UserProfileDetail: View {
     }
     
     var body: some View {
-//        VStack {
-//            VStack{
-//                //TODO: Display PROFILE image here
-//            }
-//            Text("\(session.session?.username ?? "")") .font(.title)
-//            Divider()
-//            VStack(alignment: .leading) {
-//                HStack(alignment: .top) {
-//                    Text(session.session?.email ?? "")
-//                }
-//                HStack(alignment: .top) {
-//                    Text("Bio")
-//                        .font(.subheadline)
-//                        .bold()
-//                    Spacer()
-//                }.padding()
-//                    HStack{
-//                        Text("\(session.session?.bio ?? "")")
-//                        .font(.subheadline)
-//                    }.padding()
-//                HStack(alignment: .top) {
-//                    Text("Challenges")
-//                        .font(.subheadline)
-//                        .bold()
-//                }.padding()
-//            }
-//            Spacer()
-//        }
+        GeometryReader { geometry in
+            VStack (alignment: .leading){
+                HStack{
+                    Spacer()
+                    Button(action: {}){
+                                            Image(systemName: "square.and.arrow.up")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                    }
+                }.padding()
+            HStack{
+                VStack{
+                    WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
+                    .resizable()
+                    .frame(width: 90, height: 90)
+                        .clipShape(Circle())
+                        .shadow(radius: 3)
+                        .overlay(Circle().stroke(Color.pink, lineWidth: 1))
+                    
+                    Text("Your Name")
+                        .fontWeight(.semibold)
+                }.padding(.leading, 10)
+                
+                VStack{
+                    Text("10")
+                    .font(.system(size: 30))
+                    .fontWeight(.bold)
+                    
+                    Text("Publications")
+                    .font(.system(size: 13))
+                }.padding(.leading, 30)
+                
+                VStack{
+                    Text("100")
+                    .font(.system(size: 30))
+                    .fontWeight(.bold)
+                    
+                    Text("Followers")
+                    .font(.system(size: 13))
+                }.padding()
+                
+                VStack{
+                    Text("1000")
+                    .font(.system(size: 30))
+                    .fontWeight(.bold)
+                    
+                    Text("Following")
+                    .font(.system(size: 13))
+                }
+                
+            }.frame(height: 100)
+            .padding(.leading, 10)
         
-        
-        VStack {
-            WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
-                      .resizable()
-                      .aspectRatio(contentMode: .fit)
+            VStack {
+                Picker(selection: $selectedTab,label: Text("")) {
+                            Text("First").tag(0)
+                            Text("Second").tag(1)
+                            Text("Third").tag(2)
+                        }.pickerStyle(SegmentedPickerStyle())
 
-        Text(session.session?.email ?? "")
-        VStack{
-           Button(action: logOut) {
-               Text("Log out").font(.title).modifier(ButtonModifier())
-           }
+                        switch(selectedTab) {
+                            case 0: Community()
+                            case 1: Chat()
+                            case 2: Community()
+                            default: Community()
+
+                        }
+                    }
         }
-        }
-            
-            .onAppear(perform: performOnAppear)
         
+        }
+        .onAppear(perform: performOnAppear)
     }
+    
 }
+    
 
 struct UserProfileDetail_Previews: PreviewProvider {
     static var previews: some View {

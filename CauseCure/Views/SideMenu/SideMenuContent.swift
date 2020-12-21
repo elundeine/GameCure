@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct SideMenuContent: View {
+    @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var sharedInt: SharedInt
+    
+    func logOut() {
+        session.logout()
+        self.sharedInt.myInt = 0
+    }
+    
         var body: some View {
             List {
                 Text("My Profile").onTapGesture {
@@ -17,7 +25,7 @@ struct SideMenuContent: View {
                     print("Posts")
                 }
                 Text("Logout").onTapGesture {
-                    print("Logout")
+                    logOut()
                 }
             }
         }

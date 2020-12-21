@@ -10,6 +10,10 @@ import SwiftUI
 struct ChallengeCellDetail: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     @State var presentChallengeAFriend = false
+    
+    func completeChallenge() {
+        challengeCellVM.challengeRepository.addChallengeToUser(challengeCellVM.challenge)
+    }
     var body: some View {
             VStack {
                 Text("\($challengeCellVM.challenge.title.wrappedValue)") .font(.title)
@@ -52,6 +56,13 @@ struct ChallengeCellDetail: View {
                 .resizable()
                 .frame(width: 20, height: 20)
             Text("Challenge a friend!")
+            }
+        }.padding()
+        Button(action: {
+            completeChallenge()
+        }) {
+            HStack {
+            Text("Complete Challenge")
             }
         }.padding()
             

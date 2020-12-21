@@ -64,4 +64,11 @@ class ChallengeRepository: ObservableObject {
             }
         }
     }
+    
+    func addChallengeToUser (_ challenge: Challenge) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        print(userId)
+        let userRef = db.collection("users").document(userId)
+        userRef.updateData(["completedChallenges" : [challenge.id : "\(Timestamp(date: Date())))"]])
+    }
 }
