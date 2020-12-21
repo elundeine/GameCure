@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
 
 struct User: Encodable, Decodable {
@@ -18,5 +17,5 @@ struct User: Encodable, Decodable {
     var bio: String
     var challenges: [String]
     var loggedInDates: [String?]
-    @ServerTimestamp var completedChallenges: [String : Timestamp]?
+    var completedChallenges: [String : String]?
 }
