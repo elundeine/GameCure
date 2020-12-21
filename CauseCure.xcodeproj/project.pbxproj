@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */; };
+		D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */; };
+		D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */; };
+		D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51933022591264900681EC3 /* CategoryCellViewModel.swift */; };
+		D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51933052591266200681EC3 /* CategoryListViewModel.swift */; };
 		D53C948225801BF10001244E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948125801BF10001244E /* UserModel.swift */; };
 		D53C948625801CB40001244E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948525801CB40001244E /* Extensions.swift */; };
 		D53C948A25801F8B0001244E /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948925801F8B0001244E /* AuthService.swift */; };
@@ -43,6 +47,10 @@
 		2F7BABFF7F027B774A08D05F /* Pods-CauseCure.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.release.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.release.xcconfig"; sourceTree = "<group>"; };
 		59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CauseCure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2E6835F79FE424D2D18555B /* Pods-CauseCure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.debug.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.debug.xcconfig"; sourceTree = "<group>"; };
+		D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
+		D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCategoryModel.swift; sourceTree = "<group>"; };
+		D51933022591264900681EC3 /* CategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewModel.swift; sourceTree = "<group>"; };
+		D51933052591266200681EC3 /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
 		D53C948125801BF10001244E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		D53C948525801CB40001244E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D53C948925801F8B0001244E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -110,6 +118,7 @@
 			children = (
 				D53C948125801BF10001244E /* UserModel.swift */,
 				D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */,
+				D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */,
 			);
 			name = Models;
 			path = ..;
@@ -122,6 +131,8 @@
 				D53C948D25801FAB0001244E /* StorageService.swift */,
 				D53C949825802DC30001244E /* SessionStore.swift */,
 				D5DEDF2E2580EE69006A39B0 /* ChallengeRepository.swift */,
+				D51933022591264900681EC3 /* CategoryCellViewModel.swift */,
+				D51933052591266200681EC3 /* CategoryListViewModel.swift */,
 				D5578F2E25836B9A0038F956 /* ChallengeListViewModel.swift */,
 				D5578F3125836CD10038F956 /* ChallengeCellViewModel.swift */,
 			);
@@ -175,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				D589C094257FF7F2005A5464 /* SignInView.swift */,
+				D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */,
 				D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */,
 				D594D637258003D9003B44DD /* SignUpView.swift */,
 				D589C083257FEF20005A5464 /* ContentView.swift */,
@@ -336,6 +348,7 @@
 				D589C084257FEF20005A5464 /* ContentView.swift in Sources */,
 				D5825FAE2584CC7E0011AC33 /* Modifiers.swift in Sources */,
 				D594D63425800097003B44DD /* ButtonModifier.swift in Sources */,
+				D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */,
 				D5DEDF2F2580EE69006A39B0 /* ChallengeRepository.swift in Sources */,
 				D53C948E25801FAB0001244E /* StorageService.swift in Sources */,
 				D53C948225801BF10001244E /* UserModel.swift in Sources */,
@@ -344,6 +357,7 @@
 				D5578F3225836CD10038F956 /* ChallengeCellViewModel.swift in Sources */,
 				D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */,
 				D594D638258003D9003B44DD /* SignUpView.swift in Sources */,
+				D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */,
 				D594A8FC258F5E9E00CCAEC7 /* SideMenuView.swift in Sources */,
 				D589C095257FF7F2005A5464 /* SignInView.swift in Sources */,
 				D53C949C258032130001244E /* HomeView.swift in Sources */,
@@ -354,6 +368,8 @@
 				D589C0A0257FF8FD005A5464 /* Community.swift in Sources */,
 				D53C948A25801F8B0001244E /* AuthService.swift in Sources */,
 				D589C082257FEF20005A5464 /* CauseCureApp.swift in Sources */,
+				D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */,
+				D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */,
 				D594A8FF258F5EE800CCAEC7 /* SideMenuContent.swift in Sources */,
 				D53C948625801CB40001244E /* Extensions.swift in Sources */,
 				D546A2BC25861CBF00A06C3C /* UserProfileDetail.swift in Sources */,

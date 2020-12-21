@@ -25,9 +25,12 @@ class ChallengeRepository: ObservableObject {
     }
     let db = Firestore.firestore()
     @Published var challenges = [Challenge]()
+    @Published var challengeCategories = [ChallengeCategory]()
     
     init() {
         loadDataForUser()
+        loadDataForCategory()
+
     }
  
     private func loadDataForUser() {
@@ -45,6 +48,17 @@ class ChallengeRepository: ObservableObject {
             }
         }
         
+    private func loadDataForCategory() {
+              db.collection("challengecategories")
+                .addSnapshotListener { (querySnapshot, error) in
+                  if let querySnapshot = querySnapshot {
+                    print("in querySnapshot of challenge categories")
+                    self.challengeCategories = querySnapshot.documents.compactMap { document -> ChallengeCategory? in
+                      try? document.data(as: ChallengeCategory.self)
+                    }
+                  }
+                }
+            }
     
     func addChallenge(_ challenge: Challenge) {
         do {
@@ -74,25 +88,4 @@ class ChallengeRepository: ObservableObject {
         print("\(date)")
         userRef.setData(["completedChallenges" : [challenge.id : [".sv":  "\(Timestamp(date: Date()))"]]], merge: true)
     }
-    
-//    let frankDocRef = db.collection("users").document("frank")
-//    frankDocRef.setData([
-//        "name": "Frank",
-//        "favorites": [ "food": "Pizza", "color": "Blue", "subject": "recess" ],
-//        "age": 12
-//        ])
-//
-//    // To update age and favorite color:
-//    db.collection("users").document("frank").updateData([
-//        "age": 13,
-//        "favorites.color": "Red"
-//    ]) { err in
-//        if let err = err {
-//            print("Error updating document: \(err)")
-//        } else {
-//            print("Document successfully updated")
-//        }
-//    }
-//    ViewController.swift
-
 }
