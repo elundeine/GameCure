@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct CustomSearchBar: View {
+    @Binding var challenges : [Challenge]
     @State var txt = ""
     var body: some View {
         VStack {
@@ -21,16 +23,26 @@ struct CustomSearchBar: View {
                     }
                     .foregroundColor(.black)
                 }
+            }.padding()
+            if self.txt != "" {
+                
+                if self.challenges.filter ({$0.title.lowercased().contains(self.txt.lowercased())}).count == 0 {
+                    Text("No Results Found").foregroundColor(Color.black.opacity(0.5)).padding()
+                } else {
+                    List(self.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
+                
+                        Text(i.title)
+                    }.frame(height: UIScreen.main.bounds.height / 5)
+                }
+            
             }
-            .padding()
-        }
-        .background(Color.white)
-    }
+        }.background(Color.white)
     
-}
-
-struct CustomSearchBar_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomSearchBar()
     }
 }
+//
+//struct CustomSearchBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CustomSearchBar()
+//    }
+//}

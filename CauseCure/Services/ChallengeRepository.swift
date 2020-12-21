@@ -25,13 +25,27 @@ class ChallengeRepository: ObservableObject {
     }
     let db = Firestore.firestore()
     @Published var challenges = [Challenge]()
+    @Published var userChallenges = [Challenge]()
     @Published var challengeCategories = [ChallengeCategory]()
     
+    
     init() {
+        loadChallenges()
         loadDataForUser()
         loadDataForCategory()
+        
 
     }
+    private func loadChallenges() {
+        db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
+            if let querySnapshot = querySnapshot {
+              self.challenges = querySnapshot.documents.compactMap { document -> Challenge? in
+                try? document.data(as: Challenge.self)
+              }
+            }
+          }
+    }
+    
  
     private func loadDataForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -41,7 +55,7 @@ class ChallengeRepository: ObservableObject {
             .addSnapshotListener { (querySnapshot, error) in
               if let querySnapshot = querySnapshot {
                 print("in querySnapshot")
-                self.challenges = querySnapshot.documents.compactMap { document -> Challenge? in
+                self.userChallenges = querySnapshot.documents.compactMap { document -> Challenge? in
                   try? document.data(as: Challenge.self)
                 }
               }

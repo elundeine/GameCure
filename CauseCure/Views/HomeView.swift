@@ -20,7 +20,7 @@ import SDWebImageSwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
-    
+    @ObservedObject var challengeRepository = ChallengeRepository()
     @ObservedObject var challengeListVM = ChallengeListViewModel()
     @ObservedObject var categoryListVM = CategoryListViewModel()
 
@@ -49,9 +49,9 @@ struct HomeView: View {
         
         //TODO: If challenge is empty case
         ZStack{
-        
         NavigationView {
             VStack (alignment: .leading) {
+                CustomSearchBar(challenges: self.$challengeRepository.challenges).padding(.top)
                 List {
                     ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
                        NavigationLink(destination: CategoryCell(categoryCellVM: categoryCellVM)) {
