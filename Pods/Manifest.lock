@@ -218,6 +218,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
+  - CodableFirebase (0.2.1)
   - Firebase/Auth (6.34.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.9.2)
@@ -314,27 +315,28 @@ PODS:
   - SDWebImage/Core (5.10.0)
   - SDWebImageSwiftUI (1.5.0):
     - SDWebImage (~> 5.7)
-  - URLImage (2.1.12):
-    - URLImage/Common (= 2.1.12)
-    - URLImage/DownloadManager (= 2.1.12)
-    - URLImage/FileIndex (= 2.1.12)
-    - URLImage/ImageDecoder (= 2.1.12)
-    - URLImage/Log (= 2.1.12)
-    - URLImage/PlainDatabase (= 2.1.12)
-    - URLImage/RemoteContentView (= 2.1.12)
-  - URLImage/Common (2.1.12)
-  - URLImage/DownloadManager (2.1.12):
+  - URLImage (2.1.13):
+    - URLImage/Common (= 2.1.13)
+    - URLImage/DownloadManager (= 2.1.13)
+    - URLImage/FileIndex (= 2.1.13)
+    - URLImage/ImageDecoder (= 2.1.13)
+    - URLImage/Log (= 2.1.13)
+    - URLImage/PlainDatabase (= 2.1.13)
+    - URLImage/RemoteContentView (= 2.1.13)
+  - URLImage/Common (2.1.13)
+  - URLImage/DownloadManager (2.1.13):
     - URLImage/Log
-  - URLImage/FileIndex (2.1.12):
+  - URLImage/FileIndex (2.1.13):
     - URLImage/Common
     - URLImage/Log
     - URLImage/PlainDatabase
-  - URLImage/ImageDecoder (2.1.12)
-  - URLImage/Log (2.1.12)
-  - URLImage/PlainDatabase (2.1.12)
-  - URLImage/RemoteContentView (2.1.12)
+  - URLImage/ImageDecoder (2.1.13)
+  - URLImage/Log (2.1.13)
+  - URLImage/PlainDatabase (2.1.13)
+  - URLImage/RemoteContentView (2.1.13)
 
 DEPENDENCIES:
+  - CodableFirebase
   - Firebase/Auth
   - Firebase/Firestore
   - Firebase/Storage
@@ -346,6 +348,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
+    - CodableFirebase
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -368,6 +371,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
+  CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
   FirebaseAuth: c92d49ada7948d1a23466e3db17bc4c2039dddc3
   FirebaseCore: d3a978a3cfa3240bf7e4ba7d137fdf5b22b628ec
@@ -385,8 +389,8 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
-  URLImage: 35d26d4453bf98efb071e24c320e6a4ebf157331
+  URLImage: a89dc7105eab7db97076716ac2635e8a160a7fb9
 
-PODFILE CHECKSUM: 8ca8d93384b3321749a2c4e68f1af6c36c5ad733
+PODFILE CHECKSUM: 256ac76f956607957b7d3a780da6f08a8cf54733
 
 COCOAPODS: 1.10.0

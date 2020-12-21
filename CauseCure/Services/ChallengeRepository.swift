@@ -66,9 +66,33 @@ class ChallengeRepository: ObservableObject {
     }
     
     func addChallengeToUser (_ challenge: Challenge) {
+        
         guard let userId = Auth.auth().currentUser?.uid else { return }
         print(userId)
         let userRef = db.collection("users").document(userId)
-        userRef.updateData(["completedChallenges" : [challenge.id : "\(Timestamp(date: Date())))"]])
+        let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
+        print("\(date)")
+        userRef.setData(["completedChallenges" : [challenge.id : [".sv":  "\(Timestamp(date: Date()))"]]], merge: true)
     }
+    
+//    let frankDocRef = db.collection("users").document("frank")
+//    frankDocRef.setData([
+//        "name": "Frank",
+//        "favorites": [ "food": "Pizza", "color": "Blue", "subject": "recess" ],
+//        "age": 12
+//        ])
+//
+//    // To update age and favorite color:
+//    db.collection("users").document("frank").updateData([
+//        "age": 13,
+//        "favorites.color": "Red"
+//    ]) { err in
+//        if let err = err {
+//            print("Error updating document: \(err)")
+//        } else {
+//            print("Document successfully updated")
+//        }
+//    }
+//    ViewController.swift
+
 }
