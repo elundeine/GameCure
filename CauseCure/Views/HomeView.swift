@@ -21,8 +21,10 @@ import SDWebImageSwiftUI
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
     
-    @ObservedObject var challengeListVM = ChallengeListViewModel()
-//    @ObservedObject var userModel = UserRepository()
+    //@ObservedObject var challengeListVM = ChallengeListViewModel()
+    
+    @ObservedObject var categoryListVM = CategoryListViewModel()
+    //    @ObservedObject var userModel = UserRepository()
     @State var presentAddNewItem = false
     
     @State var menuOpen: Bool = false
@@ -52,12 +54,12 @@ struct HomeView: View {
         NavigationView {
             VStack (alignment: .leading) {
                 List {
-                    ForEach(challengeListVM.challengeCellViewModels) { challengeCellVM in
-                        NavigationLink(destination: ChallengeCellDetail(challengeCellVM: challengeCellVM)) {
-                            ProductCard(challengeCellVM: challengeCellVM)
+                    ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
+                        NavigationLink(destination: CategoryCell(categoryCellVM: categoryCellVM)) {
+                            CategoryCard(categoryCellVM: categoryCellVM)
                         }
                     }
-                    
+                
                 //
                 }.listStyle(PlainListStyle())
             }.navigationBarItems(leading:
@@ -119,7 +121,6 @@ struct ChallengeCell: View {
     }
 }
 
-
 struct ProductCard: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     
@@ -155,7 +156,47 @@ struct ProductCard: View {
 }
 
 
+struct CategoryCell: View {
+    @ObservedObject var categoryCellVM: CategorCellViewModel
+        var body: some View {
+            HStack{
+                Text("\($categoryCellVM.category.name.wrappedValue)")
+                    .font(.system(size: 26, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+      }
+    }
+}
 
+struct CategoryCard: View {
+    @ObservedObject var categoryCellVM: CategorCellViewModel
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            Image("trophy")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100)
+                .padding(.all, 20)
+            
+            VStack(alignment: .leading) {
+                Text("\($categoryCellVM.category.name.wrappedValue)")
+                    .font(.system(size: 26, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+                HStack {
+                    Text("daily")
+                        .font(.system(size: 16, weight: .bold, design: .default))
+                        .foregroundColor(.white)
+                        .padding(.top, 8)
+                }
+            }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
 
 struct CardModifier: ViewModifier {
     func body(content: Content) -> some View {

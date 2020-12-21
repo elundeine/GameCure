@@ -25,9 +25,10 @@ class ChallengeRepository: ObservableObject {
     }
     let db = Firestore.firestore()
     @Published var challenges = [Challenge]()
-    
+    @Published var challengeCategories = [ChallengeCategory]()
     init() {
         loadDataForUser()
+        loadDataForCategory()
     }
  
     private func loadDataForUser() {
@@ -45,6 +46,17 @@ class ChallengeRepository: ObservableObject {
             }
         }
         
+    private func loadDataForCategory() {
+          db.collection("challengecategories")
+            .addSnapshotListener { (querySnapshot, error) in
+              if let querySnapshot = querySnapshot {
+                print("in querySnapshot of challenge categories")
+                self.challengeCategories = querySnapshot.documents.compactMap { document -> ChallengeCategory? in
+                  try? document.data(as: ChallengeCategory.self)
+                }
+              }
+            }
+        }
     
     func addChallenge(_ challenge: Challenge) {
         do {
