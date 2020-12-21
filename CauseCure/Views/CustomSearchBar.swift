@@ -11,24 +11,40 @@ import UIKit
 struct CustomSearchBar: View {
     @Binding var challenges : [Challenge]
     @State var txt = ""
+    @State private var showCancelButton: Bool = false
     var body: some View {
         VStack {
             HStack{
-                TextField("Search", text: self.$txt)
-                if self.txt != "" {
-                    Button(action: {
-                        
-                    }) {
-                        Text("Cancel")
-                    }
-                    .foregroundColor(.black)
-                }
-            }.padding()
-            if self.txt != "" {
-                
-                if self.challenges.filter ({$0.title.lowercased().contains(self.txt.lowercased())}).count == 0 {
-                    Text("No Results Found").foregroundColor(Color.black.opacity(0.5)).padding()
-                } else {
+                Image(systemName: "magnifyingglass")
+                TextField("search", text: $txt, onEditingChanged: { isEditing in
+                                            self.showCancelButton = true
+                                        }, onCommit: {
+                                            print("onCommit")
+                                        }).foregroundColor(.primary)
+
+                                        Button(action: {
+                                            self.txt = ""
+                                        }) {
+                                            Image(systemName: "xmark.circle.fill").opacity(txt == "" ? 0 : 1)
+                                        }
+                                    }
+                                    .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
+                                    .foregroundColor(.secondary)
+                                    .background(Color(.secondarySystemBackground))
+                                    .cornerRadius(10.0)
+
+                                    if showCancelButton  {
+                                        Button("Cancel") {
+                                                // this must be placed before the other commands here
+                                                self.txt = ""
+                                                self.showCancelButton = false
+                                        }
+                                        .foregroundColor(Color(.systemBlue))
+                                    }
+                                }
+                                .padding(.horizontal)
+                                .navigationBarHidden(showCancelButton) // .animation(.default) // animation does not work properly
+
                     List(self.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
                 
                         Text(i.title)
@@ -36,8 +52,14 @@ struct CustomSearchBar: View {
                 }
             
             }
-        }.background(Color.white)
     
+
+extension UIApplication {
+    func endEditing(_ force: Bool) {
+        self.windows
+            .filter{$0.isKeyWindow}
+            .first?
+            .endEditing(force)
     }
 }
 //
