@@ -18,7 +18,6 @@ struct Challenge: Codable, Identifiable {
     var searchName: [String]
     var description: String
     var completed: Bool
-    // challengeCreater = uid of creater
     var challengeCreater: String
     var userIds: [String]?
     @ServerTimestamp var createdTime: Timestamp?

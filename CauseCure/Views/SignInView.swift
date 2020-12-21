@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignInView: View {
-    @EnvironmentObject var sharedInt:SharedInt
+//    @EnvironmentObject var sharedInt:SharedInt
 
     
     @State private var email: String = ""
@@ -24,7 +24,7 @@ struct SignInView: View {
             return "Please fill in a valid email and password"
             
         }
-        
+        print ("nil error")
         return nil
     }
     
@@ -37,6 +37,7 @@ struct SignInView: View {
     
     func signIn() {
         if let error = errorCheck() {
+            print("here")
             self.error = error
             self.showingAlert = true
             return
@@ -45,7 +46,7 @@ struct SignInView: View {
             (user) in
             self.clear()
             print("changing shared Int")
-            self.sharedInt.myInt = 1
+//            self.sharedInt.myInt = 1
             
         }) {
             (errorMessage) in
@@ -54,6 +55,7 @@ struct SignInView: View {
             self.showingAlert = true
             return
         }
+        print("here!??!")
         
     }
     
