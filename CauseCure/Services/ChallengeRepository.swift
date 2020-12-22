@@ -113,12 +113,11 @@ class ChallengeRepository: ObservableObject {
     }
     
     func addChallengeToUser (_ challenge: Challenge) {
-        
         guard let userId = Auth.auth().currentUser?.uid else { return }
         print(userId)
         let userRef = db.collection("users").document(userId)
         let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
         print("\(date)")
-        userRef.updateData(["challenge.id" : "\(Timestamp(date: Date()))")])
+        userRef.updateData(["completedChallenges.\(challenge.id)" : "\(Timestamp(date: Date()))"])
     }
 }

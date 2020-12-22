@@ -12,5 +12,5 @@ import FirebaseFirestoreSwift
 struct ChallengeCategory: Codable, Identifiable {
     @DocumentID var id: String?
     var name: String
-    var challenges: [String : String]
+    var challenges: [String : Bool]
 }

@@ -51,7 +51,7 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
+//                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
                 List {
                     HStack(alignment: .center) {
                         Image("trophy")
@@ -179,6 +179,7 @@ struct CategoryCell: View {
     var body: some View {
         //TODO: If challenge is empty case
         ZStack{
+            Text("hello")
             NavigationView {
                 VStack (alignment: .leading) {
                     List {
@@ -199,12 +200,13 @@ struct CategoryCard: View {
     
     var body: some View {
         HStack(alignment: .center) {
+            
             Image("\($categoryCellVM.category.name.wrappedValue)")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100)
                 .padding(.all, 20)
-            
+
             VStack(alignment: .leading) {
                 Text("\($categoryCellVM.category.name.wrappedValue)")
                     .font(.system(size: 26, weight: .bold, design: .default))
