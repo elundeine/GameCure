@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 struct Challenge: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var title: String
+    var category: String
     var durationDays: String
     var interval: String
     var searchName: [String]

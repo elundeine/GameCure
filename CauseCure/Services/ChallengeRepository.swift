@@ -77,10 +77,19 @@ class ChallengeRepository: ObservableObject {
     func addChallenge(_ challenge: Challenge) {
         do {
             print("adding")
-            let _ = try db.collection("challenges").addDocument(from: challenge)
+            let result = try db.collection("challenges").addDocument(from: challenge)
+            print(result.documentID)
+            updateCategory(challengeId: result.documentID, category: challenge.category)
         } catch {
             fatalError("Unable to encode challenge: \(error.localizedDescription)")
         }
+    }
+    
+    func updateCategory(challengeId: String, category: String) {
+            print("updating")
+            db.collection("challengecategories").document(category).updateData([
+                "challenges.\(challengeId)": true
+            ])
     }
     
     func updateChallenge(_ challenge: Challenge) {

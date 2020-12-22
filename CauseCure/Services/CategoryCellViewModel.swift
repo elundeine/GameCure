@@ -8,7 +8,7 @@ import Foundation
 import Combine
 import FirebaseAuth
 
-class CategorCellViewModel: ObservableObject, Identifiable {
+class CategoryCellViewModel: ObservableObject, Identifiable {
     @Published var challengeRepository = ChallengeRepository()
     
     @Published var category: ChallengeCategory
