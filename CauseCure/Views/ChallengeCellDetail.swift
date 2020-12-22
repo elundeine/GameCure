@@ -10,6 +10,7 @@ import SwiftUI
 struct ChallengeCellDetail: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     @State var presentChallengeAFriend = false
+    @State var myChallenge: Bool
     
     func completeChallenge() {
         challengeCellVM.challengeRepository.addChallengeToUser(challengeCellVM.challenge)
@@ -58,15 +59,20 @@ struct ChallengeCellDetail: View {
             Text("Challenge a friend!")
             }
         }.padding()
-        Button(action: {
+        .onAppear(perform: {
+            print(self.$myChallenge)
+        })
+        if self.myChallenge == true {
+            Button(action: {
             completeChallenge()
-        }) {
-            HStack {
-            Text("Complete Challenge")
-            }
-        }.padding()
-            
+            }) {
+                HStack {
+                    Text("Complete Challenge")
+                }
+            }.padding()
         }
+        
+    }
 }
 
 //
