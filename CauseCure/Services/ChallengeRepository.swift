@@ -33,8 +33,6 @@ class ChallengeRepository: ObservableObject {
         loadChallenges()
         loadDataForUser()
         loadDataForCategory()
-        
-
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -79,16 +77,16 @@ class ChallengeRepository: ObservableObject {
             print("adding")
             let result = try db.collection("challenges").addDocument(from: challenge)
             print(result.documentID)
-            updateCategory(challengeId: result.documentID, category: challenge.category)
+            updateCategory(challengeId: result.documentID, challengeName: challenge.title, category: challenge.category)
         } catch {
             fatalError("Unable to encode challenge: \(error.localizedDescription)")
         }
     }
     
-    func updateCategory(challengeId: String, category: String) {
+    func updateCategory(challengeId: String, challengeName: String, category: String) {
             print("updating")
             db.collection("challengecategories").document(category).updateData([
-                "challenges.\(challengeId)": true
+                "challenges.\(challengeId)": challengeName
             ])
     }
     

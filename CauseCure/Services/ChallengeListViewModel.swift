@@ -19,7 +19,7 @@ class ChallengeListViewModel: ObservableObject {
     private var cancellabels = Set<AnyCancellable>()
     
     init() {
-        challengeRepository.$userChallenges.map { challenges in
+        challengeRepository.$challenges.map { challenges in
                 challenges.map { challenge in
                     ChallengeCellViewModel(challenge: challenge)
                 }

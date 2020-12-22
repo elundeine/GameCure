@@ -144,27 +144,9 @@ struct ProductCard: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Image("trophy")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100)
-                .padding(.all, 20)
-            
-            VStack(alignment: .leading) {
                 Text("\($challengeCellVM.challenge.title.wrappedValue)")
                     .font(.system(size: 26, weight: .bold, design: .default))
                     .foregroundColor(.white)
-                Text("\($challengeCellVM.challenge.description.wrappedValue)")
-                    .font(.system(size: 16, weight: .bold, design: .default))
-                    .foregroundColor(.gray)
-                HStack {
-                    Text("daily")
-                        .font(.system(size: 16, weight: .bold, design: .default))
-                        .foregroundColor(.white)
-                        .padding(.top, 8)
-                }
-            }.padding(.trailing, 20)
-            Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .background(Color(red: 32/255, green: 36/255, blue: 38/255))
@@ -182,10 +164,10 @@ struct CategoryCell: View {
             NavigationView {
                 VStack (alignment: .leading) {
                     List {
-                        ForEach(challengeListVM.challengeCellViewModels) { challengeCellVM in
+                        ForEach(challengeListVM.challengeCellViewModels.filter { categoryCellVM.category.challenges.keys.contains($0.challenge.id!)}) { challengeCellVM in
                            NavigationLink(destination: ChallengeCell(challengeCellVM: challengeCellVM)) {
                                ProductCard(challengeCellVM: challengeCellVM)
-                                               }
+                                }
                         }
                     //
                     }.listStyle(PlainListStyle())
