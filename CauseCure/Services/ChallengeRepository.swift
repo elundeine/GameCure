@@ -110,6 +110,6 @@ class ChallengeRepository: ObservableObject {
         let userRef = db.collection("users").document(userId)
         let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
         print("\(date)")
-        userRef.setData(["completedChallenges" : [challenge.id : [".sv":  "\(Timestamp(date: Date()))"]]], merge: true)
+        userRef.updateData(["challenge.id" : "\(Timestamp(date: Date()))")])
     }
 }
