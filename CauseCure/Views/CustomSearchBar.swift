@@ -46,8 +46,9 @@ struct CustomSearchBar: View {
                                 .navigationBarHidden(showCancelButton) // .animation(.default) // animation does not work properly
 
                     List(self.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
-                
-                        Text(i.title)
+                        NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i))) {
+                            Text(i.title)
+                        }
                     }.frame(height: UIScreen.main.bounds.height / 5)
                 }
             

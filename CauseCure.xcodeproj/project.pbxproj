@@ -12,6 +12,7 @@
 		D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */; };
 		D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51933022591264900681EC3 /* CategoryCellViewModel.swift */; };
 		D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51933052591266200681EC3 /* CategoryListViewModel.swift */; };
+		D51933092591D47600681EC3 /* SearchChallengeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */; };
 		D53C948225801BF10001244E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948125801BF10001244E /* UserModel.swift */; };
 		D53C948625801CB40001244E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948525801CB40001244E /* Extensions.swift */; };
 		D53C948A25801F8B0001244E /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948925801F8B0001244E /* AuthService.swift */; };
@@ -51,6 +52,7 @@
 		D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCategoryModel.swift; sourceTree = "<group>"; };
 		D51933022591264900681EC3 /* CategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewModel.swift; sourceTree = "<group>"; };
 		D51933052591266200681EC3 /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
+		D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChallengeDetailView.swift; sourceTree = "<group>"; };
 		D53C948125801BF10001244E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		D53C948525801CB40001244E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D53C948925801F8B0001244E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				D589C094257FF7F2005A5464 /* SignInView.swift */,
 				D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */,
 				D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */,
+				D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */,
 				D594D637258003D9003B44DD /* SignUpView.swift */,
 				D589C083257FEF20005A5464 /* ContentView.swift */,
 				D589C091257FEF43005A5464 /* TabBar.swift */,
@@ -353,6 +356,7 @@
 				D53C948E25801FAB0001244E /* StorageService.swift in Sources */,
 				D53C948225801BF10001244E /* UserModel.swift in Sources */,
 				D5DEDF2C2580EAF7006A39B0 /* ChallengeModel.swift in Sources */,
+				D51933092591D47600681EC3 /* SearchChallengeDetailView.swift in Sources */,
 				D57C9C602583D1670090CF70 /* ChallengeCellDetail.swift in Sources */,
 				D5578F3225836CD10038F956 /* ChallengeCellViewModel.swift in Sources */,
 				D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */,
