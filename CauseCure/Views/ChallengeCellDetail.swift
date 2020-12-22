@@ -10,6 +10,7 @@ import SwiftUI
 struct ChallengeCellDetail: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     @State var presentChallengeAFriend = false
+//    @Binding var myChallenge 
     
     func completeChallenge() {
         challengeCellVM.challengeRepository.addChallengeToUser(challengeCellVM.challenge)

@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Challenge: Codable, Identifiable {
+struct Challenge: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var title: String
     var durationDays: String

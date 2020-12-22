@@ -93,6 +93,15 @@ class ChallengeRepository: ObservableObject {
         }
     }
     
+    func checkIfIDoThe(_ challenge: Challenge) -> Bool {
+        guard let userId = Auth.auth().currentUser?.uid else { return false }
+        if ((challenge.userIds?.contains(userId)) != nil) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func addChallengeToUser (_ challenge: Challenge) {
         
         guard let userId = Auth.auth().currentUser?.uid else { return }

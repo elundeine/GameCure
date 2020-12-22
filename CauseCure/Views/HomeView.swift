@@ -51,7 +51,7 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                CustomSearchBar(challenges: self.$challengeRepository.challenges).padding(.top)
+                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
                 List {
                     ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
                        NavigationLink(destination: CategoryCell(categoryCellVM: categoryCellVM)) {
