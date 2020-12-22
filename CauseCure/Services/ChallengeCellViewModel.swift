@@ -25,12 +25,12 @@ class ChallengeCellViewModel: ObservableObject, Identifiable {
     
     static func newChallenge() -> ChallengeCellViewModel {
         print("here")
-        return ChallengeCellViewModel(challenge: Challenge(title: "", durationDays: "", interval: "", searchName: [""], description: "", completed: false, challengeCreater: Auth.auth().currentUser?.uid ?? "" ))
+        return ChallengeCellViewModel(challenge: Challenge(title: "", category: "", durationDays: "", interval: "", searchName: [""], description: "", completed: false, challengeCreater: Auth.auth().currentUser?.uid ?? "" ))
     }
     
     static func newChallenge(title: String, durationDays: String, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String) -> ChallengeCellViewModel {
         print("here")
-        return ChallengeCellViewModel(challenge: Challenge(title: title, durationDays: durationDays, interval: interval, searchName: searchName, description: description, completed: completed, challengeCreater: challengeCreater))
+        return ChallengeCellViewModel(challenge: Challenge(title: title, category: "", durationDays: durationDays, interval: interval, searchName: searchName, description: description, completed: completed, challengeCreater: challengeCreater))
     }
     
     

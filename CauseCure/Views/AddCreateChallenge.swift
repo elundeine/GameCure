@@ -10,6 +10,7 @@ import SwiftUI
 struct AddCreateChallenge: View {
     @EnvironmentObject var session: SessionStore
     @ObservedObject var challengeListVM = ChallengeListViewModel()
+    @ObservedObject var categoryListVM = CategoryListViewModel()
     
     @State private var title = ""
     @State private var durationDays = ""
@@ -23,7 +24,7 @@ struct AddCreateChallenge: View {
     
     @State private var intervalOptions = ["Daily","Weekly","Monthly"]
     @State private var selectedInterval = 0
-        
+    @State private var selectedCategory = "Other"
     
    // static func newChallenge(title: String, durationDays: String, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String)
     func listen() {
@@ -32,11 +33,11 @@ struct AddCreateChallenge: View {
     
     func save() {
         if selectedInterval == 0 {
-            self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.uid ?? "", userIds: [session.session?.uid ?? ""]))
+            self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.uid ?? "", userIds: [session.session?.uid ?? ""]))
         } else if selectedInterval == 1 {
-            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, durationDays: self.durationDays, interval: "7", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: "", userIds: [""]))
+            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "7", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: "", userIds: [""]))
         } else {
-            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, durationDays: self.durationDays, interval: "30", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: "", userIds: [""]))
+            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "30", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: "", userIds: [""]))
         }
     }
     
@@ -60,6 +61,13 @@ struct AddCreateChallenge: View {
                                        Text(self.intervalOptions[index]).tag(index)
                                    }
                                }.pickerStyle(SegmentedPickerStyle())
+            }
+            Section (header: Text("Category")) {
+                Picker(selection: $selectedCategory, label: Text("Color")) {
+                    ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
+                        Text(categoryCellVM.name).tag(categoryCellVM.name)
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
             }
             Section (header: Text("Challenge Created")) {
                 TextField("\(session.session?.username ?? "")", text: $challengeCreater)
