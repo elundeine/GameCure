@@ -16,7 +16,6 @@ struct TabBar: View {
     var body: some View {
             VStack{
                 CustomTabView().environmentObject(SessionStore())
-                    .environmentObject(SharedInt())
 
             }
     }

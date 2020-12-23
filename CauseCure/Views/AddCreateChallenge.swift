@@ -72,11 +72,13 @@ struct AddCreateChallenge: View {
             Section (header: Text("Challenge Created")) {
                 TextField("\(session.session?.username ?? "")", text: $challengeCreater)
             }
+            Button(action:  {self.save()}) {
+                Text("save")
+            }
+                
         }.listStyle(GroupedListStyle())
         .environment(\.horizontalSizeClass, .regular)
-        .onAppear(perform: listen)
-        .onDisappear(perform: save)
-    }
+        .onAppear(perform: listen)    }
     }
 }
 

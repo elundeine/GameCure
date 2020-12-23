@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct MyChallengesView: View {
+    @ObservedObject var userChallengeListVM : UserChallengeListViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("")
+        List {
+            ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
+               NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM)) {
+                   UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
+                                   }
+        }
+        }
     }
 }
 
-struct MyChallengesView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyChallengesView()
-    }
-}
+//struct MyChallengesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyChallengesView()
+//    }
+//}

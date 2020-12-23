@@ -10,7 +10,7 @@ import Combine
 import FirebaseFirestoreSwift
 import SwiftUI
 
-class ChallengeListViewModel: ObservableObject {
+class UserChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
     @Published var challengeRepository = ChallengeRepository()
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
@@ -19,18 +19,18 @@ class ChallengeListViewModel: ObservableObject {
     private var cancellabels = Set<AnyCancellable>()
     
     init() {
-        challengeRepository.$userChallenges.map { userChallenges in
-            userChallenges.map { userChallenges in
-                    ChallengeCellViewModel(userChallenges: userChallenges)
+        challengeRepository.$userChallenges.map { userChallenge in
+            userChallenge.map { userChallenge in
+                    UserChallengeCellViewModel(userChallenge: userChallenge)
                 }
             }
-            .assign(to: \.challengeCellViewModels, on: self)
+            .assign(to: \.userChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
     }
     
     
-    func addChallenge(challenge: Challenge) {
-        challengeRepository.addChallenge(challenge)
+    func addChallenge(userChallenge: Challenge) {
+        challengeRepository.addChallenge(userChallenge)
 //        let challengeVM = ChallengeCellViewModel(challenge: challenge)
 //        self.challengeCellViewModels.append(challengeVM)
     }
