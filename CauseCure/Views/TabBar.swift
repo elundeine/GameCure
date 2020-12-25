@@ -22,11 +22,11 @@ struct TabBar: View {
     
 }
 
-var tabs = ["house.fill","person.fill","plus.circle.fill","message.fill","person.3.fill"]
+var tabs = ["house.fill","magnifyingglass","plus.circle.fill","message.fill","person.3.fill"]
 
 private enum Tab: String, Equatable, CaseIterable{
     case first = "house.fill"
-    case second = "person.fill"
+    case second = "magnifyingglass"
     case third = "plus"
     case fourth = "message.fill"
     case fifth = "person.3.fill"
@@ -37,6 +37,7 @@ private enum Tab: String, Equatable, CaseIterable{
 struct CustomTabView: View {
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var sharedInt: SharedInt
+    
     @State private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
@@ -45,9 +46,9 @@ struct CustomTabView: View {
             TabView(selection: $selectedTab) {
                 HomeView().environmentObject(SessionStore())
                     .tag("house.fill")
-                UserProfileDetail().environmentObject(SessionStore())
+                ExploreView().environmentObject(SessionStore())
                     .environmentObject(SharedInt())
-                    .tag("person.fill")
+                    .tag("magnifyingglass")
                 AddCreateChallenge()
                     .tag("plus.circle.fill")
                 Chat()

@@ -116,6 +116,13 @@ class ChallengeRepository: ObservableObject {
         let userRef = db.collection("users").document(userId)
         let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
         print("\(date)")
-        userRef.updateData(["completedChallenges.\(challenge.id)" : "\(Timestamp(date: Date()))"])
+        userRef.updateData(["completedChallenges.\(Timestamp(date: Date()))" : "\(String(describing: challenge.id))"])
+        guard let challengeId = challenge.id else { return }
+        let challengeRef = db.collection("challenges").document(challengeId)
+        challengeRef.updateData(["completedBy.\(Timestamp(date: Date()))" : "\(String(describing: userId))"])
+    }
+    
+    func getChallengeStreak (_ challenge: Challenge) {
+        
     }
 }

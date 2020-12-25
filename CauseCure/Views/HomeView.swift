@@ -52,36 +52,10 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
-                List {
-                    NavigationLink(destination: MyChallengesView(userChallengeListVM: userChallengeListVM)) {
-                    HStack(alignment: .center) {
-                        Image("trophy")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .padding(.all, 20)
-                        
-                        VStack(alignment: .leading) {
-                            Text("My Challenges")
-                                .font(.system(size: 24, weight: .bold, design: .default))
-                                .foregroundColor(.white)
-                        }.padding(.trailing, 20)
-                        Spacer()
-                    }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .background(Color(red: 32/255, green: 36/255, blue: 38/255))
-                    .modifier(CardModifier())
-                    .padding(.all, 10)
-
-                    ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
-                       NavigationLink(destination: CategoryCell(categoryCellVM: categoryCellVM)) {
-                           CategoryCard(categoryCellVM: categoryCellVM)
-                                           }
-                    }
-                //
-                }.listStyle(PlainListStyle())
+//                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
+                
+                MyChallengesView(userChallengeListVM: userChallengeListVM)
+                    .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
                        HStack {
                         Button(action:  {self.openMenu()}) {
@@ -138,22 +112,6 @@ struct ChallengeCell: View {
                     }
         }).id(challengeCellVM.id)
       }
-    }
-}
-
-struct UserChallengeCard: View {
-    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
-    
-    var body: some View {
-        HStack(alignment: .center) {
-                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
-                    .font(.system(size: 26, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-        }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
-        .modifier(CardModifier())
-        .padding(.all, 10)
     }
 }
 

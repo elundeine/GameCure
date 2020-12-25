@@ -10,29 +10,48 @@ import SwiftUI
 struct SideMenuContent: View {
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var sharedInt: SharedInt
-    
+    @State var isPresented = false
     func logOut() {
         session.logout()
         self.sharedInt.myInt = 0
     }
     
         var body: some View {
-            List {
-                Text("My Profile").onTapGesture {
-                    print("My Profile")
+            NavigationView {
+                List {
+                    Button(action: {
+                        withAnimation{
+                            self.isPresented.toggle()
+                        }
+                        }, label: {
+                            Text("My Profile")
+                        })
+                    Text("Posts").onTapGesture {
+                        print("Posts")
+                    }
+                    Text("Logout").onTapGesture {
+                        logOut()
+                    }
+                    .fullScreenCover(isPresented: $isPresented, content: FullScreenModalView.init)
                 }
-                Text("Posts").onTapGesture {
-                    print("Posts")
-                }
-                Text("Logout").onTapGesture {
-                    logOut()
-                }
+                    //Modal
             }
+            
+        }
+}
+    
+struct FullScreenModalView: View {
+        @Environment(\.presentationMode) var presentationMode
+        var body: some View {
+            //TODO: add dismiss button
+            UserProfileDetail()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.white)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    presentationMode.wrappedValue.dismiss()
+                }
         }
     }
 
-struct SideMenuContent_Previews: PreviewProvider {
-    static var previews: some View {
-        SideMenuContent()
-    }
-}
+

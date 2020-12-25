@@ -21,6 +21,55 @@ struct MyChallengesView: View {
     }
 }
 
+struct UserChallengeCard: View {
+    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+    
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+        }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
+
+
+struct ProgressBar: View {
+    @Binding var progress: Float
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 20.0)
+                .opacity(0.3)
+                .foregroundColor(Color.red)
+            
+            Circle()
+                .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
+                .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
+                .foregroundColor(Color.red)
+                .rotationEffect(Angle(degrees: 270.0))
+                .animation(.linear)
+
+            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
+                .font(.largeTitle)
+                .bold()
+        }
+    }
+}
+
 //struct MyChallengesView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        MyChallengesView()
