@@ -6,16 +6,22 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-
-struct User: Encodable, Decodable {
-    var uid: String
+struct User: Codable, Hashable {
+    var uid: String?
     var email: String
     var profileImageUrl: String
     var username: String
     var searchName: [String]
     var bio: String
-    var challenges: [String]
     var loggedInDates: [String?]
+    var friends: [String]?
     var completedChallenges: [String : String]?
+}
+
+extension User: Identifiable {
+    var id: User { self }
 }

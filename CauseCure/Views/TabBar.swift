@@ -10,7 +10,6 @@ import SwiftUI
 
 struct TabBar: View {
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var sharedInt: SharedInt
     //@EnvironmentObject var model: Model
     
     var body: some View {
@@ -36,18 +35,16 @@ private enum Tab: String, Equatable, CaseIterable{
 }
 struct CustomTabView: View {
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var sharedInt: SharedInt
-    
+
     @State private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             TabView(selection: $selectedTab) {
-                HomeView().environmentObject(SessionStore())
+                HomeView()
                     .tag("house.fill")
-                ExploreView().environmentObject(SessionStore())
-                    .environmentObject(SharedInt())
+                ExploreView()
                     .tag("magnifyingglass")
                 AddCreateChallenge()
                     .tag("plus.circle.fill")

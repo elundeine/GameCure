@@ -12,14 +12,14 @@ import SwiftUI
 
 class UserChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
-    @Published var challengeRepository = ChallengeRepository()
+    @Published var repository = Repository()
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
     
     
     private var cancellabels = Set<AnyCancellable>()
     
     init() {
-        challengeRepository.$userChallenges.map { userChallenge in
+        repository.$userChallenges.map { userChallenge in
             userChallenge.map { userChallenge in
                     UserChallengeCellViewModel(userChallenge: userChallenge)
                 }
@@ -30,7 +30,7 @@ class UserChallengeListViewModel: ObservableObject {
     
     
     func addChallenge(userChallenge: Challenge) {
-        challengeRepository.addChallenge(userChallenge)
+        repository.addChallenge(userChallenge)
 //        let challengeVM = ChallengeCellViewModel(challenge: challenge)
 //        self.challengeCellViewModels.append(challengeVM)
     }

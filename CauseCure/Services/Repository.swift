@@ -15,7 +15,7 @@ import FirebaseFirestoreSwift
 import Combine
 import SwiftUI
 
-class ChallengeRepository: ObservableObject {
+class Repository: ObservableObject {
     
     @EnvironmentObject var session: SessionStore
     static var storeRoot = Firestore.firestore()
@@ -27,12 +27,13 @@ class ChallengeRepository: ObservableObject {
     @Published var challenges = [Challenge]()
     @Published var userChallenges = [Challenge]()
     @Published var challengeCategories = [ChallengeCategory]()
-    
+    @Published var users = [User]()
     
     init() {
         loadChallenges()
         loadDataForUser()
         loadDataForCategory()
+        loadUsers()
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -43,16 +44,30 @@ class ChallengeRepository: ObservableObject {
             }
           }
     }
+    private func loadUsers() {
+        print("before db collection")
+        db.collection("users").addSnapshotListener { (querySnapshot, error) in
+            print("loading user")
+            if let querySnapshot = querySnapshot {
+                
+                  print("in querySnapshot of users")
+              self.users = querySnapshot.documents.compactMap { document -> User? in
+                try? document.data(as: User.self)
+              }
+            }
+        }
+    }
+    
+    //Todo: This should be in a different repository?
+    //      Or we should rename the Challenge Repository to a general repository
     
  
     private func loadDataForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
-        print(userId)
           db.collection("challenges")
             .whereField("userIds", arrayContains: userId)
             .addSnapshotListener { (querySnapshot, error) in
               if let querySnapshot = querySnapshot {
-                print("in querySnapshot")
                 self.userChallenges = querySnapshot.documents.compactMap { document -> Challenge? in
                   try? document.data(as: Challenge.self)
                 }
@@ -64,7 +79,6 @@ class ChallengeRepository: ObservableObject {
               db.collection("challengecategories")
                 .addSnapshotListener { (querySnapshot, error) in
                   if let querySnapshot = querySnapshot {
-                    print("in querySnapshot of challenge categories")
                     self.challengeCategories = querySnapshot.documents.compactMap { document -> ChallengeCategory? in
                       try? document.data(as: ChallengeCategory.self)
                     }
@@ -124,5 +138,15 @@ class ChallengeRepository: ObservableObject {
     
     func getChallengeStreak (_ challenge: Challenge) {
         
+    }
+    
+    func updateUser(_ user: User) {
+         if let userID = user.uid {
+            do {
+                try db.collection("users").document(userID).setData(from: user)
+            } catch {
+                fatalError("Unable to encode challenge: \(error.localizedDescription)")
+            }
+        }
     }
 }

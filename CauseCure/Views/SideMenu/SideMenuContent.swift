@@ -44,7 +44,7 @@ struct FullScreenModalView: View {
         @Environment(\.presentationMode) var presentationMode
         var body: some View {
             //TODO: add dismiss button
-            UserProfileDetail()
+            MyProfile()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .edgesIgnoringSafeArea(.all)

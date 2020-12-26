@@ -9,10 +9,9 @@ import SwiftUI
 import FirebaseStorage
 import SDWebImageSwiftUI
 
-struct UserProfileDetail: View {
+struct MyProfile: View {
     @EnvironmentObject var session: SessionStore
     @State private var imageURL = URL(string: "")
-    @EnvironmentObject var sharedInt: SharedInt
     
     @State private var selectedTab: Int = 0
     
@@ -26,7 +25,6 @@ struct UserProfileDetail: View {
     
     func logOut() {
         session.logout()
-        self.sharedInt.myInt = 0
     }
     
     var body: some View {
@@ -109,6 +107,6 @@ struct UserProfileDetail: View {
 
 struct UserProfileDetail_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileDetail()
+        MyProfile()
     }
 }

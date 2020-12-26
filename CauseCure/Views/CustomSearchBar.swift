@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 struct CustomSearchBar: View {
-    @ObservedObject var challengeRepository : ChallengeRepository
+    @ObservedObject var repository : Repository
 //    @Binding var challenges : [Challenge]
     @State var txt = ""
     @State private var showCancelButton: Bool = false
@@ -46,14 +46,14 @@ struct CustomSearchBar: View {
                                 .padding(.horizontal)
                                 .navigationBarHidden(showCancelButton) // .animation(.default) // animation does not work properly
         
-        List(self.challengeRepository.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
-            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: challengeRepository.checkIfIDoThe(i) )) {
+        List(self.repository.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
+            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: repository.checkIfIDoThe(i) )) {
                             Text(i.title)
                         }
                     }.frame(height: UIScreen.main.bounds.height / 5)
-                }
+    }
             
-            }
+}
     
 
 extension UIApplication {

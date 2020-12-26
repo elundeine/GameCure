@@ -9,7 +9,7 @@ import Combine
 import FirebaseAuth
 
 class CategoryCellViewModel: ObservableObject, Identifiable {
-    @Published var challengeRepository = ChallengeRepository()
+    @Published var repository = Repository()
     
     @Published var category: ChallengeCategory
     

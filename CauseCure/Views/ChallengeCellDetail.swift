@@ -13,7 +13,7 @@ struct ChallengeCellDetail: View {
     @State var myChallenge: Bool
     
     func completeChallenge() {
-        challengeCellVM.challengeRepository.addChallengeToUser(challengeCellVM.challenge)
+        challengeCellVM.repository.addChallengeToUser(challengeCellVM.challenge)
     }
     var body: some View {
             VStack {

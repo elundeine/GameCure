@@ -8,8 +8,25 @@
 import SwiftUI
 
 struct Chat: View {
+    @EnvironmentObject var session: SessionStore
+    @ObservedObject var repository = Repository()
+    //TODO:
+    
+    //1 user cell
+    
+    
+    //2 search
+    
+    //3 
+    
     var body: some View {
-        Text("Hello, Chat!")
+        VStack {
+            UserSearch(repository: repository)
+            ForEach(repository.users) { user in
+                Text(user.username)
+            
+            }
+        }
     }
 }
 

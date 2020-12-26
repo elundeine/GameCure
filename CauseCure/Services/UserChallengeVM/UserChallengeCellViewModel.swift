@@ -10,7 +10,7 @@ import FirebaseAuth
 
 
 class UserChallengeCellViewModel: ObservableObject, Identifiable {
-    @Published var challengeRepository = ChallengeRepository()
+    @Published var repository = Repository()
     
     @Published var userChallenge: Challenge
     
@@ -54,7 +54,7 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
             .dropFirst()
             .debounce(for: 0.8, scheduler: RunLoop.main)
             .sink { [weak self] userChallenge in
-                self?.challengeRepository.updateChallenge(userChallenge)
+                self?.repository.updateChallenge(userChallenge)
             }
             .store(in: &cancellables)
     }

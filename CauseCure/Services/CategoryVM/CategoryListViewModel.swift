@@ -12,14 +12,14 @@ import SwiftUI
 
 class CategoryListViewModel: ObservableObject {
     //@EnvironmentObject var session: SessionStore
-    @Published var challengeRepository = ChallengeRepository()
+    @Published var repository = Repository()
     @Published var categoryCellViewModels = [CategoryCellViewModel]()
     
     
     private var cancellabels = Set<AnyCancellable>()
     
     init() {
-        challengeRepository.$challengeCategories.map { categories in
+        repository.$challengeCategories.map { categories in
                 categories.map { category in
                     CategoryCellViewModel(category: category)
                 }
