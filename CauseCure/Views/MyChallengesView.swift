@@ -13,9 +13,14 @@ struct MyChallengesView: View {
         Text("")
         List {
             ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
-               NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM)) {
+                ZStack{
+                NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM)) {
+                    EmptyView()
+                }.opacity(0.0)
+                .buttonStyle(PlainButtonStyle())
                    UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
-                                   }
+               
+               }
         }
         }
     }
@@ -36,7 +41,14 @@ struct UserChallengeCard: View {
                 Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
                     .font(.system(size: 24, weight: .bold, design: .default))
                     .foregroundColor(.white)
-        }
+                HStack {
+                    Text("daily")
+                    .font(.system(size: 16, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+                    .padding(.top, 8)
+                }
+        }.padding(.trailing, 20)
+            Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .background(Color(red: 32/255, green: 36/255, blue: 38/255))
@@ -44,7 +56,6 @@ struct UserChallengeCard: View {
         .padding(.all, 10)
     }
 }
-
 
 struct ProgressBar: View {
     @Binding var progress: Float

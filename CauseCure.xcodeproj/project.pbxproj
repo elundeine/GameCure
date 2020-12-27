@@ -17,7 +17,6 @@
 		D51C8C9D25963A0000F8FB3D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8C9C25963A0000F8FB3D /* ExploreView.swift */; };
 		D51C8CB8259690A600F8FB3D /* UserSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CB7259690A600F8FB3D /* UserSearch.swift */; };
 		D51C8CBB2596931B00F8FB3D /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CBA2596931B00F8FB3D /* UserProfile.swift */; };
-		D51C8CBF25969C3500F8FB3D /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CBE25969C3500F8FB3D /* UserRepository.swift */; };
 		D51C8CC225969FD900F8FB3D /* UserCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CC125969FD900F8FB3D /* UserCellViewModel.swift */; };
 		D51C8CC52596A23800F8FB3D /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CC42596A23800F8FB3D /* UserListViewModel.swift */; };
 		D53C948225801BF10001244E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948125801BF10001244E /* UserModel.swift */; };
@@ -50,6 +49,8 @@
 		D594D63425800097003B44DD /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594D63325800097003B44DD /* ButtonModifier.swift */; };
 		D594D638258003D9003B44DD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594D637258003D9003B44DD /* SignUpView.swift */; };
 		D594D63D258005C4003B44DD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594D63C258005C4003B44DD /* ImagePicker.swift */; };
+		D5BA4B7D259893B600706AD1 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA4B7C259893B600706AD1 /* ChatModel.swift */; };
+		D5BA4B992598972A00706AD1 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA4B982598972A00706AD1 /* ChatService.swift */; };
 		D5DEDF2C2580EAF7006A39B0 /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */; };
 		D5DEDF2F2580EE69006A39B0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2E2580EE69006A39B0 /* Repository.swift */; };
 /* End PBXBuildFile section */
@@ -67,7 +68,6 @@
 		D51C8C9C25963A0000F8FB3D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		D51C8CB7259690A600F8FB3D /* UserSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearch.swift; sourceTree = "<group>"; };
 		D51C8CBA2596931B00F8FB3D /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
-		D51C8CBE25969C3500F8FB3D /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		D51C8CC125969FD900F8FB3D /* UserCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCellViewModel.swift; sourceTree = "<group>"; };
 		D51C8CC42596A23800F8FB3D /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
 		D53C948125801BF10001244E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -102,6 +102,8 @@
 		D594D63325800097003B44DD /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
 		D594D637258003D9003B44DD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D594D63C258005C4003B44DD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		D5BA4B7C259893B600706AD1 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		D5BA4B982598972A00706AD1 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		D5DEDF2E2580EE69006A39B0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +179,7 @@
 				D53C948125801BF10001244E /* UserModel.swift */,
 				D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */,
 				D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */,
+				D5BA4B7C259893B600706AD1 /* ChatModel.swift */,
 			);
 			name = Models;
 			path = ..;
@@ -186,16 +189,34 @@
 			isa = PBXGroup;
 			children = (
 				D53C948925801F8B0001244E /* AuthService.swift */,
+				D5BA4B982598972A00706AD1 /* ChatService.swift */,
 				D53C948D25801FAB0001244E /* StorageService.swift */,
 				D53C949825802DC30001244E /* SessionStore.swift */,
 				D5DEDF2E2580EE69006A39B0 /* Repository.swift */,
-				D51C8CBE25969C3500F8FB3D /* UserRepository.swift */,
 				D51C8CCA2596A68900F8FB3D /* CategoryVM */,
 				D51C8CC82596A65400F8FB3D /* ChallengeVM */,
 				D51C8CC72596A63B00F8FB3D /* UserVM */,
 				D51C8CCC2596A69500F8FB3D /* UserChallengeVM */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D53DCFA52598D2020037C24B /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				D594D637258003D9003B44DD /* SignUpView.swift */,
+				D589C094257FF7F2005A5464 /* SignInView.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		D53DCFA62598D2210037C24B /* SearchBars */ = {
+			isa = PBXGroup;
+			children = (
+				D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */,
+				D51C8CB7259690A600F8FB3D /* UserSearch.swift */,
+			);
+			path = SearchBars;
 			sourceTree = "<group>";
 		};
 		D589C075257FEF20005A5464 = {
@@ -219,6 +240,7 @@
 		D589C080257FEF20005A5464 /* CauseCure */ = {
 			isa = PBXGroup;
 			children = (
+				D589C08A257FEF21005A5464 /* Info.plist */,
 				D589C081257FEF20005A5464 /* CauseCureApp.swift */,
 				D53C949525802B180001244E /* GoogleService-Info.plist */,
 				D589C085257FEF21005A5464 /* Assets.xcassets */,
@@ -227,7 +249,6 @@
 				D594D63B258005AB003B44DD /* Utilities */,
 				D589C097257FF80B005A5464 /* Views */,
 				D589C0A9257FFA26005A5464 /* Components */,
-				D589C08A257FEF21005A5464 /* Info.plist */,
 				D589C087257FEF21005A5464 /* Preview Content */,
 			);
 			path = CauseCure;
@@ -244,14 +265,13 @@
 		D589C097257FF80B005A5464 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D589C094257FF7F2005A5464 /* SignInView.swift */,
-				D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */,
-				D51C8CB7259690A600F8FB3D /* UserSearch.swift */,
+				D53DCFA52598D2020037C24B /* SignIn */,
+				D53C949B258032130001244E /* HomeView.swift */,
+				D56292A925925FD2002762D7 /* MyChallengesView.swift */,
+				D51C8C9C25963A0000F8FB3D /* ExploreView.swift */,
 				D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */,
 				D50339242593620F006ED209 /* UserChallengeCellDetail.swift */,
-				D56292A925925FD2002762D7 /* MyChallengesView.swift */,
 				D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */,
-				D594D637258003D9003B44DD /* SignUpView.swift */,
 				D589C083257FEF20005A5464 /* ContentView.swift */,
 				D589C091257FEF43005A5464 /* TabBar.swift */,
 				D589C09F257FF8FD005A5464 /* Community.swift */,
@@ -259,8 +279,7 @@
 				D546A2BB25861CBF00A06C3C /* MyProfile.swift */,
 				D51C8CBA2596931B00F8FB3D /* UserProfile.swift */,
 				D589C09C257FF8AC005A5464 /* AddCreateChallenge.swift */,
-				D53C949B258032130001244E /* HomeView.swift */,
-				D51C8C9C25963A0000F8FB3D /* ExploreView.swift */,
+				D53DCFA62598D2210037C24B /* SearchBars */,
 				D594A901258F72CF00CCAEC7 /* SideMenu */,
 			);
 			path = Views;
@@ -416,6 +435,7 @@
 				D594D63425800097003B44DD /* ButtonModifier.swift in Sources */,
 				D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */,
 				D56292B025935A55002762D7 /* UserChallengeCellViewModel.swift in Sources */,
+				D5BA4B7D259893B600706AD1 /* ChatModel.swift in Sources */,
 				D5DEDF2F2580EE69006A39B0 /* Repository.swift in Sources */,
 				D53C948E25801FAB0001244E /* StorageService.swift in Sources */,
 				D56292AA25925FD2002762D7 /* MyChallengesView.swift in Sources */,
@@ -430,13 +450,13 @@
 				D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */,
 				D51C8CB8259690A600F8FB3D /* UserSearch.swift in Sources */,
 				D594D638258003D9003B44DD /* SignUpView.swift in Sources */,
+				D5BA4B992598972A00706AD1 /* ChatService.swift in Sources */,
 				D51C8CC225969FD900F8FB3D /* UserCellViewModel.swift in Sources */,
 				D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */,
 				D594A8FC258F5E9E00CCAEC7 /* SideMenuView.swift in Sources */,
 				D589C095257FF7F2005A5464 /* SignInView.swift in Sources */,
 				D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */,
 				D53C949C258032130001244E /* HomeView.swift in Sources */,
-				D51C8CBF25969C3500F8FB3D /* UserRepository.swift in Sources */,
 				D589C0A4257FF921005A5464 /* Chat.swift in Sources */,
 				D589C0A7257FFA12005A5464 /* FormField.swift in Sources */,
 				D594D63D258005C4003B44DD /* ImagePicker.swift in Sources */,
@@ -488,6 +508,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -549,6 +570,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -577,9 +599,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
-				DEVELOPMENT_TEAM = Y86KQ25V2Y;
+				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CauseCure/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -587,8 +610,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gamecure.CauseCure;
+				PRODUCT_BUNDLE_IDENTIFIER = GameCure.CauseCure.tc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -600,9 +624,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
-				DEVELOPMENT_TEAM = Y86KQ25V2Y;
+				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CauseCure/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -610,8 +635,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gamecure.CauseCure;
+				PRODUCT_BUNDLE_IDENTIFIER = GameCure.CauseCure.tc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

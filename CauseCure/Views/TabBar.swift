@@ -48,7 +48,7 @@ struct CustomTabView: View {
                     .tag("magnifyingglass")
                 AddCreateChallenge()
                     .tag("plus.circle.fill")
-                Chat()
+                ChatView()
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")

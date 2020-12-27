@@ -26,12 +26,13 @@ class Repository: ObservableObject {
     let db = Firestore.firestore()
     @Published var challenges = [Challenge]()
     @Published var userChallenges = [Challenge]()
+    @Published var userChallengesToday = [Challenge]()
     @Published var challengeCategories = [ChallengeCategory]()
     @Published var users = [User]()
     
     init() {
         loadChallenges()
-        loadDataForUser()
+        loadChallengesForUser()
         loadDataForCategory()
         loadUsers()
     }
@@ -45,12 +46,12 @@ class Repository: ObservableObject {
           }
     }
     private func loadUsers() {
-        print("before db collection")
+//        print("before db collection")
         db.collection("users").addSnapshotListener { (querySnapshot, error) in
-            print("loading user")
+//            print("loading user")
             if let querySnapshot = querySnapshot {
                 
-                  print("in querySnapshot of users")
+//                  print("in querySnapshot of users")
               self.users = querySnapshot.documents.compactMap { document -> User? in
                 try? document.data(as: User.self)
               }
@@ -62,8 +63,22 @@ class Repository: ObservableObject {
     //      Or we should rename the Challenge Repository to a general repository
     
  
-    private func loadDataForUser() {
+    private func loadChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
+//        print(userId)
+          db.collection("challenges")
+            .whereField("userIds", arrayContains: userId)
+            .addSnapshotListener { (querySnapshot, error) in
+              if let querySnapshot = querySnapshot {
+                self.userChallenges = querySnapshot.documents.compactMap { document -> Challenge? in
+                  try? document.data(as: Challenge.self)
+                }
+              }
+            }
+        }
+    private func loadTodaysChallengesForUser() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+//        print(userId)
           db.collection("challenges")
             .whereField("userIds", arrayContains: userId)
             .addSnapshotListener { (querySnapshot, error) in
@@ -126,18 +141,30 @@ class Repository: ObservableObject {
     
     func addChallengeToUser (_ challenge: Challenge) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
-        print(userId)
+//        print(userId)
         let userRef = db.collection("users").document(userId)
         let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
         print("\(date)")
-        userRef.updateData(["completedChallenges.\(Timestamp(date: Date()))" : "\(String(describing: challenge.id))"])
+        userRef.updateData(["completedChallenges.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
         guard let challengeId = challenge.id else { return }
         let challengeRef = db.collection("challenges").document(challengeId)
-        challengeRef.updateData(["completedBy.\(Timestamp(date: Date()))" : "\(String(describing: userId))"])
+        challengeRef.updateData(["completedBy.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
     }
     
     func getChallengeStreak (_ challenge: Challenge) {
         
+    }
+    
+    func checkIfCompletedToday (_ challenge: Challenge, user: User) -> Bool {
+        guard let userId = user.uid else { return false }
+        let valuesForKeys = user.completedChallenges?.valuesForKeys(keys: ["drOPQwKJraX3KE54vOCrnLYSOIo2"])
+        var i = 0
+        for value in valuesForKeys ?? [] {
+            print(i)
+            print(value)
+            i += 1
+        }
+        return true
     }
     
     func updateUser(_ user: User) {
@@ -150,3 +177,11 @@ class Repository: ObservableObject {
         }
     }
 }
+
+
+extension Dictionary {
+    func valuesForKeys(keys: [Key]) -> [Value?] {
+            return keys.map { self[$0] }
+        }
+}
+

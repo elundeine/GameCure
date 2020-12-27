@@ -77,7 +77,7 @@ struct UserProfile: View {
 
                         switch(selectedTab) {
                             case 0: Community()
-                            case 1: Chat()
+                            case 1: ChatView()
                             case 2: Community()
                             default: Community()
 

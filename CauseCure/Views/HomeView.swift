@@ -38,6 +38,9 @@ struct HomeView: View {
         session.session?.loggedInDates
     }
     
+    func performOnAppear() {
+        listen()
+    }
     func listen() {
         session.listen()
     }
@@ -82,37 +85,12 @@ struct HomeView: View {
         SideMenuView(width: 270,
                         isOpen: self.menuOpen,
                         menuClose: self.openMenu)
-        .onAppear(perform: listen)
+        .onAppear(perform: performOnAppear)
         }
     }
 }
 enum InputError: Error {
   case empty
-}
-
-struct ChallengeCell: View {
-    @ObservedObject var challengeCellVM: ChallengeCellViewModel
-
-    var onCommit: (Result<Challenge, InputError>) -> Void = {_ in }
-
-        var body: some View {
-            HStack{
-                Image(systemName: challengeCellVM.completionStateIconName)
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .onTapGesture {
-                      self.challengeCellVM.challenge.completed.toggle()
-                    }
-                TextField("Enter the challenges title", text: $challengeCellVM.challenge.title, onCommit: {
-                    if !self.challengeCellVM.challenge.title.isEmpty {
-                      self.onCommit(.success(self.challengeCellVM.challenge))
-                    }
-                    else {
-                      self.onCommit(.failure(.empty))
-                    }
-        }).id(challengeCellVM.id)
-      }
-    }
 }
 
 
@@ -132,59 +110,6 @@ struct ProductCard: View {
     }
 }
 
-struct CategoryCell: View {
-    @ObservedObject var categoryCellVM: CategoryCellViewModel
-    @ObservedObject var challengeListVM = ChallengeListViewModel()
-    var body: some View {
-        //TODO: If challenge is empty case
-        ZStack{
-            Text("hello")
-            NavigationView {
-                VStack (alignment: .leading) {
-                    List {
-                        ForEach(challengeListVM.challengeCellViewModels.filter { categoryCellVM.category.challenges.keys.contains($0.challenge.id!)}) { challengeCellVM in
-                           NavigationLink(destination: ChallengeCell(challengeCellVM: challengeCellVM)) {
-                               ProductCard(challengeCellVM: challengeCellVM)
-                                }
-                        }
-                    //
-                    }.listStyle(PlainListStyle())
-                }
-            }
-        }
-    }
-}
-struct CategoryCard: View {
-    @ObservedObject var categoryCellVM: CategoryCellViewModel
-    
-    var body: some View {
-        HStack(alignment: .center) {
-            
-            Image("\($categoryCellVM.category.name.wrappedValue)")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100)
-                .padding(.all, 20)
-
-            VStack(alignment: .leading) {
-                Text("\($categoryCellVM.category.name.wrappedValue)")
-                    .font(.system(size: 26, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-                HStack {
-                    Text("daily")
-                        .font(.system(size: 16, weight: .bold, design: .default))
-                        .foregroundColor(.white)
-                        .padding(.top, 8)
-                }
-            }.padding(.trailing, 20)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
-        .modifier(CardModifier())
-        .padding(.all, 10)
-    }
-}
 
 
 

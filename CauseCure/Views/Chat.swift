@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Chat: View {
+struct ChatView: View {
     @EnvironmentObject var session: SessionStore
     @ObservedObject var repository = Repository()
     //TODO:
@@ -20,18 +20,21 @@ struct Chat: View {
     //3 
     
     var body: some View {
-        VStack {
-            UserSearch(repository: repository)
-            ForEach(repository.users) { user in
-                Text(user.username)
+        VStack{
+        NavigationView{
+            VStack {
+                UserSearch(repository: repository)
+                Spacer()
             
             }
+            .navigationBarTitle(Text("Explore"))
+        }
         }
     }
 }
 
 struct Chat_Previews: PreviewProvider {
     static var previews: some View {
-        Chat()
+        ChatView()
     }
 }

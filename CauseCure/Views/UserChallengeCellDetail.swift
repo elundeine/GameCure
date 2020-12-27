@@ -30,7 +30,7 @@ struct UserChallengeCellDetail: View {
                                 .font(.subheadline)
                             }.padding()
                         HStack(alignment: .top) {
-                            Text("Inveral")
+                            Text("Interval")
                                 .font(.subheadline)
                                 .bold()
                             Spacer()
