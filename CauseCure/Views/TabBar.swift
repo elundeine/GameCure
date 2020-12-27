@@ -42,7 +42,7 @@ struct CustomTabView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             TabView(selection: $selectedTab) {
-                HomeView()
+                HomeView().environmentObject(self.session)
                     .tag("house.fill")
                 ExploreView()
                     .tag("magnifyingglass")

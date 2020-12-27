@@ -49,6 +49,7 @@
 		D594D63425800097003B44DD /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594D63325800097003B44DD /* ButtonModifier.swift */; };
 		D594D638258003D9003B44DD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594D637258003D9003B44DD /* SignUpView.swift */; };
 		D594D63D258005C4003B44DD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594D63C258005C4003B44DD /* ImagePicker.swift */; };
+		D5985DA32598E3B50074D025 /* CompletedChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5985DA22598E3B50074D025 /* CompletedChallengeModel.swift */; };
 		D5BA4B7D259893B600706AD1 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA4B7C259893B600706AD1 /* ChatModel.swift */; };
 		D5BA4B992598972A00706AD1 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA4B982598972A00706AD1 /* ChatService.swift */; };
 		D5DEDF2C2580EAF7006A39B0 /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */; };
@@ -102,6 +103,7 @@
 		D594D63325800097003B44DD /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
 		D594D637258003D9003B44DD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D594D63C258005C4003B44DD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		D5985DA22598E3B50074D025 /* CompletedChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengeModel.swift; sourceTree = "<group>"; };
 		D5BA4B7C259893B600706AD1 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		D5BA4B982598972A00706AD1 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				D53C948125801BF10001244E /* UserModel.swift */,
 				D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */,
 				D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */,
+				D5985DA22598E3B50074D025 /* CompletedChallengeModel.swift */,
 				D5BA4B7C259893B600706AD1 /* ChatModel.swift */,
 			);
 			name = Models;
@@ -438,6 +441,7 @@
 				D5BA4B7D259893B600706AD1 /* ChatModel.swift in Sources */,
 				D5DEDF2F2580EE69006A39B0 /* Repository.swift in Sources */,
 				D53C948E25801FAB0001244E /* StorageService.swift in Sources */,
+				D5985DA32598E3B50074D025 /* CompletedChallengeModel.swift in Sources */,
 				D56292AA25925FD2002762D7 /* MyChallengesView.swift in Sources */,
 				D51C8C9D25963A0000F8FB3D /* ExploreView.swift in Sources */,
 				D50339252593620F006ED209 /* UserChallengeCellDetail.swift in Sources */,

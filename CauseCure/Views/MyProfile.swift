@@ -77,6 +77,14 @@ struct MyProfile: View {
                     Text("Following")
                     .font(.system(size: 13))
                 }
+                VStack{
+                    Text("Experience")
+                    .font(.system(size: 30))
+                    .fontWeight(.bold)
+                    
+                    Text("\(session.session?.experience ?? 0)")
+                    .font(.system(size: 13))
+                }
                 
             }.frame(height: 100)
             .padding(.leading, 10)

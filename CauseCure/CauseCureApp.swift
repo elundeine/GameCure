@@ -12,10 +12,10 @@ import Firebase
 struct CauseCureApp: App {
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
+    
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(SessionStore())
-                .environmentObject(SharedInt())
         }
     }
 }

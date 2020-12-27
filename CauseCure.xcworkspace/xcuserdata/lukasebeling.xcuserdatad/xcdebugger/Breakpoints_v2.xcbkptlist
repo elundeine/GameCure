@@ -14,10 +14,10 @@
             filePath = "CauseCure/Services/Repository.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "checkIfCompletedToday(_:user:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

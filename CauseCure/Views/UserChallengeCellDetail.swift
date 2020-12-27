@@ -12,7 +12,7 @@ struct UserChallengeCellDetail: View {
         @State var presentChallengeAFriend = false
         
         func completeChallenge() {
-            userChallengeCellVM.repository.addChallengeToUser(userChallengeCellVM.userChallenge)
+            userChallengeCellVM.repository.completeChallenge(userChallengeCellVM.userChallenge)
         }
         var body: some View {
                 VStack {

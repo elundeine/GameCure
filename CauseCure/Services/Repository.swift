@@ -17,7 +17,7 @@ import SwiftUI
 
 class Repository: ObservableObject {
     
-    @EnvironmentObject var session: SessionStore
+
     static var storeRoot = Firestore.firestore()
     
     static func getUserId(userId: String) -> DocumentReference {
@@ -31,6 +31,7 @@ class Repository: ObservableObject {
     @Published var users = [User]()
     
     init() {
+       
         loadChallenges()
         loadChallengesForUser()
         loadDataForCategory()
@@ -139,13 +140,35 @@ class Repository: ObservableObject {
         }
     }
     
-    func addChallengeToUser (_ challenge: Challenge) {
+    func completeChallenge (_ challenge: Challenge) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 //        print(userId)
         let userRef = db.collection("users").document(userId)
+             
         let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
         print("\(date)")
         userRef.updateData(["completedChallenges.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
+//        let experience = userRef.get("experience") as! Int
+        let docRef = Firestore.firestore().collection("users").document(userId ?? "")
+                
+                // Get data
+                docRef.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        let dataDescription = document.data()
+                        if dataDescription?["experience"] != nil {
+                            let experience = dataDescription?["experience"] as! Int
+                            userRef.updateData(["experience" : (experience + 50 )])
+                        } else {
+                            userRef.updateData(["experience" : (50)])
+                        }
+                    } else {
+                        print("Document does not exist")
+                        
+                        
+                    }
+                }
+        
+        
         guard let challengeId = challenge.id else { return }
         let challengeRef = db.collection("challenges").document(challengeId)
         challengeRef.updateData(["completedBy.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
