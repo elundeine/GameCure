@@ -315,25 +315,6 @@ PODS:
   - SDWebImage/Core (5.10.0)
   - SDWebImageSwiftUI (1.5.0):
     - SDWebImage (~> 5.7)
-  - URLImage (2.1.13):
-    - URLImage/Common (= 2.1.13)
-    - URLImage/DownloadManager (= 2.1.13)
-    - URLImage/FileIndex (= 2.1.13)
-    - URLImage/ImageDecoder (= 2.1.13)
-    - URLImage/Log (= 2.1.13)
-    - URLImage/PlainDatabase (= 2.1.13)
-    - URLImage/RemoteContentView (= 2.1.13)
-  - URLImage/Common (2.1.13)
-  - URLImage/DownloadManager (2.1.13):
-    - URLImage/Log
-  - URLImage/FileIndex (2.1.13):
-    - URLImage/Common
-    - URLImage/Log
-    - URLImage/PlainDatabase
-  - URLImage/ImageDecoder (2.1.13)
-  - URLImage/Log (2.1.13)
-  - URLImage/PlainDatabase (2.1.13)
-  - URLImage/RemoteContentView (2.1.13)
 
 DEPENDENCIES:
   - CodableFirebase
@@ -342,7 +323,6 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseFirestoreSwift
   - SDWebImageSwiftUI
-  - URLImage
 
 SPEC REPOS:
   trunk:
@@ -366,7 +346,6 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
     - SDWebImageSwiftUI
-    - URLImage
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -389,8 +368,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
-  URLImage: a89dc7105eab7db97076716ac2635e8a160a7fb9
 
-PODFILE CHECKSUM: 256ac76f956607957b7d3a780da6f08a8cf54733
+PODFILE CHECKSUM: f453913c17dee06cf94114b26669c4aa13fc2b5b
 
 COCOAPODS: 1.10.0

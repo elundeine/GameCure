@@ -15,7 +15,7 @@ struct User: Codable, Hashable {
     var email: String
     var profileImageUrl: String
     var username: String
-    var experience: Int?
+    var experience: Int
     var searchName: [String]
     var bio: String
     var loggedInDates: [String?]
