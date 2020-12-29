@@ -20,11 +20,6 @@ struct SideMenuContent: View {
         var body: some View {
             NavigationView {
                 List {
-                    HStack{
-                        Text("Experience")
-                        Spacer()
-                        Text("\(session.session?.experience ?? 0)")
-                    }
                     Button(action: {
                         withAnimation{
                             self.isPresented.toggle()
@@ -32,7 +27,15 @@ struct SideMenuContent: View {
                         }, label: {
                             Text("My Profile")
                         })
+                    HStack{
+                        Text("Experience")
+                        Spacer()
+                        Text("\(session.session?.experience ?? 0)")
+                        }
                     
+                    Text("Posts").onTapGesture {
+                        print("Posts")
+                    }
                     Text("Logout").onTapGesture {
                         logOut()
                     }
@@ -65,14 +68,17 @@ struct SideMenuContent: View {
 struct FullScreenModalView: View {
         @Environment(\.presentationMode) var presentationMode
         var body: some View {
+            HStack {
+                Spacer()
+                Text("Dismiss").onTapGesture {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
             //TODO: add dismiss button
             MyProfile()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    presentationMode.wrappedValue.dismiss()
-                }
         }
     }
 
