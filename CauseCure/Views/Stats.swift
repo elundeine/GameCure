@@ -1,50 +1,49 @@
 //
-//  Community.swift
+//  Description.swift
 //  CauseCure
 //
-//  Created by Lukas Ebeling on 08.12.20.
+//  Created by Oscar Lange on 12/29/20.
 //
 
 import SwiftUI
 
-struct Community: View {
+struct Stats: View {
     var body: some View {
-        
         VStack(alignment: .leading, spacing: 15){
             HStack(){
-                Text("Publications")
+                Text("Challenges finished")
                     .fontWeight(.semibold)
                 Spacer()
-                Text("100")
+                Text("35")
                     .fontWeight(.semibold)
             }
             HStack(){
-                Text("Followers")
+                Text("Current Challenges")
                     .fontWeight(.semibold)
                 Spacer()
-                Text("56")
+                Text("4")
                     .fontWeight(.semibold)
             }
             HStack(){
-                Text("Experience")
+                Text("Active since")
                     .fontWeight(.semibold)
                 Spacer()
-                Text("195320")
+                Text("10.12.2020")
                     .fontWeight(.semibold)
             }
             HStack(){
-                Text("Points")
+                Text("Title")
                     .fontWeight(.semibold)
                 Spacer()
-                Text("1984 Stone Coins")
+                Text("Stone Cutter")
                     .fontWeight(.semibold)
             }
         }.padding(EdgeInsets(top:10, leading:10, bottom:10, trailing: 10))
     }
 }
 
-struct Community_Previews: PreviewProvider {
+struct Stats_Previews: PreviewProvider {
     static var previews: some View {
-        Community()
+        Stats()
     }
 }

@@ -68,17 +68,52 @@ struct SideMenuContent: View {
 struct FullScreenModalView: View {
         @Environment(\.presentationMode) var presentationMode
         var body: some View {
-            HStack {
-                Spacer()
-                Text("Dismiss").onTapGesture {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
+            ZStack {
             //TODO: add dismiss button
             MyProfile()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .edgesIgnoringSafeArea(.all)
+                
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("Level 100")
+                            .font(.system(size: 20))
+                            .padding(10)
+                            .overlay(
+                                Capsule(style: .continuous)
+                                    .stroke(Color.black, lineWidth: 5)
+                            ).background(Capsule().fill(Color.white))
+                        Spacer()
+                        Text("Dismiss").onTapGesture {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .font(.system(size: 20))
+                        .padding(10)
+                        .overlay(
+                            Capsule(style: .continuous)
+                                .stroke(Color.black, lineWidth: 5)
+                        ).background(Capsule().fill(Color.white))
+                    }
+                    Spacer()
+                    HStack{
+                        Spacer()
+                        Text("Your Name")
+                            .fontWeight(.semibold)
+                            .font(.system(size: 40))
+                            .padding(15)
+                            .overlay(
+                                Capsule(style: .continuous)
+                                    .stroke(Color.black, lineWidth: 7)
+                            ).background(Capsule().fill(Color.white))
+                        Spacer()
+                    }
+                    Spacer()
+                    Spacer()
+                }
+            
+                
+            }
         }
     }
 
