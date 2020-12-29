@@ -22,7 +22,7 @@ class ChallengeCellViewModel: ObservableObject, Identifiable {
     
     @Published var completionStateIconName = ""
     @Published var numberOfCompletions = 0
-    @Published var leaderBoard = [("" , 0)]
+    @Published var leaderBoard = ["" , 0]
     
     static func newChallenge() -> ChallengeCellViewModel {
         print("here")
@@ -48,15 +48,18 @@ class ChallengeCellViewModel: ObservableObject, Identifiable {
         $challenge
             .map { challenge in
                 var counts: [String: Int] = [:]
-                guard let completedBy = challenge.completedBy else { return  [("" , 0)]}
+                guard let completedBy = challenge.completedBy else { return  ["" , 0]}
                 for (_, value) in completedBy {
                     counts[value] = (counts[value] ?? 0) + 1
                     
                 }
                 print(counts)
+                print("first entry of counts")
+                print(counts.first?.value)
                 let sorted = counts.sorted {
                     return $0.1 > $1.1
                 }
+                
                 print(sorted)
                 return sorted
             }
@@ -91,3 +94,4 @@ class ChallengeCellViewModel: ObservableObject, Identifiable {
     }
     
 }
+

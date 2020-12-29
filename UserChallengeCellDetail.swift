@@ -11,6 +11,8 @@ struct UserChallengeCellDetail: View {
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @State var presentChallengeAFriend = false
         @State var challengeCompletedIncrement = 0
+    
+        var noLeaderboardEntries = ["first place", "second place", "third place" ]
         
         func completeChallenge() {
             userChallengeCellVM.repository.completeChallenge(userChallengeCellVM.userChallenge)
@@ -24,7 +26,6 @@ struct UserChallengeCellDetail: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100)
-                        .padding(.all, 20)
                     Text($userChallengeCellVM.userChallenge.title.wrappedValue)
                         .font(.title)
                     Text($userChallengeCellVM.userChallenge.description.wrappedValue)
@@ -56,18 +57,23 @@ struct UserChallengeCellDetail: View {
                             Text($userChallengeCellVM.userChallenge.challengeCreater.wrappedValue)
                                 .font(.subheadline)
                         }.padding()
-                        HStack(alignment: .top) {
+                        Divider()
+                        VStack {
+                            HStack(alignment: .top) {
                             Text("Leaderboard")
                                 .font(.subheadline)
                                 .bold()
                             Spacer()
-//                            List {
-//                                ForEach(userChallengeCellVM.leaderBoard, id:\.self) { dict in
-//                                    Section {
-//                                        SectionView(dict: dict)
-//                                    }
-//                                .font(.subheadline)
+                            }
+                            HStack(alignment: .top) {
+                            Text("1. \(userChallengeCellVM.leaderBoard.first?.0 ?? "")")
+//                                if
+//                                ForEach(userChallengeCellVM.leaderBoard.first!, id: \.self) { entry in
+                            Spacer()
+                            }
+                            
                         }.padding()
+                        
                         HStack(alignment: .top) {
                             Spacer()
                             Button(action: { self.presentChallengeAFriend.toggle()
@@ -96,9 +102,10 @@ struct UserChallengeCellDetail: View {
                     }
                     Spacer()
                 }
+                }
         }
     }
-}
+
   
 //struct SectionView : View {
 //    @State var dict = (String, Int)()
@@ -115,7 +122,7 @@ struct UserChallengeCellDetail: View {
 //        }
 //    }
 //}
-//
+////
 //struct UserChallengecellDetail_Previews: PreviewProvider {
 //    static var previews: some View {
 //        UserChallengecellDetail()
