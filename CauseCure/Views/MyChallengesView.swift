@@ -41,12 +41,12 @@ struct UserChallengeCard: View {
                 Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
                     .font(.system(size: 24, weight: .bold, design: .default))
                     .foregroundColor(.white)
-                HStack {
-                    Text("daily")
-                    .font(.system(size: 16, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-                    .padding(.top, 8)
-                }
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
         }.padding(.trailing, 20)
             Spacer()
         }

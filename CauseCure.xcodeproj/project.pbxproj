@@ -269,19 +269,16 @@
 			isa = PBXGroup;
 			children = (
 				D53DCFA52598D2020037C24B /* SignIn */,
+				D589C083257FEF20005A5464 /* ContentView.swift */,
+				D589C091257FEF43005A5464 /* TabBar.swift */,
 				D53C949B258032130001244E /* HomeView.swift */,
 				D56292A925925FD2002762D7 /* MyChallengesView.swift */,
 				D51C8C9C25963A0000F8FB3D /* ExploreView.swift */,
-				D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */,
-				D50339242593620F006ED209 /* UserChallengeCellDetail.swift */,
-				D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */,
-				D589C083257FEF20005A5464 /* ContentView.swift */,
-				D589C091257FEF43005A5464 /* TabBar.swift */,
-				D589C09F257FF8FD005A5464 /* Community.swift */,
-				D589C0A3257FF921005A5464 /* Chat.swift */,
 				D546A2BB25861CBF00A06C3C /* MyProfile.swift */,
+				D589C0A3257FF921005A5464 /* Chat.swift */,
+				D589C09F257FF8FD005A5464 /* Community.swift */,
 				D51C8CBA2596931B00F8FB3D /* UserProfile.swift */,
-				D589C09C257FF8AC005A5464 /* AddCreateChallenge.swift */,
+				D59CB185259B307D008D0651 /* Challenges */,
 				D53DCFA62598D2210037C24B /* SearchBars */,
 				D594A901258F72CF00CCAEC7 /* SideMenu */,
 			);
@@ -314,6 +311,18 @@
 				D5825FAD2584CC7E0011AC33 /* Modifiers.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		D59CB185259B307D008D0651 /* Challenges */ = {
+			isa = PBXGroup;
+			children = (
+				D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */,
+				D589C09C257FF8AC005A5464 /* AddCreateChallenge.swift */,
+				D50339242593620F006ED209 /* UserChallengeCellDetail.swift */,
+				D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */,
+			);
+			name = Challenges;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -27,7 +27,7 @@ struct ChatView: View {
                 Spacer()
             
             }
-            .navigationBarTitle(Text("Explore"))
+            .navigationBarTitle(Text("Social"))
         }
         }
     }

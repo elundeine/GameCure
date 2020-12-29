@@ -16,7 +16,7 @@ struct ExploreView: View {
     
     var body: some View {
         NavigationView {
-           
+            VStack (alignment: .leading) {
                 List {
                     ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
                         ZStack{
@@ -28,7 +28,7 @@ struct ExploreView: View {
                         }
                     }
                 } .listStyle(PlainListStyle())
-            
+            }
             .navigationBarTitle("Explore")
             .navigationBarItems(trailing:
                 HStack {
@@ -79,7 +79,7 @@ struct CategoryCell: View {
                     List {
                         ForEach(challengeListVM.challengeCellViewModels.filter { categoryCellVM.category.challenges.keys.contains($0.challenge.id!)}) { challengeCellVM in
                            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: challengeCellVM, myChallenge: true)) {
-                               ProductCard(challengeCellVM: challengeCellVM)
+                                ChallengeCard(challengeCellVM: challengeCellVM)
                                 }
                         }
                     //
@@ -106,12 +106,42 @@ struct CategoryCard: View {
                     .font(.system(size: 26, weight: .bold, design: .default))
                     .foregroundColor(.white)
                 HStack {
-                    Text("daily")
+                    Text("Challenges")
                         .font(.system(size: 16, weight: .bold, design: .default))
                         .foregroundColor(.white)
                         .padding(.top, 8)
                 }
             }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
+struct ChallengeCard: View {
+    @ObservedObject var challengeCellVM: ChallengeCellViewModel
+    
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($challengeCellVM.challenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
+        }.padding(.trailing, 20)
             Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .center)

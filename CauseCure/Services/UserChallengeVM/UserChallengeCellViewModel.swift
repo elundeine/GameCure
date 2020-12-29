@@ -21,7 +21,9 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     //indicate if challenge is completed
     
     @Published var completionStateIconName = ""
-    
+    @Published var numberOfCompletions = 0
+    @Published var userCompletions = 0
+    @Published var leaderBoard = [("" , 0)]
     
     static func newChallenge() -> UserChallengeCellViewModel {
         print("here")
@@ -44,6 +46,35 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
             }
             .assign(to: \.completionStateIconName, on: self)
             .store(in: &cancellables)
+        
+        $userChallenge
+            .map { userChallenge in
+                guard let userId = Auth.auth().currentUser?.uid else { return 0 }
+                let filtered = userChallenge.completedBy?.filter {$0.value == userId }
+                return filtered?.count ?? 0
+            }
+            .assign(to: \.userCompletions, on: self)
+        $userChallenge
+            .map { challenge in
+                var counts: [String: Int] = [:]
+                guard let completedBy = userChallenge.completedBy else { return  [("" , 0)]}
+                for (_, value) in completedBy {
+                    counts[value] = (counts[value] ?? 0) + 1
+                    
+                }
+                print(counts)
+                let sorted = counts.sorted {
+                    return $0.1 > $1.1
+                }
+                print(sorted)
+                return sorted
+            }
+            .assign(to: \.leaderBoard, on: self)
+        $userChallenge
+            .map { userChallenge in
+                userChallenge.completedBy?.count ?? 0
+            }
+            .assign(to: \.numberOfCompletions, on: self)
         $userChallenge
             .compactMap { userChallenge in
                 userChallenge.id

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct SideMenuView: View {
     let width: CGFloat
     let isOpen: Bool
@@ -23,7 +24,6 @@ struct SideMenuView: View {
             .onTapGesture {
                 self.menuClose()
             }
-            
             HStack {
                 SideMenuContent()
                     .frame(width: self.width)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SideMenuContent: View {
     @EnvironmentObject var session: SessionStore
@@ -19,6 +20,11 @@ struct SideMenuContent: View {
         var body: some View {
             NavigationView {
                 List {
+                    HStack{
+                        Text("Experience")
+                        Spacer()
+                        Text("\(session.session?.experience ?? 0)")
+                    }
                     Button(action: {
                         withAnimation{
                             self.isPresented.toggle()
@@ -26,14 +32,30 @@ struct SideMenuContent: View {
                         }, label: {
                             Text("My Profile")
                         })
-                    Text("Posts").onTapGesture {
-                        print("Posts")
-                    }
+                    
                     Text("Logout").onTapGesture {
                         logOut()
                     }
                     .fullScreenCover(isPresented: $isPresented, content: FullScreenModalView.init)
-                }
+                } .navigationBarItems(leading:
+                                        HStack {
+                                             if session.session?.profileImageUrl != nil {
+                                                 WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
+                                                    .resizable().clipShape(Circle())
+                                                    .frame(width: 30, height: 30)
+                                                    .overlay(Circle().stroke(Color.gray, lineWidth: 1))
+                                             } else {
+                                                 Image(systemName: "person.fill").resizable()
+                                                     .frame(width: 25, height: 25)
+                                                     .overlay(Circle().stroke(Color.gray, lineWidth: 1))
+                                             }
+                                         }
+                                        , trailing:
+                                        //add further nav bar button
+                                         HStack {
+                                            Text("")
+                                        })
+           
                     //Modal
             }
             

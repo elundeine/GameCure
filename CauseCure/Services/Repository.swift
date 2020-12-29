@@ -171,7 +171,7 @@ class Repository: ObservableObject {
         
         guard let challengeId = challenge.id else { return }
         let challengeRef = db.collection("challenges").document(challengeId)
-        challengeRef.updateData(["completedBy.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
+        challengeRef.updateData(["completedBy.\(Timestamp(date: Date()))" : "\(String(describing: userId))"])
     }
     
     func getChallengeStreak (_ challenge: Challenge) {
