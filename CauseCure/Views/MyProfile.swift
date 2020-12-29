@@ -13,7 +13,10 @@ struct MyProfile: View {
     @EnvironmentObject var session: SessionStore
     @State private var imageURL = URL(string: "")
     
+    
     @State private var selectedTab: Int = 0
+    
+    @State var presentationMode = true
     
     func performOnAppear() {
         listen()
