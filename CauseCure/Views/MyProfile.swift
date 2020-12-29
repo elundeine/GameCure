@@ -28,83 +28,75 @@ struct MyProfile: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack (alignment: .leading){
+        ZStack { 
+                VStack (alignment: .leading){
                 HStack{
-                    Spacer()
-                    Button(action: {}){
-                                            Image(systemName: "square.and.arrow.up")
-                                            .resizable()
-                                            .frame(width: 20, height: 20)
+                    VStack{
+                        WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
+                        .resizable()
+                        
+                        Text("Your Name")
+                            .fontWeight(.semibold)
                     }
-                }.padding()
-            HStack{
-                VStack{
-                    WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
-                    .resizable()
-                    .frame(width: 90, height: 90)
-                        .clipShape(Circle())
-                        .shadow(radius: 3)
-                        .overlay(Circle().stroke(Color.pink, lineWidth: 1))
-                    
-                    Text("Your Name")
-                        .fontWeight(.semibold)
-                }.padding(.leading, 10)
-                
-                VStack{
-                    Text("10")
-                    .font(.system(size: 30))
-                    .fontWeight(.bold)
-                    
-                    Text("Publications")
-                    .font(.system(size: 13))
-                }.padding(.leading, 30)
-                
-                VStack{
-                    Text("100")
-                    .font(.system(size: 30))
-                    .fontWeight(.bold)
-                    
-                    Text("Followers")
-                    .font(.system(size: 13))
-                }.padding()
-                
-                VStack{
-                    Text("1000")
-                    .font(.system(size: 30))
-                    .fontWeight(.bold)
-                    
-                    Text("Following")
-                    .font(.system(size: 13))
                 }
-                VStack{
-                    Text("Experience")
-                    .font(.system(size: 30))
-                    .fontWeight(.bold)
-                    
-                    Text("\(session.session?.experience ?? 0)")
-                    .font(.system(size: 13))
-                }
-                
-            }.frame(height: 100)
-            .padding(.leading, 10)
-        
-            VStack {
-                Picker(selection: $selectedTab,label: Text("")) {
-                            Text("First").tag(0)
-                            Text("Second").tag(1)
-                            Text("Third").tag(2)
-                        }.pickerStyle(SegmentedPickerStyle())
+            
+                VStack {
+                    Picker(selection: $selectedTab,label: Text("")) {
+                                Text("Description").tag(0)
+                                Text("Stats").tag(1)
+                                Text("Followers").tag(2)
+                            }.pickerStyle(SegmentedPickerStyle())
 
-                        switch(selectedTab) {
-                            case 0: Community()
-                            case 1: ChatView()
-                            case 2: Community()
-                            default: Community()
+                            switch(selectedTab) {
+                                case 0: Community()
+                                case 1: ChatView()
+                                case 2: Community()
+                                default: Community()
 
+                            }
                         }
-                    }
-        }
+                    
+                    VStack(alignment: .leading, spacing: 15){
+                        HStack(){
+                            Text("Description")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("I am a very cool Person!")
+                                .fontWeight(.semibold)
+                        }
+                        HStack(){
+                            Text("Age")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("25")
+                                .fontWeight(.semibold)
+                        }
+                        HStack(){
+                            Text("Number of Stones")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("12")
+                                .fontWeight(.semibold)
+                        }
+                        HStack(){
+                            Text("Biggest Stone")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("3mm")
+                                .fontWeight(.semibold)
+                        }
+                        HStack(){
+                            Text("Status")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("IN PAIN!")
+                                .fontWeight(.semibold)
+                        }
+                        
+                        
+                    }.padding(EdgeInsets(top:0, leading:10, bottom:20, trailing: 10))
+                    
+                }
         
         }
         .onAppear(perform: performOnAppear)
