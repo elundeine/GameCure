@@ -28,7 +28,3 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 }
-
-class SharedInt: ObservableObject {
-    @Published var myInt = 0
-}

@@ -67,6 +67,7 @@ struct UserChallengeCellDetail: View {
                             }
                             HStack(alignment: .top) {
                             Text("1. \(userChallengeCellVM.leaderBoard.first?.0 ?? "")")
+//                            Text("1. \(userChallengeCellVM.repository.getUsernameBy(userChallengeCellVM.leaderBoard.first?.0 ?? ""))")
 //                                if
 //                                ForEach(userChallengeCellVM.leaderBoard.first!, id: \.self) { entry in
                             Spacer()

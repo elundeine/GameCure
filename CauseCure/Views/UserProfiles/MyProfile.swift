@@ -48,7 +48,7 @@ struct MyProfile: View {
                             switch(selectedTab) {
                                 case 0: Description()
                                 case 1: Stats()
-                                case 2: Community()
+                                case 2: Stats()
                                 default: Description()
 
                             }

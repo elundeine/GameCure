@@ -10,11 +10,9 @@ import SDWebImageSwiftUI
 
 struct SideMenuContent: View {
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var sharedInt: SharedInt
     @State var isPresented = false
     func logOut() {
         session.logout()
-        self.sharedInt.myInt = 0
     }
     
         var body: some View {

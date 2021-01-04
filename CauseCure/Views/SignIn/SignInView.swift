@@ -45,8 +45,6 @@ struct SignInView: View {
         AuthService.signIn(email: email, password: password, onSuccess: {
             (user) in
             self.clear()
-            print("changing shared Int")
-//            self.sharedInt.myInt = 1
             
         }) {
             (errorMessage) in
@@ -55,7 +53,6 @@ struct SignInView: View {
             self.showingAlert = true
             return
         }
-        print("here!??!")
         
     }
     

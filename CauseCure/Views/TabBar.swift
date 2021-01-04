@@ -35,12 +35,14 @@ private enum Tab: String, Equatable, CaseIterable{
 }
 struct CustomTabView: View {
     @EnvironmentObject var session: SessionStore
-
+    @ObservedObject var repository = Repository()
     @State private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
+            
+            
             TabView(selection: $selectedTab) {
                 HomeView().environmentObject(self.session)
                     .tag("house.fill")
@@ -48,7 +50,7 @@ struct CustomTabView: View {
                     .tag("magnifyingglass")
                 AddCreateChallenge()
                     .tag("plus.circle.fill")
-                ChatView()
+                ChatView(repository: repository)
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")
