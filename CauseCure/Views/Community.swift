@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Community: View {
+    @EnvironmentObject var session: SessionStore
+
     var body: some View {
         
         VStack(alignment: .leading, spacing: 15){
@@ -29,7 +31,7 @@ struct Community: View {
                 Text("Experience")
                     .fontWeight(.semibold)
                 Spacer()
-                Text("195320")
+                Text("\(session.session!.experience)")
                     .fontWeight(.semibold)
             }
             HStack(){

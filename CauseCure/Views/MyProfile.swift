@@ -33,11 +33,27 @@ struct MyProfile: View {
     var body: some View {
         GeometryReader { geometry in
                 VStack (alignment: .leading){
-                HStack{
-                        WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
-                        .resizable()
-                }.frame(height: 400)
-            
+                    HStack {
+                        VStack {
+                            HStack{
+                                    WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
+                                    .resizable()
+                                        .frame(width: 100, height: 100)
+                            }.clipShape(Circle())
+                            .overlay(Circle().stroke(Color.black, lineWidth: 5))
+                            
+                            HStack{
+                                Text(session.session!.username)
+                                    .fontWeight(.semibold)
+                                    .font(.system(size: 20))
+                            }
+                        }.padding(20)
+                        VStack{
+                            Text("Level 100")
+                                .fontWeight(.semibold)
+                                .font(.system(size: 20))
+                        }
+                    }
                 VStack {
                     Picker(selection: $selectedTab,label: Text("")) {
                                 Text("Description").tag(0)
