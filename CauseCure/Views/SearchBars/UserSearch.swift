@@ -45,15 +45,17 @@ struct UserSearch: View {
             .padding(.horizontal)
             .navigationBarHidden(showCancelButton)
            
-
+            NavigationView{
             List(self.repository.users.filter { $0.username.lowercased().contains(self.txt.lowercased())}) { i in
                 NavigationLink(destination: UserProfile(userCellVM: UserCellViewModel(user: i))) {
                                     Text(i.username)
                                 }
                             }.frame(height: UIScreen.main.bounds.height / 5)
+                
                         }
 
                     }
+            }
 
     
 

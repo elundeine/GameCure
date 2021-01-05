@@ -15,7 +15,7 @@ struct UserProfile: View {
     @ObservedObject var userCellVM: UserCellViewModel
     
     func followUser() {
-        userCellVM.repository.followUser(userIdToFollow: userCellVM.user.uid ?? "")
+        userCellVM.repository.followUser(userIdToFollow: userCellVM.user.uid ?? "", usernameToFollow: userCellVM.user.username ?? "")
     }
     
     var body: some View {

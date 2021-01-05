@@ -29,6 +29,7 @@ class Repository: ObservableObject {
     @Published var userChallengesToday = [Challenge]()
     @Published var challengeCategories = [ChallengeCategory]()
     @Published var users = [User]()
+    @Published var following = [User]()
     
     init() {
        
@@ -36,7 +37,6 @@ class Repository: ObservableObject {
         loadChallengesForUser()
         loadDataForCategory()
         loadUsers()
-        loadFollowing()
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -50,7 +50,7 @@ class Repository: ObservableObject {
     private func loadUsers() {
 //        print("before db collection")
         db.collection("users").addSnapshotListener { (querySnapshot, error) in
-            print("loading user")
+//            print("loading user")
             if let querySnapshot = querySnapshot {
                 
 //                  print("in querySnapshot of users")
@@ -62,17 +62,19 @@ class Repository: ObservableObject {
     }
     
     private func loadFollowing() {
-     guard let userId = Auth.auth().currentUser?.uid else { return }
-        //        print(userId)
-                  db.collection("users")
-                    .whereField("following", arrayContains: userId)
-                    .addSnapshotListener { (querySnapshot, error) in
-                      if let querySnapshot = querySnapshot {
-                        self.userChallenges = querySnapshot.documents.compactMap { document -> Challenge? in
-                          try? document.data(as: Challenge.self)
-                        }
-              }
-        }
+        //NOT USED ATM
+//        guard let userId = Auth.auth().currentUser?.uid else { return }
+//        db.collection("users").document(userId).getDocument { (querySnapshot, error) in
+//            if let error = error {
+//                print("error getting document")
+//            } else if let querySnapshot = querySnapshot {
+//                for 
+//            }
+//            
+//        }
+        //Todo: This should be in a different repository?
+        //      Or we should rename the Challenge Repository to a general repository
+
     }
     //Todo: This should be in a different repository?
     //      Or we should rename the Challenge Repository to a general repository
@@ -128,7 +130,7 @@ class Repository: ObservableObject {
     }
     
     func updateCategory(challengeId: String, challengeName: String, category: String) {
-            print("updating")
+//            print("updating")
             db.collection("challengecategories").document(category).updateData([
                 "challenges.\(challengeId)": challengeName
             ])
@@ -220,16 +222,15 @@ class Repository: ObservableObject {
         //TODO
     }
     
-    func followUser (userIdToFollow: String) {
+    func followUser (userIdToFollow: String, usernameToFollow: String) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         db.collection("users").document(userId).updateData([
-            "following.\(userIdToFollow)": ""
-        ])
+            "following.\(userIdToFollow)": "\(usernameToFollow)"])
         print("\(userId) now following \(userIdToFollow)")
         
         db.collection("users").document(userIdToFollow).updateData([
-            "followers.\(userId)": ""
+            "followers.\(userId)": "\(usernameToFollow)"
         ])
         print("\(userIdToFollow) now has a new follower \(userId)")
     
