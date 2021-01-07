@@ -10,6 +10,7 @@
 		0F1A715325A4D42800782049 /* Followers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A715225A4D42800782049 /* Followers.swift */; };
 		0F970470259BD1AF00C4AE29 /* Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F97046F259BD1AF00C4AE29 /* Description.swift */; };
 		0F970474259BDA4A00C4AE29 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F970473259BDA4A00C4AE29 /* Stats.swift */; };
+		0FD1CDFC25A76EEF00459242 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */; };
 		C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */; };
 		D50339252593620F006ED209 /* UserChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50339242593620F006ED209 /* UserChallengeCellDetail.swift */; };
 		D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */; };
@@ -75,6 +76,7 @@
 		0F1A715225A4D42800782049 /* Followers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Followers.swift; sourceTree = "<group>"; };
 		0F97046F259BD1AF00C4AE29 /* Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Description.swift; sourceTree = "<group>"; };
 		0F970473259BDA4A00C4AE29 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2F7BABFF7F027B774A08D05F /* Pods-CauseCure.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.release.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.release.xcconfig"; sourceTree = "<group>"; };
 		59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CauseCure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2E6835F79FE424D2D18555B /* Pods-CauseCure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.debug.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.debug.xcconfig"; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				D59CB185259B307D008D0651 /* Challenges */,
 				D53DCFA62598D2210037C24B /* SearchBars */,
 				D594A901258F72CF00CCAEC7 /* SideMenu */,
+				0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				D5611B0525A4C3DC00443FA5 /* MessageCellViewModel.swift in Sources */,
 				0F970474259BDA4A00C4AE29 /* Stats.swift in Sources */,
 				D589C09D257FF8AC005A5464 /* AddCreateChallenge.swift in Sources */,
+				0FD1CDFC25A76EEF00459242 /* OnboardingView.swift in Sources */,
 				D51C8CC52596A23800F8FB3D /* UserListViewModel.swift in Sources */,
 				D589C084257FEF20005A5464 /* ContentView.swift in Sources */,
 				D5C1DC4025A3934F00F2DF4E /* FollowerCellViewModel.swift in Sources */,
