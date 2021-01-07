@@ -11,6 +11,8 @@ import SwiftUI
 struct TabBar: View {
     @ObservedObject var session : SessionStore
     //@EnvironmentObject var model: Model
+    //@AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
+    @State private var needsOnboarding = true
     
     func onAppear() {
         UITableView.appearance().backgroundColor = .white
@@ -18,9 +20,11 @@ struct TabBar: View {
     var body: some View {
             VStack{
                 CustomTabView().environmentObject(SessionStore())
-
             }
             .onAppear(perform: onAppear)
+            .sheet(isPresented: $needsOnboarding){
+                OnboardingView()
+            }
     }
     
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Community: View {
+    
     @State var isPresented = false
     var body: some View {
         NavigationView {
