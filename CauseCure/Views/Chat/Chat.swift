@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ChatView: View {
-    @EnvironmentObject var session: SessionStore
+    @ObservedObject var session: SessionStore
     @ObservedObject var repository = Repository()
     @ObservedObject var userListVM = UserListViewModel()
+    @ObservedObject var messageListVM = MessageListViewModel()
     @State var isPresented = false
-    @State var following = [:]
     //TODO:
     
     //1 user cell
@@ -22,9 +22,6 @@ struct ChatView: View {
     
     //3 
     
-    init() {
-        UITableView.appearance().backgroundColor = .white
-        }
     var body: some View {
         VStack{
         NavigationView{
@@ -40,7 +37,7 @@ struct ChatView: View {
                             ForEach(userListVM.userCellViewModels.filter {
                                 session.session!.following!.keys.contains($0.user.uid!)}) {
                                     userCellVM in
-                                NavigationLink(destination: UserProfile(userCellVM: userCellVM)) {
+                                NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
                                      ChatViewRow(userCellVM: userCellVM)
                                      }
                         
@@ -99,8 +96,8 @@ struct UserFullScreenSearchModalView: View {
             
         }
     }
-struct Chat_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView()
-    }
-}
+//struct Chat_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatView(session: <#T##SessionStore#>)
+//    }
+//}

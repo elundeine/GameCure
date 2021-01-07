@@ -14,7 +14,7 @@ import FirebaseFirestore
 class AuthService {
     
     static var storeRoot = Firestore.firestore()
-    
+    let uid = Auth.auth().currentUser?.uid ?? "uid"
     static func getUserId(userId: String) -> DocumentReference {
         return storeRoot.collection("users").document(userId)
     }
@@ -39,6 +39,10 @@ class AuthService {
             StorageService.saveProfileImage(userId: userId, username: username, email: email, imageData: imageData, metaData: metadata, storageProfileImageRef: storageProfileUserId, onSuccess: onSuccess, onError: onError)
             
         }
+    }
+    
+    func signInn(email:String,password:String,handler : @escaping AuthDataResultCallback){
+        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
     }
     
     static func signIn(email: String, password: String, onSuccess: @escaping(_ user: User) -> Void,onError: @escaping(_ errorMessage: String)-> Void) {

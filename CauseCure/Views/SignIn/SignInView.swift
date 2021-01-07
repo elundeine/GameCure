@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignInView: View {
 //    @EnvironmentObject var sharedInt:SharedInt
-
+    @EnvironmentObject var session : SessionStore
     
     @State private var email: String = ""
     @State private var password: String = ""

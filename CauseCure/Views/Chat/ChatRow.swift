@@ -8,18 +8,39 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct ChatRow: View {
+struct ChatRow : View {
+    
+    var message : Message
+    var uid : String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        HStack {
+           
+                if message.sender == uid {
+                    HStack {
+                        Spacer()
+                        Text(message.textMessage ?? "")
+                            .modifier(chatModifier(myMessage: true))
+                    }.padding(.leading,75)
+                } else {
+                    HStack {
+                        Text(message.textMessage ?? "")
+                            .modifier(chatModifier(myMessage: false))
+                        Spacer()
+                    }.padding(.trailing,75)
+                }
+            
+        }
     }
 }
 
-struct ChatRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatRow()
-    }
-}
-
+//struct ChatRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatRow()
+//    }
+//}
+//
 
 struct ChatViewRow : View {
     @ObservedObject var userCellVM: UserCellViewModel
