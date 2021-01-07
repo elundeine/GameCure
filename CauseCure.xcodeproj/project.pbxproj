@@ -38,6 +38,7 @@
 		D56292AA25925FD2002762D7 /* MyChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292A925925FD2002762D7 /* MyChallengesView.swift */; };
 		D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */; };
 		D56292B025935A55002762D7 /* UserChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */; };
+		D579941225A76B910005A263 /* ChallengeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579941125A76B910005A263 /* ChallengeService.swift */; };
 		D57C9C602583D1670090CF70 /* ChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */; };
 		D5825FAE2584CC7E0011AC33 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5825FAD2584CC7E0011AC33 /* Modifiers.swift */; };
 		D589C082257FEF20005A5464 /* CauseCureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589C081257FEF20005A5464 /* CauseCureApp.swift */; };
@@ -104,6 +105,7 @@
 		D56292A925925FD2002762D7 /* MyChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChallengesView.swift; sourceTree = "<group>"; };
 		D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeListViewModel.swift; sourceTree = "<group>"; };
 		D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeCellViewModel.swift; sourceTree = "<group>"; };
+		D579941125A76B910005A263 /* ChallengeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeService.swift; sourceTree = "<group>"; };
 		D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellDetail.swift; sourceTree = "<group>"; };
 		D5825FAD2584CC7E0011AC33 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		D589C07E257FEF20005A5464 /* CauseCure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CauseCure.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +229,7 @@
 				D5BA4B982598972A00706AD1 /* ChatService.swift */,
 				D53C948D25801FAB0001244E /* StorageService.swift */,
 				D53C949825802DC30001244E /* SessionStore.swift */,
+				D579941125A76B910005A263 /* ChallengeService.swift */,
 				D5DEDF2E2580EE69006A39B0 /* Repository.swift */,
 				D5611AFF25A4C3B100443FA5 /* MessageVM */,
 				D5C1DC3A25A3931C00F2DF4E /* FollowerVM */,
@@ -552,6 +555,7 @@
 				D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */,
 				D594A8FC258F5E9E00CCAEC7 /* SideMenuView.swift in Sources */,
 				0F970470259BD1AF00C4AE29 /* Description.swift in Sources */,
+				D579941225A76B910005A263 /* ChallengeService.swift in Sources */,
 				D589C095257FF7F2005A5464 /* SignInView.swift in Sources */,
 				D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */,
 				D53C949C258032130001244E /* HomeView.swift in Sources */,

@@ -24,6 +24,7 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     @Published var numberOfCompletions = 0
     @Published var userCompletions = 0
     @Published var leaderBoard = [("" , 0)]
+    @Published var leaderusername = ""
     
     static func newChallenge() -> UserChallengeCellViewModel {
         print("here")
@@ -32,9 +33,15 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     
     static func newChallenge(title: String, durationDays: String, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String) -> UserChallengeCellViewModel {
         print("here")
+
         return UserChallengeCellViewModel(userChallenge: Challenge(title: title, category: "", durationDays: durationDays, interval: interval, searchName: searchName, description: description, completed: completed, challengeCreater: challengeCreater))
     }
     
+    func getUsernameFor (id : String) -> String {
+    
+        return repository.getUsernameBy(id)
+        
+    }
     
     
     init(userChallenge: Challenge) {
@@ -62,11 +69,11 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
                     counts[value] = (counts[value] ?? 0) + 1
                     
                 }
-                print(counts)
                 let sorted = counts.sorted {
                     return $0.1 > $1.1
                 }
-                print(sorted)
+                self.leaderusername = self.repository.getUsernameBy(sorted.first?.0 ?? "No first place, be the first!")
+//                print(self.leaderusername)
                 return sorted
             }
             .assign(to: \.leaderBoard, on: self)

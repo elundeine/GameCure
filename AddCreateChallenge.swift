@@ -35,9 +35,9 @@ struct AddCreateChallenge: View {
         if selectedInterval == 0 {
             self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
         } else if selectedInterval == 1 {
-            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "7", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: "", userIds: [""]))
+            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "7", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [""]))
         } else {
-            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "30", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: "", userIds: [""]))
+            self.challengeListVM.addChallenge(challenge: Challenge(id:id as! String, title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "30", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [""]))
         }
     }
     

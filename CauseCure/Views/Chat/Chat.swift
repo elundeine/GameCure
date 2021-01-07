@@ -37,13 +37,17 @@ struct ChatView: View {
                             ForEach(userListVM.userCellViewModels.filter {
                                 session.session!.following!.keys.contains($0.user.uid!)}) {
                                     userCellVM in
+                                ZStack {
                                 NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
-                                     ChatViewRow(userCellVM: userCellVM)
-                                     }
+                                    EmptyView()
+                                }.opacity(0.0)
+                                .buttonStyle(PlainButtonStyle())
+                                FriendCard(userCellVM: userCellVM)
+                                     
                         
                                 }
-                            .listStyle(PlainListStyle())
-                            .listRowInsets(EdgeInsets())
+                            
+                            }
                         }
                         
                     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExploreView: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var repository = Repository()
+    @ObservedObject var repository = ChallengeService()
     @ObservedObject var categoryListVM = CategoryListViewModel()
     @State var isPresented = false
     @State var menuOpen = false
@@ -50,7 +50,7 @@ struct ExploreView: View {
 
 struct FullScreenSearchModalView: View {
         @Environment(\.presentationMode) var presentationMode
-        @ObservedObject var repository = Repository()
+        @ObservedObject var repository: ChallengeService
         var body: some View {
             //TODO: add dismiss button
             VStack{
@@ -82,7 +82,7 @@ struct CategoryCell: View {
                 VStack (alignment: .leading) {
                     List {
                         ForEach(challengeListVM.challengeCellViewModels.filter { categoryCellVM.category.challenges.keys.contains($0.challenge.id!)}) { challengeCellVM in
-                           NavigationLink(destination: ChallengeCellDetail(challengeCellVM: challengeCellVM, myChallenge: true)) {
+                            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: challengeCellVM, myChallenge: challengeCellVM.repository.checkIfIDoThe(challengeCellVM.challenge))) {
                                 ChallengeCard(challengeCellVM: challengeCellVM)
                                 }
                         }

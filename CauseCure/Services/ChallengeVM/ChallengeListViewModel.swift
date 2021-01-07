@@ -12,7 +12,7 @@ import SwiftUI
 
 class ChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
-    @Published var repository = Repository()
+    @Published var repository = ChallengeService()
     @Published var challengeCellViewModels = [ChallengeCellViewModel]()
     
     

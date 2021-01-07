@@ -9,8 +9,7 @@ import SwiftUI
 import UIKit
 
 struct CustomSearchBar: View {
-    @ObservedObject var repository : Repository
-//    @Binding var challenges : [Challenge]
+    @ObservedObject var repository : ChallengeService
     @State var txt = ""
     @State private var showCancelButton: Bool = false
     var body: some View {

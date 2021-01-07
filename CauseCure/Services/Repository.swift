@@ -34,7 +34,7 @@ class Repository: ObservableObject {
     
     init() {
        
-        loadChallenges()
+//        loadChallenges()
         loadChallengesForUser()
         loadDataForCategory()
         loadUsers()

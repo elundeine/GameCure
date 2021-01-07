@@ -10,7 +10,6 @@ import SwiftUI
 struct MyChallengesView: View {
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
     var body: some View {
-        Text("")
         List {
             ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
                 ZStack{
