@@ -58,20 +58,18 @@ struct MyProfile: View {
                     Picker(selection: $selectedTab,label: Text("")) {
                                 Text("Description").tag(0)
                                 Text("Stats").tag(1)
-                                Text("Community").tag(2)
+                                Text("Followers").tag(2)
                             }.pickerStyle(SegmentedPickerStyle())
 
                             switch(selectedTab) {
                                 case 0: Description()
                                 case 1: Stats()
-                                case 2: Community()
+                                case 2: Followers()
                                 default: Description()
 
                             }
                         }
-                    
                 }
-        
         }
         .onAppear(perform: performOnAppear)
     }

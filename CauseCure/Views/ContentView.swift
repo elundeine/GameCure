@@ -17,6 +17,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if (session.session != nil) {
+                
                 TabBar().environmentObject(SessionStore())
                 
             } else {

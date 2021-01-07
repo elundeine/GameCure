@@ -14,6 +14,10 @@ struct UserProfile: View {
     @State private var selectedTab: Int = 0
     @ObservedObject var userCellVM: UserCellViewModel
     
+    func followUser() {
+        userCellVM.repository.followUser(userIdToFollow: userCellVM.user.uid ?? "", usernameToFollow: userCellVM.user.username ?? "")
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             VStack (alignment: .leading){
@@ -27,13 +31,13 @@ struct UserProfile: View {
                 }.padding()
             HStack{
                 VStack{
-//                    WebImage(url: URL(string: user.profileImageUrl ?? ""))
-//                    .resizable()
-//                    .frame(width: 90, height: 90)
-//                        .clipShape(Circle())
-//                        .shadow(radius: 3)
-//                        .overlay(Circle().stroke(Color.pink, lineWidth: 1))
-//                    
+                    WebImage(url: URL(string: userCellVM.user.profileImageUrl ?? ""))
+                    .resizable()
+                    .frame(width: 90, height: 90)
+                        .clipShape(Circle())
+                        .shadow(radius: 3)
+                        .overlay(Circle().stroke(Color.pink, lineWidth: 1))
+                    
                     Text("Your Name")
                         .fontWeight(.semibold)
                 }.padding(.leading, 10)
@@ -76,13 +80,25 @@ struct UserProfile: View {
                         }.pickerStyle(SegmentedPickerStyle())
 
                         switch(selectedTab) {
-                            case 0: Community()
-                            case 1: ChatView()
-                            case 2: Community()
-                            default: Community()
+                            case 0: Stats()
+                            case 1: Stats()
+                            case 2: Stats()
+                            default: Stats()
 
                     }
             }
+                VStack {
+                    Button(action: {
+                        self.followUser()
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        Text("Follow")
+                        }
+                    }.padding()
+                }
         }
         
         }

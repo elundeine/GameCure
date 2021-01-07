@@ -51,19 +51,23 @@ struct ExploreView: View {
 struct FullScreenSearchModalView: View {
         @Environment(\.presentationMode) var presentationMode
         @ObservedObject var repository = Repository()
-        @ObservedObject var userListVM = UserListViewModel()
         var body: some View {
             //TODO: add dismiss button
+            VStack{
             HStack {
                 Spacer()
                 Text("Dismiss").onTapGesture {
                     presentationMode.wrappedValue.dismiss()
-                }
+                }.padding()
+                
             }
             CustomSearchBar(repository: repository)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
-                .edgesIgnoringSafeArea(.all)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.white)
+                    .edgesIgnoringSafeArea(.all)
+            }
+           Spacer()
+            
         }
     }
 
@@ -74,7 +78,7 @@ struct CategoryCell: View {
         //TODO: If challenge is empty case
         ZStack{
             Text("hello")
-            NavigationView {
+            
                 VStack (alignment: .leading) {
                     List {
                         ForEach(challengeListVM.challengeCellViewModels.filter { categoryCellVM.category.challenges.keys.contains($0.challenge.id!)}) { challengeCellVM in
@@ -85,7 +89,7 @@ struct CategoryCell: View {
                     //
                     }.listStyle(PlainListStyle())
                 }
-            }
+            
         }
     }
 }

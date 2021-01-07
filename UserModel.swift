@@ -19,7 +19,8 @@ struct User: Codable, Hashable {
     var searchName: [String]
     var bio: String
     var loggedInDates: [String?]
-    var friends: [String]?
+    var following: [String : String]?
+    var followers: [String : String]?
     var completedChallenges: [String : String]?
 }
 
