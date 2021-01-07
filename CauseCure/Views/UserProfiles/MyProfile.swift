@@ -53,9 +53,7 @@ struct MyProfile: View {
 
                             }
                         }
-                    
                 }
-        
         }
         .onAppear(perform: performOnAppear)
     }

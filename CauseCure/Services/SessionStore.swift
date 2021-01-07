@@ -16,14 +16,17 @@ import FirebaseFirestoreSwift
 
 class SessionStore: ObservableObject {
     
+    
     var didChange = PassthroughSubject<SessionStore, Never>()
     @Published var session: User? {
         didSet{
             self.didChange.send(self)
         }}
-    
+    @Published var messages = [Message]()
+    @Published var messagesDictionary = [String:Message]()
     var handle: AuthStateDidChangeListenerHandle?
     let db = Firestore.firestore()
+
 
     func listen() {
         handle = Auth.auth().addStateDidChangeListener({
@@ -39,6 +42,7 @@ class SessionStore: ObservableObject {
                         self.session = decodedUser
                     }
                 }
+               
                 
             } else {
                 print("session store nil")
@@ -47,7 +51,7 @@ class SessionStore: ObservableObject {
         })
     }
     
-    
+   
     func logout() {
         do{
             try Auth.auth().signOut()

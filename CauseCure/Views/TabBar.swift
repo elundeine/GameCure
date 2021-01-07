@@ -9,14 +9,18 @@ import SwiftUI
 
 
 struct TabBar: View {
-    @EnvironmentObject var session: SessionStore
+    @ObservedObject var session : SessionStore
     //@EnvironmentObject var model: Model
     
+    func onAppear() {
+        UITableView.appearance().backgroundColor = .white
+    }
     var body: some View {
             VStack{
                 CustomTabView().environmentObject(SessionStore())
 
             }
+            .onAppear(perform: onAppear)
     }
     
 }
@@ -50,7 +54,7 @@ struct CustomTabView: View {
                     .tag("magnifyingglass")
                 AddCreateChallenge()
                     .tag("plus.circle.fill")
-                ChatView().environmentObject(self.session)
+                ChatView(session: self.session)
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")

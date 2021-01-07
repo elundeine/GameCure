@@ -30,6 +30,7 @@ class Repository: ObservableObject {
     @Published var challengeCategories = [ChallengeCategory]()
     @Published var users = [User]()
     @Published var following = [User]()
+    @Published var messages = [Message]()
     
     init() {
        
@@ -37,6 +38,7 @@ class Repository: ObservableObject {
         loadChallengesForUser()
         loadDataForCategory()
         loadUsers()
+        loadMessages()
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -60,6 +62,17 @@ class Repository: ObservableObject {
             }
         }
     }
+    private func loadMessages() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        db.collection("messages").addSnapshotListener { (querySnapshot, error) in
+            if let querySnapshot = querySnapshot {
+                self.messages = querySnapshot.documents.compactMap { document -> Message? in
+                try? document.data(as: Message.self)
+              }
+            }
+        }
+    }
+    
     
     private func loadFollowing() {
         //NOT USED ATM
@@ -117,6 +130,15 @@ class Repository: ObservableObject {
                   }
                 }
             }
+    func addMessage(_ message: Message) {
+        do {
+            print("adding")
+            let result = try db.collection("messages").addDocument(from: message)
+            print(result.documentID)
+        } catch {
+            fatalError("Unable to encode challenge: \(error.localizedDescription)")
+        }
+    }
     
     func addChallenge(_ challenge: Challenge) {
         do {

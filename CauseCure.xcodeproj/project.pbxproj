@@ -31,6 +31,10 @@
 		D546A2BC25861CBF00A06C3C /* MyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D546A2BB25861CBF00A06C3C /* MyProfile.swift */; };
 		D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5578F2E25836B9A0038F956 /* ChallengeListViewModel.swift */; };
 		D5578F3225836CD10038F956 /* ChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5578F3125836CD10038F956 /* ChallengeCellViewModel.swift */; };
+		D5611AFA25A4B89300443FA5 /* ChatLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611AF925A4B89300443FA5 /* ChatLogView.swift */; };
+		D5611AFD25A4BA2B00443FA5 /* Keyboard+notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611AFC25A4BA2B00443FA5 /* Keyboard+notification.swift */; };
+		D5611B0125A4C3D000443FA5 /* MessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611B0025A4C3D000443FA5 /* MessageListViewModel.swift */; };
+		D5611B0525A4C3DC00443FA5 /* MessageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611B0425A4C3DC00443FA5 /* MessageCellViewModel.swift */; };
 		D56292AA25925FD2002762D7 /* MyChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292A925925FD2002762D7 /* MyChallengesView.swift */; };
 		D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */; };
 		D56292B025935A55002762D7 /* UserChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */; };
@@ -93,6 +97,10 @@
 		D546A2BB25861CBF00A06C3C /* MyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfile.swift; sourceTree = "<group>"; };
 		D5578F2E25836B9A0038F956 /* ChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeListViewModel.swift; sourceTree = "<group>"; };
 		D5578F3125836CD10038F956 /* ChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellViewModel.swift; sourceTree = "<group>"; };
+		D5611AF925A4B89300443FA5 /* ChatLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogView.swift; sourceTree = "<group>"; };
+		D5611AFC25A4BA2B00443FA5 /* Keyboard+notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard+notification.swift"; sourceTree = "<group>"; };
+		D5611B0025A4C3D000443FA5 /* MessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewModel.swift; sourceTree = "<group>"; };
+		D5611B0425A4C3DC00443FA5 /* MessageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellViewModel.swift; sourceTree = "<group>"; };
 		D56292A925925FD2002762D7 /* MyChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChallengesView.swift; sourceTree = "<group>"; };
 		D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeListViewModel.swift; sourceTree = "<group>"; };
 		D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeCellViewModel.swift; sourceTree = "<group>"; };
@@ -220,6 +228,7 @@
 				D53C948D25801FAB0001244E /* StorageService.swift */,
 				D53C949825802DC30001244E /* SessionStore.swift */,
 				D5DEDF2E2580EE69006A39B0 /* Repository.swift */,
+				D5611AFF25A4C3B100443FA5 /* MessageVM */,
 				D5C1DC3A25A3931C00F2DF4E /* FollowerVM */,
 				D51C8CCA2596A68900F8FB3D /* CategoryVM */,
 				D51C8CC82596A65400F8FB3D /* ChallengeVM */,
@@ -245,6 +254,15 @@
 				D51C8CB7259690A600F8FB3D /* UserSearch.swift */,
 			);
 			path = SearchBars;
+			sourceTree = "<group>";
+		};
+		D5611AFF25A4C3B100443FA5 /* MessageVM */ = {
+			isa = PBXGroup;
+			children = (
+				D5611B0025A4C3D000443FA5 /* MessageListViewModel.swift */,
+				D5611B0425A4C3DC00443FA5 /* MessageCellViewModel.swift */,
+			);
+			path = MessageVM;
 			sourceTree = "<group>";
 		};
 		D589C075257FEF20005A5464 = {
@@ -333,6 +351,7 @@
 			children = (
 				D594D63C258005C4003B44DD /* ImagePicker.swift */,
 				D53C948525801CB40001244E /* Extensions.swift */,
+				D5611AFC25A4BA2B00443FA5 /* Keyboard+notification.swift */,
 				D5825FAD2584CC7E0011AC33 /* Modifiers.swift */,
 			);
 			path = Utilities;
@@ -364,6 +383,7 @@
 			children = (
 				D589C0A3257FF921005A5464 /* Chat.swift */,
 				D5C1DC9925A4450C00F2DF4E /* ChatRow.swift */,
+				D5611AF925A4B89300443FA5 /* ChatLogView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -495,6 +515,7 @@
 			files = (
 				D5C1DC3C25A3934200F2DF4E /* FollowerListViewModel.swift in Sources */,
 				D589C092257FEF43005A5464 /* TabBar.swift in Sources */,
+				D5611B0525A4C3DC00443FA5 /* MessageCellViewModel.swift in Sources */,
 				0F970474259BDA4A00C4AE29 /* Stats.swift in Sources */,
 				D589C09D257FF8AC005A5464 /* AddCreateChallenge.swift in Sources */,
 				D51C8CC52596A23800F8FB3D /* UserListViewModel.swift in Sources */,
@@ -517,6 +538,7 @@
 				D51C8CBB2596931B00F8FB3D /* UserProfile.swift in Sources */,
 				D51933092591D47600681EC3 /* SearchChallengeDetailView.swift in Sources */,
 				D57C9C602583D1670090CF70 /* ChallengeCellDetail.swift in Sources */,
+				D5611AFD25A4BA2B00443FA5 /* Keyboard+notification.swift in Sources */,
 				D5578F3225836CD10038F956 /* ChallengeCellViewModel.swift in Sources */,
 				D5C1DC5E25A3AC7F00F2DF4E /* PostModel.swift in Sources */,
 				D5C1DC6125A3AE6E00F2DF4E /* PostService.swift in Sources */,
@@ -540,7 +562,9 @@
 				D589C0A0257FF8FD005A5464 /* Community.swift in Sources */,
 				D53C948A25801F8B0001244E /* AuthService.swift in Sources */,
 				D589C082257FEF20005A5464 /* CauseCureApp.swift in Sources */,
+				D5611AFA25A4B89300443FA5 /* ChatLogView.swift in Sources */,
 				D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */,
+				D5611B0125A4C3D000443FA5 /* MessageListViewModel.swift in Sources */,
 				D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */,
 				D594A8FF258F5EE800CCAEC7 /* SideMenuContent.swift in Sources */,
 				D5C1DC6425A3BB1200F2DF4E /* PostCardService.swift in Sources */,
