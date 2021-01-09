@@ -86,11 +86,12 @@ struct UserFullScreenSearchModalView: View {
             VStack{
             HStack {
                 Spacer()
-                Text("Dismiss").onTapGesture {
+                Image(systemName: "xmark").onTapGesture {
                     presentationMode.wrappedValue.dismiss()
                 }.padding()
                 
             }
+                Text("Search for other Users").font(.title)
             UserSearch(repository: repository)
 //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)

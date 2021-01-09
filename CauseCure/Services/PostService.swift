@@ -15,7 +15,7 @@ import FirebaseFirestore
 class PostService {
     
     static var Posts = AuthService.storeRoot.collection("posts")
-    
+    static var User = AuthService.storeRoot.collection("posts")
     static var AllPosts = AuthService.storeRoot.collection("allPosts")
     static var Timeline = AuthService.storeRoot.collection("timeline")
     
@@ -45,7 +45,17 @@ class PostService {
     }
     
     
-    static func loadPostsCreatedByCurrentUser(userId: String, onSuccess: @escaping(_ posts: [PostModel]) -> Void) {
+    static func loadPostsByFollowing(userId: String, onSuccess: @escaping(_ posts: [PostModel]) -> Void) {
+        //TODO
+       
+        //Get userID document Following
+      
+        
+        // for each user in following loadPostsCreatedByUser
+        
+    }
+    
+    static func loadPostsCreatedByUser(userId: String, onSuccess: @escaping(_ posts: [PostModel]) -> Void) {
         
         PostService.PostsUserId(userId: userId).collection("posts").getDocuments {
             (snapshot, error) in

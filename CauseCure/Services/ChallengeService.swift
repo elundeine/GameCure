@@ -89,39 +89,86 @@ class ChallengeService: ObservableObject {
         print(username)
         return username
     }
-    func completeChallenge (_ challenge: Challenge) {
+    
+    func completeAChallenge(_ challenge: Challenge) {
+        
         guard let userId = Auth.auth().currentUser?.uid else { return }
-//        print(userId)
         let userRef = db.collection("users").document(userId)
-             
-        let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
-        print("\(date)")
-        userRef.updateData(["completedChallenges.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
-//        let experience = userRef.get("experience") as! Int
-        let docRef = Firestore.firestore().collection("users").document(userId ?? "")
-                
-                // Get data
-                docRef.getDocument { (document, error) in
-                    if let document = document, document.exists {
-                        let dataDescription = document.data()
-                        if dataDescription?["experience"] != nil {
-                            let experience = dataDescription?["experience"] as! Int
-                            userRef.updateData(["experience" : (experience + 50 )])
-                        } else {
-                            userRef.updateData(["experience" : (50)])
+        var completedUserChallengesIDs = [String]()
+        let userDocRef = Firestore.firestore().collection("users").document(userId )
+        let challengeRef = Firestore.firestore().collection("challenges").document(challenge.id ?? "")
+        userDocRef.getDocument { (document, error) in
+            print("get document")
+            if let document = document, document.exists {
+                let dataDescription = document.data()
+                if dataDescription?["completedChallenges"] != nil {
+                    print("user has completed some challenges")
+                    
+                    let completedChallengesByUser = dataDescription!["completedChallenges"] as! Dictionary<String, String>
+                    for (key, _) in completedChallengesByUser {
+
+                        print("user completedChallenges IDs \(key)")
+                        
+                        let completedChallengeRef = self.db.collection("completedChallenges").document(key)
+                        completedChallengeRef.getDocument { (document, error) in
+                            if let document = document, document.exists {
+                                let dataDescription = document.data()
+                                if dataDescription?["challengeId"] != nil  && dataDescription?["userId"] != nil {
+                                    guard let completedChallengeId = dataDescription?["challengeId"] as? String else {return}
+                                    if completedChallengeId == challenge.id {
+                                        // add new entry
+                                        //challenge already has
+                                        completedChallengeRef.updateData(["completed" : FieldValue.arrayUnion([Date().timeIntervalSince1970])])
+                                        return
+                                    }
+                                }
+                            }
                         }
-                    } else {
-                        print("Document does not exist")
-                        
-                        
                     }
-                }
+                    print("non of the user completedChallenges is equal to \(challenge.id), we create a new Completed Challenges Collection")
+                    let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                    userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
+                    challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
+                    print("Completed Challenges Collection was created id: \(newCompletedChallengesID)")
+                
+            } else {
+                print("user \(userId) has never completed a challenge")
+                let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
+                challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
+                print("first Completed Challenges Collection was created id: \(newCompletedChallengesID)")
+            
+            }
+        }
         
-        
-        guard let challengeId = challenge.id else { return }
-        let challengeRef = db.collection("challenges").document(challengeId)
-        challengeRef.updateData(["completedBy.\(Timestamp(date: Date()))" : "\(String(describing: userId))"])
+        }
     }
+    
+    func addNewCompletedChallenge(_ challenge: Challenge, userId: String, timeInterval: Double) -> String {
+        
+        
+        do {
+            print("adding")
+            
+            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
+            print(result.documentID)
+            return result.documentID
+        } catch {
+            fatalError("Unable to encode challenge: \(error.localizedDescription)")
+        }
+        
+    }
+        
+    
+//    func updateCompletedChallenge(challengeId: String, challengeName: String, category: String) {
+////            print("updating")
+//            db.collection("completedChallenges").document(category).updateData([
+//                "challenges.\(challengeId)": challengeName
+//            ])
+//    }
+//
+    
+    
     
     func checkIfIDoThe(_ challenge: Challenge) -> Bool {
         guard let userId = Auth.auth().currentUser?.uid else { return false }

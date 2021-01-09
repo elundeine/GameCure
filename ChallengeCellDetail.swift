@@ -15,7 +15,7 @@ struct ChallengeCellDetail: View {
     @State var showCompleteChallengeAlert = false
     
     func completeChallenge() {
-        challengeCellVM.repository.completeChallenge(challengeCellVM.challenge)
+        challengeCellVM.repository.completeAChallenge(challengeCellVM.challenge)
     }
     
     func addToMyChallenges() {
@@ -42,14 +42,6 @@ struct ChallengeCellDetail: View {
                             .bold()
                         Spacer()
                         Text("\(challengeCellVM.numberOfCompletions + challengeCompletedIncrement) times")
-                            .font(.subheadline)
-                    }.padding()
-                    HStack(alignment: .top) {
-                        Text("Challenge Created by")
-                            .font(.subheadline)
-                            .bold()
-                        Spacer()
-                        Text($challengeCellVM.challenge.challengeCreater.wrappedValue)
                             .font(.subheadline)
                     }.padding()
                     Divider()

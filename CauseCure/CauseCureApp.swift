@@ -17,6 +17,7 @@ struct CauseCureApp: App {
         WindowGroup {
             ContentView().environmentObject(SessionStore())
         }
+      
     }
 }
 

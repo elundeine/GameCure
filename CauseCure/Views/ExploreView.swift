@@ -11,6 +11,7 @@ struct ExploreView: View {
     @EnvironmentObject var session: SessionStore
     @ObservedObject var repository = ChallengeService()
     @ObservedObject var categoryListVM = CategoryListViewModel()
+    
     @State var isPresented = false
     @State var menuOpen = false
     
@@ -56,11 +57,12 @@ struct FullScreenSearchModalView: View {
             VStack{
             HStack {
                 Spacer()
-                Text("Dismiss").onTapGesture {
+                Image(systemName: "xmark").onTapGesture {
                     presentationMode.wrappedValue.dismiss()
                 }.padding()
                 
             }
+                Text("Search for challenges").font(.title)
             CustomSearchBar(repository: repository)
 //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)

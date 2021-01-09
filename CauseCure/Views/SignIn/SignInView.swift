@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignInView: View {
 //    @EnvironmentObject var sharedInt:SharedInt
-    @EnvironmentObject var session : SessionStore
+    @ObservedObject var session : SessionStore
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -69,6 +69,7 @@ struct SignInView: View {
                 }
                 VStack {
                     Text("welcome back!").font(.system(size: 32, weight: .heavy))
+                        .foregroundColor(.blue)
                     Text("Sign in to contine").font(.system(size: 16, weight: .medium))
                     
                 
@@ -86,7 +87,7 @@ struct SignInView: View {
                     Text("New?").font(.system(size: 20))
                     NavigationLink(destination: SignUpView()) {
                         Text("Create an Account").font(.system(size: 20, weight: .semibold))
-                            .foregroundColor(.black)
+                            .foregroundColor(.blue)
                     }
                 }
                 

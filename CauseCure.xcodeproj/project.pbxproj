@@ -41,6 +41,12 @@
 		D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */; };
 		D56292B025935A55002762D7 /* UserChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */; };
 		D579941225A76B910005A263 /* ChallengeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579941125A76B910005A263 /* ChallengeService.swift */; };
+		D579941825A8AA570005A263 /* CompletedChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579941725A8AA570005A263 /* CompletedChallengeListViewModel.swift */; };
+		D579941B25A8AA6A0005A263 /* CompletedChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579941A25A8AA6A0005A263 /* CompletedChallengeCellViewModel.swift */; };
+		D579941F25A8CBBA0005A263 /* PostCardImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579941E25A8CBBA0005A263 /* PostCardImage.swift */; };
+		D579942225A8CDCD0005A263 /* PostCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579942125A8CDCD0005A263 /* PostCard.swift */; };
+		D579942825A99DFC0005A263 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579942725A99DFC0005A263 /* ProfileService.swift */; };
+		D579942C25A99F110005A263 /* CommunityMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579942B25A99F110005A263 /* CommunityMain.swift */; };
 		D57C9C602583D1670090CF70 /* ChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */; };
 		D5825FAE2584CC7E0011AC33 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5825FAD2584CC7E0011AC33 /* Modifiers.swift */; };
 		D589C082257FEF20005A5464 /* CauseCureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589C081257FEF20005A5464 /* CauseCureApp.swift */; };
@@ -67,7 +73,6 @@
 		D5C1DC5E25A3AC7F00F2DF4E /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1DC5D25A3AC7E00F2DF4E /* PostModel.swift */; };
 		D5C1DC6125A3AE6E00F2DF4E /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1DC6025A3AE6E00F2DF4E /* PostService.swift */; };
 		D5C1DC6425A3BB1200F2DF4E /* PostCardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1DC6325A3BB1200F2DF4E /* PostCardService.swift */; };
-		D5C1DC6725A3BD6300F2DF4E /* UserPostsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1DC6625A3BD6300F2DF4E /* UserPostsService.swift */; };
 		D5C1DC9A25A4450C00F2DF4E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1DC9925A4450C00F2DF4E /* ChatRow.swift */; };
 		D5DEDF2C2580EAF7006A39B0 /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */; };
 		D5DEDF2F2580EE69006A39B0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2E2580EE69006A39B0 /* Repository.swift */; };
@@ -110,6 +115,12 @@
 		D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeListViewModel.swift; sourceTree = "<group>"; };
 		D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeCellViewModel.swift; sourceTree = "<group>"; };
 		D579941125A76B910005A263 /* ChallengeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeService.swift; sourceTree = "<group>"; };
+		D579941725A8AA570005A263 /* CompletedChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengeListViewModel.swift; sourceTree = "<group>"; };
+		D579941A25A8AA6A0005A263 /* CompletedChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengeCellViewModel.swift; sourceTree = "<group>"; };
+		D579941E25A8CBBA0005A263 /* PostCardImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardImage.swift; sourceTree = "<group>"; };
+		D579942125A8CDCD0005A263 /* PostCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCard.swift; sourceTree = "<group>"; };
+		D579942725A99DFC0005A263 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		D579942B25A99F110005A263 /* CommunityMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMain.swift; sourceTree = "<group>"; };
 		D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellDetail.swift; sourceTree = "<group>"; };
 		D5825FAD2584CC7E0011AC33 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		D589C07E257FEF20005A5464 /* CauseCure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CauseCure.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +149,6 @@
 		D5C1DC5D25A3AC7E00F2DF4E /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		D5C1DC6025A3AE6E00F2DF4E /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		D5C1DC6325A3BB1200F2DF4E /* PostCardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardService.swift; sourceTree = "<group>"; };
-		D5C1DC6625A3BD6300F2DF4E /* UserPostsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostsService.swift; sourceTree = "<group>"; };
 		D5C1DC9925A4450C00F2DF4E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 		D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		D5DEDF2E2580EE69006A39B0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -229,12 +239,13 @@
 				D53C948925801F8B0001244E /* AuthService.swift */,
 				D5C1DC6025A3AE6E00F2DF4E /* PostService.swift */,
 				D5C1DC6325A3BB1200F2DF4E /* PostCardService.swift */,
-				D5C1DC6625A3BD6300F2DF4E /* UserPostsService.swift */,
 				D5BA4B982598972A00706AD1 /* ChatService.swift */,
 				D53C948D25801FAB0001244E /* StorageService.swift */,
+				D579942725A99DFC0005A263 /* ProfileService.swift */,
 				D53C949825802DC30001244E /* SessionStore.swift */,
 				D579941125A76B910005A263 /* ChallengeService.swift */,
 				D5DEDF2E2580EE69006A39B0 /* Repository.swift */,
+				D579941625A8AA310005A263 /* CompletedChallengesVM */,
 				D5611AFF25A4C3B100443FA5 /* MessageVM */,
 				D5C1DC3A25A3931C00F2DF4E /* FollowerVM */,
 				D51C8CCA2596A68900F8FB3D /* CategoryVM */,
@@ -270,6 +281,27 @@
 				D5611B0425A4C3DC00443FA5 /* MessageCellViewModel.swift */,
 			);
 			path = MessageVM;
+			sourceTree = "<group>";
+		};
+		D579941625A8AA310005A263 /* CompletedChallengesVM */ = {
+			isa = PBXGroup;
+			children = (
+				D579941725A8AA570005A263 /* CompletedChallengeListViewModel.swift */,
+				D579941A25A8AA6A0005A263 /* CompletedChallengeCellViewModel.swift */,
+			);
+			path = CompletedChallengesVM;
+			sourceTree = "<group>";
+		};
+		D579942F25A9A33A0005A263 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				D579941E25A8CBBA0005A263 /* PostCardImage.swift */,
+				D579942125A8CDCD0005A263 /* PostCard.swift */,
+				D5C1DC4225A396E700F2DF4E /* Post.swift */,
+				D589C09F257FF8FD005A5464 /* Community.swift */,
+				D579942B25A99F110005A263 /* CommunityMain.swift */,
+			);
+			path = Community;
 			sourceTree = "<group>";
 		};
 		D589C075257FEF20005A5464 = {
@@ -320,18 +352,17 @@
 			children = (
 				D53DCFA52598D2020037C24B /* SignIn */,
 				D589C083257FEF20005A5464 /* ContentView.swift */,
+				0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */,
 				D589C091257FEF43005A5464 /* TabBar.swift */,
 				D53C949B258032130001244E /* HomeView.swift */,
-				D5C1DC4225A396E700F2DF4E /* Post.swift */,
 				D56292A925925FD2002762D7 /* MyChallengesView.swift */,
 				D5C1DC9B25A4451000F2DF4E /* Chat */,
 				D51C8C9C25963A0000F8FB3D /* ExploreView.swift */,
-				D589C09F257FF8FD005A5464 /* Community.swift */,
+				D579942F25A9A33A0005A263 /* Community */,
 				D5F58EAD259DEEAA000FC898 /* UserProfiles */,
 				D59CB185259B307D008D0651 /* Challenges */,
 				D53DCFA62598D2210037C24B /* SearchBars */,
 				D594A901258F72CF00CCAEC7 /* SideMenu */,
-				0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +555,7 @@
 			files = (
 				D5C1DC3C25A3934200F2DF4E /* FollowerListViewModel.swift in Sources */,
 				D589C092257FEF43005A5464 /* TabBar.swift in Sources */,
+				D579942C25A99F110005A263 /* CommunityMain.swift in Sources */,
 				D5611B0525A4C3DC00443FA5 /* MessageCellViewModel.swift in Sources */,
 				0F970474259BDA4A00C4AE29 /* Stats.swift in Sources */,
 				D589C09D257FF8AC005A5464 /* AddCreateChallenge.swift in Sources */,
@@ -531,9 +563,11 @@
 				D51C8CC52596A23800F8FB3D /* UserListViewModel.swift in Sources */,
 				D589C084257FEF20005A5464 /* ContentView.swift in Sources */,
 				D5C1DC4025A3934F00F2DF4E /* FollowerCellViewModel.swift in Sources */,
+				D579942225A8CDCD0005A263 /* PostCard.swift in Sources */,
 				D5825FAE2584CC7E0011AC33 /* Modifiers.swift in Sources */,
 				D594D63425800097003B44DD /* ButtonModifier.swift in Sources */,
 				D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */,
+				D579941B25A8AA6A0005A263 /* CompletedChallengeCellViewModel.swift in Sources */,
 				D56292B025935A55002762D7 /* UserChallengeCellViewModel.swift in Sources */,
 				D5BA4B7D259893B600706AD1 /* ChatModel.swift in Sources */,
 				D5C1DC9A25A4450C00F2DF4E /* ChatRow.swift in Sources */,
@@ -541,6 +575,7 @@
 				D53C948E25801FAB0001244E /* StorageService.swift in Sources */,
 				D5985DA32598E3B50074D025 /* CompletedChallengeModel.swift in Sources */,
 				D56292AA25925FD2002762D7 /* MyChallengesView.swift in Sources */,
+				D579941F25A8CBBA0005A263 /* PostCardImage.swift in Sources */,
 				D51C8C9D25963A0000F8FB3D /* ExploreView.swift in Sources */,
 				D50339252593620F006ED209 /* UserChallengeCellDetail.swift in Sources */,
 				D53C948225801BF10001244E /* UserModel.swift in Sources */,
@@ -553,9 +588,9 @@
 				D5578F3225836CD10038F956 /* ChallengeCellViewModel.swift in Sources */,
 				D5C1DC5E25A3AC7F00F2DF4E /* PostModel.swift in Sources */,
 				D5C1DC6125A3AE6E00F2DF4E /* PostService.swift in Sources */,
-				D5C1DC6725A3BD6300F2DF4E /* UserPostsService.swift in Sources */,
 				D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */,
 				D51C8CB8259690A600F8FB3D /* UserSearch.swift in Sources */,
+				D579941825A8AA570005A263 /* CompletedChallengeListViewModel.swift in Sources */,
 				D594D638258003D9003B44DD /* SignUpView.swift in Sources */,
 				D5C1DC4325A396E700F2DF4E /* Post.swift in Sources */,
 				D5BA4B992598972A00706AD1 /* ChatService.swift in Sources */,
@@ -582,6 +617,7 @@
 				D5C1DC6425A3BB1200F2DF4E /* PostCardService.swift in Sources */,
 				D53C948625801CB40001244E /* Extensions.swift in Sources */,
 				D546A2BC25861CBF00A06C3C /* MyProfile.swift in Sources */,
+				D579942825A99DFC0005A263 /* ProfileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,7 +752,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
@@ -743,7 +779,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
