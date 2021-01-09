@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestoreSwift
 import FirebaseFirestore
 import SwiftUI
+import Swift
 
 class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
     @Published var repository = Repository()
@@ -33,6 +34,21 @@ class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
     
     @Published var doneToday = false
     
+    
+    func challengeCompletedThat(dayAsDouble: Double) -> Color {
+        if Date(timeIntervalSince1970: dayAsDouble)>Date() {
+            return .blue
+        } else {
+        let day = Date(timeIntervalSince1970: dayAsDouble).getTodaysDate()
+        let historyAsDates = history.map { Date(timeIntervalSince1970: $0).getTodaysDate()}
+        
+        if historyAsDates.contains(day) {
+            return .green
+        } else {
+            return .red
+        }
+        }
+    }
     
     init(completedChallenge: CompletedChallenge) {
         self.completedChallenge = completedChallenge
@@ -66,20 +82,13 @@ class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
             .compactMap { completedChallenge in
                 var challengeDays = [Double]()
                 if(self.completedChallenge.challengeDuration > 0){
-                print(self.completedChallenge.challengeDuration)
                 let days = [1...self.completedChallenge.challengeDuration]
-                    print(days)
-                var i = 0
-                    days.forEach {_ in 
-                    let date = Date(timeIntervalSince1970: self.completedChallenge.firstCompleted).getDate(dayDifference: i)
-                    print(date)
-                    challengeDays.append(date.timeIntervalSince1970)
                     
-                    
-                    i += 1
+                    for i in 0..<self.completedChallenge.challengeDuration {
+                        let date = Date(timeIntervalSince1970: self.completedChallenge.firstCompleted).getDate(dayDifference: i)
+                        challengeDays.append(date.timeIntervalSince1970)
+                    }
                 }
-                }
-                print(challengeDays)
                 return challengeDays
             }
             .assign(to: \.challengeDays, on: self)

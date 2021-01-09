@@ -101,34 +101,35 @@ struct UserChallengeCellDetail: View {
                                 .font(.subheadline)
                         }.padding()
                         Divider()
-                        if (completedChallengeCellVM.completedChallenge.timesCompleted != 0) {
-                        VStack {
-                            HStack(alignment: .top) {
-                                Text("History")
-                                    .font(.subheadline)
-                                    .bold()
-                                Spacer()
-                            }
-                          
-                            ScrollView(.horizontal){
-                                HStack(alignment: .top) {
-                                ForEach(completedChallengeCellVM.history, id:\.self) { historyEntry in
-                                    ZStack {
-                                        Rectangle().fill(Color.white).cornerRadius(10).shadow(color:.blue, radius: 6, x: 1, y: 1).frame(width: 80, height: 80)
-                                        VStack {
-                                            Text("\(Date(timeIntervalSince1970: historyEntry).getTodaysDate())").font(.subheadline)
-                                            Text(Date(timeIntervalSince1970: historyEntry).month).font(.subheadline)
-                                        }
-                                                
-                                    }.padding(2)
-                                   
-                                    
-                                }
-                            }
-                            }
-                            
-                        }.padding()
-                        }
+                        // Mark: History
+//                        if (completedChallengeCellVM.completedChallenge.timesCompleted != 0) {
+//                        VStack {
+//                            HStack(alignment: .top) {
+//                                Text("History")
+//                                    .font(.subheadline)
+//                                    .bold()
+//                                Spacer()
+//                            }
+//
+//                            ScrollView(.horizontal){
+//                                HStack(alignment: .top) {
+//                                ForEach(completedChallengeCellVM.history, id:\.self) { historyEntry in
+//                                    ZStack {
+//                                        Rectangle().fill(Color.white).cornerRadius(10).shadow(color:.blue, radius: 6, x: 1, y: 1).frame(width: 80, height: 80)
+//                                        VStack {
+//                                            Text("\(Date(timeIntervalSince1970: historyEntry).getTodaysDate())").font(.subheadline)
+//                                            Text(Date(timeIntervalSince1970: historyEntry).month).font(.subheadline)
+//                                        }
+//
+//                                    }.padding(2)
+//
+//
+//                                }
+//                            }
+//                            }
+//
+//                        }.padding()
+//                        }
                         if (completedChallengeCellVM.challengeDays != nil) {
                         VStack {
                             HStack(alignment: .top) {
@@ -142,7 +143,7 @@ struct UserChallengeCellDetail: View {
                                 HStack(alignment: .top) {
                                 ForEach(completedChallengeCellVM.challengeDays, id:\.self) { challengeEntry in
                                     ZStack {
-                                        Rectangle().fill(Color.white).cornerRadius(10).shadow(color:.blue, radius: 6, x: 1, y: 1).frame(width: 80, height: 80)
+                                        Rectangle().fill(Color.white).cornerRadius(10).shadow(color: completedChallengeCellVM.challengeCompletedThat(dayAsDouble: challengeEntry), radius: 6, x: 1, y: 1).frame(width: 80, height: 80)
                                         VStack {
                                             Text("\(Date(timeIntervalSince1970: challengeEntry).getTodaysDate())").font(.subheadline)
                                             Text(Date(timeIntervalSince1970: challengeEntry).month).font(.subheadline)
