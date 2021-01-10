@@ -66,15 +66,21 @@ struct AddCreateChallenge: View {
     }
     
     func uploadPost() {
+        let group = DispatchGroup()
         if let error = errorCheck() {
             self.error = error
             self.showingAlert = true
             return
         }
+        group.enter()
         self.save()
+        group.leave()
         print("saved now clear challenge")
-        self.clear()
-        return
+        group.notify(queue: DispatchQueue.global()) {
+            self.clear()
+            return
+        }
+        
     }
         
     var body: some View {

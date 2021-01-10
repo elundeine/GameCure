@@ -29,7 +29,13 @@ struct UserChallengeCellDetail: View {
             self.doneToday = true
             self.timesCompleted += 1
             userChallengeCellVM.repository.completeAChallenge(userChallengeCellVM.userChallenge)
-            self.progressValue =  Float(((100 * completedChallengeCellVM.completedChallenge.timesCompleted!) / (userChallengeCellVM.userChallenge.durationDays))) / 10
+            let timesCompletedTemp = 100 * self.timesCompleted
+             
+            let duration = userChallengeCellVM.userChallenge.durationDays
+            let progress = Float((timesCompletedTemp) / (duration))
+            print(progress)
+            self.progressValue = progress / 100
+            print(self.progressValue)
             if (userChallengeCellVM.userChallenge.durationDays == completedChallengeCellVM.completedChallenge.timesCompleted) {
                 //Full Challenge Completed
                 
@@ -56,7 +62,7 @@ struct UserChallengeCellDetail: View {
             let duration = userChallengeCellVM.userChallenge.durationDays
             print(timesCompleted)
             print(duration)
-            let progress = Float((timesCompleted) / (duration))
+            let progress = Float((timesCompletedTemp) / (duration))
             print(progress)
             self.progressValue = progress / 100
             self.doneToday = completedChallengeCellVM.checkIfCompletedToday()
@@ -106,7 +112,7 @@ struct UserChallengeCellDetail: View {
                                 .bold()
                             Spacer()
                             //                            Text("id: \(completedChallengeCellVM.id)")
-                            Text("\((completedChallengeCellVM.completedChallenge.timesCompleted ?? 0)) / \(userChallengeCellVM.userChallenge.durationDays) times")
+                            Text("\((self.timesCompleted)) / \(userChallengeCellVM.userChallenge.durationDays) times")
                                 .font(.subheadline)
                         }.padding()
                         HStack(alignment: .top) {
