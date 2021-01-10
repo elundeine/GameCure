@@ -37,18 +37,34 @@ class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
     
     func challengeCompletedThat(dayAsDouble: Double) -> Color {
         if Date(timeIntervalSince1970: dayAsDouble)>Date() {
-            return .blue
+            return .black
         } else {
-        let day = Date(timeIntervalSince1970: dayAsDouble).getTodaysDate()
+            let day = Date(timeIntervalSince1970: dayAsDouble).getTodaysDate()
+            let historyAsDates = history.map { Date(timeIntervalSince1970: $0).getTodaysDate()}
+            
+            if historyAsDates.contains(day) {
+                return .green
+            } else {
+                if Date(timeIntervalSince1970: dayAsDouble).getTodaysDate()==Date().getTodaysDate() {
+                    return .blue
+                } else {
+                    return .red
+                }
+            }
+        }
+    }
+    func checkIfCompletedToday() -> Bool {
+        let day = Date().getTodaysDate()
         let historyAsDates = history.map { Date(timeIntervalSince1970: $0).getTodaysDate()}
         
         if historyAsDates.contains(day) {
-            return .green
+            return true
         } else {
-            return .red
+            return false
         }
-        }
+        
     }
+
     
     init(completedChallenge: CompletedChallenge) {
         self.completedChallenge = completedChallenge

@@ -44,7 +44,11 @@ struct AddCreateChallenge: View {
         } else if selectedDuration == 3 {
             self.durationDays = 28
         }
-        self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
+        DispatchQueue.main.async {
+            self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
+        }
+        
+        self.clear()
     }
     
     func errorCheck() -> String? {
@@ -69,6 +73,7 @@ struct AddCreateChallenge: View {
             return
         }
         self.save()
+        print("saved now clear challenge")
         self.clear()
     }
         
@@ -89,9 +94,8 @@ struct AddCreateChallenge: View {
                             ForEach(0 ..< durationOptions.count) {
                                Text(self.durationOptions[$0])
                             }
-                 }
+                        }
                 }
-                
             }
             
 //            Section (header: Text("Interval")) {

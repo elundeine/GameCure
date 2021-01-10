@@ -6,44 +6,60 @@
 //
 
 import SwiftUI
+import AlertX
 
 struct UserChallengeCellDetail: View {
     
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
         @State var presentChallengeAFriend = false
-        @State var challengeCompletedIncrement = 0
+        
         @State var showCompleteChallengeAlert = false
         var noLeaderboardEntries = ["first place", "second place", "third place" ]
         @State var progressValue: Float = 0.0
-        
+        @State var doneToday = false
+        @State var experience = 0
+        @State var challengeEnded = false
+        @State var timesCompleted = 0
+    
     func completeChallenge() {
-            userChallengeCellVM.repository.completeAChallenge(userChallengeCellVM.userChallenge)
-            challengeCompletedIncrement += 1
+
+            self.experience = 50
             self.showCompleteChallengeAlert.toggle()
-            progressSetup()
-            
+            self.doneToday = true
+            self.timesCompleted += 1
+            userChallengeCellVM.repository.completeAChallenge(userChallengeCellVM.userChallenge)
+            self.progressValue =  Float(((100 * completedChallengeCellVM.completedChallenge.timesCompleted!) / (userChallengeCellVM.userChallenge.durationDays))) / 10
             if (userChallengeCellVM.userChallenge.durationDays == completedChallengeCellVM.completedChallenge.timesCompleted) {
                 //Full Challenge Completed
                 
             } else {
                 
             }
+        if (self.timesCompleted == userChallengeCellVM.userChallenge.durationDays) {
+                // end challenge
+        } else {
+            
         }
+    }
     
     func progressSetup() {
         if completedChallengeCellVM.completedChallenge.timesCompleted != 0 {
+            
+            
+            
             print("calculating percentage")
             print(completedChallengeCellVM.completedChallenge.timesCompleted ?? 0)
             print(userChallengeCellVM.userChallenge.durationDays)
-            let timesCompleted = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
+            let timesCompletedTemp = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
+            self.timesCompleted = timesCompletedTemp / 100
             let duration = userChallengeCellVM.userChallenge.durationDays
             print(timesCompleted)
             print(duration)
             let progress = Float((timesCompleted) / (duration))
             print(progress)
             self.progressValue = progress / 100
-            
+            self.doneToday = completedChallengeCellVM.checkIfCompletedToday()
             print(progressValue)
             
         } else {
@@ -52,10 +68,11 @@ struct UserChallengeCellDetail: View {
         
     }
         var body: some View {
+            if (self.challengeEnded == false) {
             ScrollView{
                 VStack {
                     VStack {
-                        if(completedChallengeCellVM.completedChallenge.timesCompleted == 0) {
+                        if(self.timesCompleted == 0) {
                             Image("trophy")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -89,7 +106,7 @@ struct UserChallengeCellDetail: View {
                                 .bold()
                             Spacer()
                             //                            Text("id: \(completedChallengeCellVM.id)")
-                            Text("\((completedChallengeCellVM.completedChallenge.timesCompleted ?? 0) + challengeCompletedIncrement) / \(userChallengeCellVM.userChallenge.durationDays) times")
+                            Text("\((completedChallengeCellVM.completedChallenge.timesCompleted ?? 0)) / \(userChallengeCellVM.userChallenge.durationDays) times")
                                 .font(.subheadline)
                         }.padding()
                         HStack(alignment: .top) {
@@ -158,7 +175,8 @@ struct UserChallengeCellDetail: View {
                             
                         }.padding()
                         }
-                        if(completedChallengeCellVM.completedChallenge.timesCompleted != 0) {
+                        if(self.timesCompleted != 0) {
+                            if(self.doneToday == false) {
                         HStack(alignment: .top) {
                             Spacer()
                             Button(action: {
@@ -174,7 +192,19 @@ struct UserChallengeCellDetail: View {
                             .padding()
                             Spacer()
                         }.padding()
-                        
+                            } else {
+                                HStack(alignment: .top) {
+                                Spacer()
+                                HStack {
+                                    Text("Done for Today!")
+                                        .foregroundColor(Color.white)
+                                }.frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
+                                .background(Color.blue)
+                                .cornerRadius(5)
+                                .padding()
+                                Spacer()
+                                }
+                            }
                         HStack(alignment: .top) {
                             Spacer()
                             Button(action: { self.presentChallengeAFriend.toggle()
@@ -221,12 +251,20 @@ struct UserChallengeCellDetail: View {
                 }
             }
             .onAppear(perform: self.progressSetup)
-            .alert(isPresented: $showCompleteChallengeAlert) {
-                Alert(title: Text("Congratulation"), message: Text(""), dismissButton: .default(Text("Back to Challenge")))
+            .alertX(isPresented: $showCompleteChallengeAlert) {
+                
+                AlertX(title: Text("Completed for Today! Congratulation!"),
+                       primaryButton: .default(Text("You earned \(self.experience) experience")),
+                           theme: .light(withTransparency: true, roundedCorners: true))
+
                 
             }
             
             
+            } else {
+                Text("Congratulations you completed the challenge!")
+                Text("you earned yourself bonus EXP!")
+            }
         }
 }
 struct ProgressBar: View {

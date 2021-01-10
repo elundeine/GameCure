@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -47,6 +47,7 @@
 		D579942225A8CDCD0005A263 /* PostCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579942125A8CDCD0005A263 /* PostCard.swift */; };
 		D579942825A99DFC0005A263 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579942725A99DFC0005A263 /* ProfileService.swift */; };
 		D579942C25A99F110005A263 /* CommunityMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D579942B25A99F110005A263 /* CommunityMain.swift */; };
+		D579943425AB01CC0005A263 /* AlertX in Frameworks */ = {isa = PBXBuildFile; productRef = D579943325AB01CC0005A263 /* AlertX */; };
 		D57C9C602583D1670090CF70 /* ChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */; };
 		D5825FAE2584CC7E0011AC33 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5825FAD2584CC7E0011AC33 /* Modifiers.swift */; };
 		D589C082257FEF20005A5464 /* CauseCureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589C081257FEF20005A5464 /* CauseCureApp.swift */; };
@@ -159,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D579943425AB01CC0005A263 /* AlertX in Frameworks */,
 				C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +459,9 @@
 			dependencies = (
 			);
 			name = CauseCure;
+			packageProductDependencies = (
+				D579943325AB01CC0005A263 /* AlertX */,
+			);
 			productName = CauseCure;
 			productReference = D589C07E257FEF20005A5464 /* CauseCure.app */;
 			productType = "com.apple.product-type.application";
@@ -484,6 +489,9 @@
 				Base,
 			);
 			mainGroup = D589C075257FEF20005A5464;
+			packageReferences = (
+				D579943225AB01CC0005A263 /* XCRemoteSwiftPackageReference "AlertX" */,
+			);
 			productRefGroup = D589C07F257FEF20005A5464 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -820,6 +828,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D579943225AB01CC0005A263 /* XCRemoteSwiftPackageReference "AlertX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/neel-makhecha/AlertX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D579943325AB01CC0005A263 /* AlertX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D579943225AB01CC0005A263 /* XCRemoteSwiftPackageReference "AlertX" */;
+			productName = AlertX;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D589C076257FEF20005A5464 /* Project object */;
 }

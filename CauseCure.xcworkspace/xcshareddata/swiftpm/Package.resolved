@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AlertX",
+        "repositoryURL": "https://github.com/neel-makhecha/AlertX.git",
+        "state": {
+          "branch": null,
+          "revision": "afd3738d4b1d263bd5537c41ad5fc87609200855",
+          "version": "1.1.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

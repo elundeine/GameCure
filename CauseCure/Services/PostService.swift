@@ -47,7 +47,10 @@ class PostService {
     
     static func loadPostsByFollowing(userId: String, onSuccess: @escaping(_ posts: [PostModel]) -> Void) {
         //TODO
-       
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
         //Get userID document Following
       
         
