@@ -21,9 +21,9 @@ import SDWebImageSwiftUI
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
 //    @ObservedObject var challengeListVM = ChallengeListViewModel()
-    @ObservedObject var userChallengeListVM = UserChallengeListViewModel()
+    @StateObject var userChallengeListVM = UserChallengeListViewModel()
 //    @ObservedObject var categoryListVM = CategoryListViewModel()
-    @ObservedObject var completedChallengeListVM = CompletedChallengeListViewModel()
+    @StateObject var completedChallengeListVM = CompletedChallengeListViewModel()
     @State var presentAddNewItem = false
     
     @State var menuOpen: Bool = false

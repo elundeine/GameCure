@@ -24,6 +24,7 @@ struct AddCreateChallenge: View {
     @State private var error: String = ""
 //    @State private var challengeCardColor
     
+    @State var showCreatedAlert = false
     @State var id: Challenge.ID? = nil
     
     @State private var intervalOptions = ["Daily","Weekly","Monthly"]
@@ -47,8 +48,6 @@ struct AddCreateChallenge: View {
         DispatchQueue.main.async {
             self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
         }
-        
-        self.clear()
     }
     
     func errorCheck() -> String? {
@@ -75,6 +74,7 @@ struct AddCreateChallenge: View {
         self.save()
         print("saved now clear challenge")
         self.clear()
+        return
     }
         
     var body: some View {
@@ -112,7 +112,7 @@ struct AddCreateChallenge: View {
                     }
                 }.pickerStyle(SegmentedPickerStyle())
             }
-            Button(action:  {self.save()}) {
+            Button(action:  {self.uploadPost()}) {
                 Text("save")
                     .foregroundColor(Color.white)
             }.alert(isPresented: $showingAlert) {
@@ -124,6 +124,9 @@ struct AddCreateChallenge: View {
                 
         }.listStyle(GroupedListStyle())
         .environment(\.horizontalSizeClass, .regular)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(error), dismissButton: .default(Text("Ok")))
+        }
         .onAppear(perform: listen)    }
     }
     }
