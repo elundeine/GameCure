@@ -20,6 +20,7 @@ struct AddCreateChallenge: View {
     @State private var completed = false
     @State private var challengeCreater = ["" : ""]
     @State private var showingAlert = false
+    @State private var showChallengeCompletedAlert = false
     @State private var alertTitle: String  = "Oh no 😭"
     @State private var error: String = ""
 //    @State private var challengeCardColor
@@ -77,7 +78,7 @@ struct AddCreateChallenge: View {
         group.leave()
         print("saved now clear challenge")
         group.notify(queue: DispatchQueue.global()) {
-            self.clear()
+            self.showChallengeCompletedAlert = true
             return
         }
         
@@ -132,6 +133,9 @@ struct AddCreateChallenge: View {
         .environment(\.horizontalSizeClass, .regular)
         .alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(error), dismissButton: .default(Text("Ok")))
+        }
+        .alert(isPresented: $showChallengeCompletedAlert) {
+            Alert(title: Text("Challenge was created successfully!"), message: Text("The challenge is now displayed in your dashboard."), dismissButton: .default(Text("Ok")))
         }
         .onAppear(perform: listen)    }
     }
