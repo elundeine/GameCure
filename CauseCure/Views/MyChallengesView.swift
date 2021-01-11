@@ -9,19 +9,57 @@ import SwiftUI
 
 struct MyChallengesView: View {
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
+    @AppStorage("selectedTab") private var selectedTab = "house.fill"
+    
     var body: some View {
         Text("")
-        List {
-            ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
-                ZStack{
-                NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM)) {
-                    EmptyView()
-                }.opacity(0.0)
-                .buttonStyle(PlainButtonStyle())
-                   UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
-               
-               }
-        }
+        if(userChallengeListVM.userChallengeCellViewModels.isEmpty){
+            HStack(){
+                Spacer()
+                VStack(){
+                    Spacer()
+                    Text("You have no Challenges!")
+                        .font(Font.title.bold().lowercaseSmallCaps())
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                    Button(action: {
+                            selectedTab = "magnifyingglass"
+                    }) {
+                        Text("Browse Challenges")
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    Spacer()
+                    Button(action: {
+                            selectedTab = "plus.circle.fill"
+                    }) {
+                        Text("Create a Challenge")
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    Spacer()
+                }
+                Spacer()
+            }
+        } else {
+            List {
+                ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
+                    ZStack{
+                    NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM)) {
+                        EmptyView()
+                    }.opacity(0.0)
+                    .buttonStyle(PlainButtonStyle())
+                       UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
+                   
+                   }
+                }
+            }
         }
     }
 }

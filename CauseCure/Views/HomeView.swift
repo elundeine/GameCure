@@ -23,7 +23,7 @@ struct HomeView: View {
     @ObservedObject var challengeListVM = ChallengeListViewModel()
     @ObservedObject var userChallengeListVM = UserChallengeListViewModel()
     @ObservedObject var categoryListVM = CategoryListViewModel()
-
+    
     @State var presentAddNewItem = false
     
     @State var menuOpen: Bool = false
