@@ -23,6 +23,7 @@
 		D51C8CBB2596931B00F8FB3D /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CBA2596931B00F8FB3D /* UserProfile.swift */; };
 		D51C8CC225969FD900F8FB3D /* UserCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CC125969FD900F8FB3D /* UserCellViewModel.swift */; };
 		D51C8CC52596A23800F8FB3D /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51C8CC42596A23800F8FB3D /* UserListViewModel.swift */; };
+		D535DDD725ADF3100036A079 /* SwiftUIPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D535DDD625ADF3100036A079 /* SwiftUIPullToRefresh */; };
 		D53C948225801BF10001244E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948125801BF10001244E /* UserModel.swift */; };
 		D53C948625801CB40001244E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948525801CB40001244E /* Extensions.swift */; };
 		D53C948A25801F8B0001244E /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C948925801F8B0001244E /* AuthService.swift */; };
@@ -162,6 +163,7 @@
 			files = (
 				D579943425AB01CC0005A263 /* AlertX in Frameworks */,
 				C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */,
+				D535DDD725ADF3100036A079 /* SwiftUIPullToRefresh in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +463,7 @@
 			name = CauseCure;
 			packageProductDependencies = (
 				D579943325AB01CC0005A263 /* AlertX */,
+				D535DDD625ADF3100036A079 /* SwiftUIPullToRefresh */,
 			);
 			productName = CauseCure;
 			productReference = D589C07E257FEF20005A5464 /* CauseCure.app */;
@@ -491,6 +494,7 @@
 			mainGroup = D589C075257FEF20005A5464;
 			packageReferences = (
 				D579943225AB01CC0005A263 /* XCRemoteSwiftPackageReference "AlertX" */,
+				D535DDD525ADF3100036A079 /* XCRemoteSwiftPackageReference "SwiftUI-PullToRefresh" */,
 			);
 			productRefGroup = D589C07F257FEF20005A5464 /* Products */;
 			projectDirPath = "";
@@ -760,7 +764,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
@@ -787,7 +791,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
@@ -830,6 +834,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D535DDD525ADF3100036A079 /* XCRemoteSwiftPackageReference "SwiftUI-PullToRefresh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/SwiftUI-PullToRefresh.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		D579943225AB01CC0005A263 /* XCRemoteSwiftPackageReference "AlertX" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/neel-makhecha/AlertX.git";
@@ -841,6 +853,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D535DDD625ADF3100036A079 /* SwiftUIPullToRefresh */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D535DDD525ADF3100036A079 /* XCRemoteSwiftPackageReference "SwiftUI-PullToRefresh" */;
+			productName = SwiftUIPullToRefresh;
+		};
 		D579943325AB01CC0005A263 /* AlertX */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D579943225AB01CC0005A263 /* XCRemoteSwiftPackageReference "AlertX" */;

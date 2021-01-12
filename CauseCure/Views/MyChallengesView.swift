@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct MyChallengesView: View {
+    @ObservedObject var session: SessionStore
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
     @ObservedObject var completedChallengeListVM : CompletedChallengeListViewModel
     
     var body: some View {
+//        if(session.session?.pendingChallengInvite != nil) {
+//            List{
+//
+//            }
+//        }
         List {
             ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
                 ZStack{
-                    NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
+                    NavigationLink(destination: UserChallengeCellDetail(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
                     EmptyView()
                 }.opacity(0.0)
                 .buttonStyle(PlainButtonStyle())

@@ -23,6 +23,7 @@ struct User: Codable, Hashable {
     var followers: [String : String]?
     var completedChallenges: [String : String]?
     var completedTour: Bool
+    var pendingChallengInvite: [String : String]?
 }
 
 extension User: Identifiable {

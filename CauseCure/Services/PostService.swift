@@ -45,17 +45,44 @@ class PostService {
     }
     
     
-    static func loadPostsByFollowing(userId: String, onSuccess: @escaping(_ posts: [PostModel]) -> Void) {
+    static func loadUserFollowingIds () -> [String] {
         //TODO
+        let group = DispatchGroup()
+        var followingIds = [String]()
         guard let userId = Auth.auth().currentUser?.uid else {
-            return
+            return [""]
         }
+        let userDocRef = Firestore.firestore().collection("users").document(userId)
         
-        //Get userID document Following
+        userDocRef.getDocument { (document, error) in
+            print("get user document")
+            if let document = document, document.exists {
+                let dataDescription = document.data()
+                if dataDescription?["following"] != nil {
+                    print("user is following other users")
+                    
+                    let following = dataDescription!["following"] as! Dictionary<String, String>
+                    group.enter()
+                    for (key, _) in following {
+                        group.enter()
+                        print("user is following \(key)")
+                        followingIds.append(key)
+                    }
+                    print(followingIds)
+                    group.leave()
+                }
+                group.leave()
+                
+                
+                
+            } else {
+        
       
-        
-        // for each user in following loadPostsCreatedByUser
-        
+                
+            }
+        }
+        print("returning empty")
+        return followingIds
     }
     
     static func loadPostsCreatedByUser(userId: String, onSuccess: @escaping(_ posts: [PostModel]) -> Void) {

@@ -9,10 +9,10 @@ import SwiftUI
 import AlertX
 
 struct UserChallengeCellDetail: View {
-    
+        @ObservedObject var session: SessionStore
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
-        @State var presentChallengeAFriend = false
+        @ObservedObject var userListVM = UserListViewModel()
         
         @State var showCompleteChallengeAlert = false
         var noLeaderboardEntries = ["first place", "second place", "third place" ]
@@ -21,6 +21,8 @@ struct UserChallengeCellDetail: View {
         @State var experience = 0
         @State var challengeEnded = false
         @State var timesCompleted = 0
+    
+        @State var challengeFriedPresented = false
     
     func completeChallenge() {
 
@@ -213,7 +215,7 @@ struct UserChallengeCellDetail: View {
                             }
                         HStack(alignment: .top) {
                             Spacer()
-                            Button(action: { self.presentChallengeAFriend.toggle()
+                            Button(action: { self.challengeFriedPresented.toggle()
                                 print("toggled")
                             }) {
                                 HStack {
@@ -265,7 +267,8 @@ struct UserChallengeCellDetail: View {
 
                 
             }
-            
+            .fullScreenCover(isPresented: $challengeFriedPresented) { InviteFriendModalView(session: session, userListVM: userListVM, userChallengeCellVM: userChallengeCellVM)
+            }
             
             } else {
                 Text("Congratulations you completed the challenge!")
@@ -296,6 +299,54 @@ struct ProgressBar: View {
         }
     }
 }
+    struct InviteFriendModalView: View {
+            @ObservedObject var session: SessionStore
+            @ObservedObject var userListVM: UserListViewModel
+            @Environment(\.presentationMode) var presentationMode
+            @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+            @State var challengeFriendAlert = false
+        
+        func challengeFollower(userID: String) {
+            print("User \(userID) was challenged")
+            
+            userListVM.repository.sendChallengeInvite(userId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id)
+            self.challengeFriendAlert = true
+        }
+        
+        var body: some View {
+            //TODO: add dismiss button
+            VStack{
+                HStack {
+                    Spacer()
+                    Image(systemName: "xmark").onTapGesture {
+                        presentationMode.wrappedValue.dismiss()
+                    }.padding()
+                    
+                }
+                Text("Challenge a Follower").font(.title)
+                if(session.session?.followers != nil) {
+                }
+                List {
+                    ForEach(userListVM.userCellViewModels.filter {
+                                session.session!.followers!.keys.contains($0.user.uid!)}) {
+                        userCellVM in
+                        ZStack {
+                            EmptyView()
+                        }.opacity(0.0)
+                        .buttonStyle(PlainButtonStyle())
+                        FriendCard(userCellVM: userCellVM)
+                            .onTapGesture {
+                                challengeFollower(userID: userCellVM.id)
+                            }
+                    }
+                }
+            }
+            Spacer()
+            .alert(isPresented: $challengeFriendAlert) {
+                Alert(title: Text("Sent out a challenge invite!"), message: Text("The challenge invitation is now displayed in your followers dashboard."), dismissButton: .default(Text("Ok")))
+            }
+        }
+    }
 
 struct CustomAlertView: View {
     @Binding var show: Bool

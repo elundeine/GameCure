@@ -48,7 +48,7 @@ struct CustomSearchBar: View {
         NavigationView{
 //        Text("Results").font(.subheadline)
         List(self.repository.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
-            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: repository.checkIfIDoThe(i) )) {
+            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: repository.checkIfIDoThe(i))) {
                             Text(i.title)
                             
                         }

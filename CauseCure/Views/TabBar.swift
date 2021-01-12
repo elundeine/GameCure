@@ -52,7 +52,7 @@ struct CustomTabView: View {
             
             
             TabView(selection: $selectedTab) {
-                HomeView().environmentObject(self.session)
+                HomeView(session: self.session)
                     .tag("house.fill")
                 ExploreView()
                     .tag("magnifyingglass")

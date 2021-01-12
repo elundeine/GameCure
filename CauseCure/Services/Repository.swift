@@ -89,7 +89,15 @@ class Repository: ObservableObject {
             }
         }
     }
- 
+    
+    func sendChallengeInvite (userId: String, myUsername: String, challengeId: String) {
+        guard let myId = Auth.auth().currentUser?.uid else { return }
+                    
+        db.collection("users").document(userId).updateData([
+            "pendingChallengInvite.\(challengeId)": "\(myUsername)"])
+        print("\(userId) got invited to do \(challengeId)")
+    }
+    
     private func loadChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 //        print(userId)

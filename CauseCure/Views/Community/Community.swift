@@ -6,31 +6,54 @@
 //
 
 import SwiftUI
-
+import FirebaseAuth
 struct Community: View {
-    
+    @EnvironmentObject var session: SessionStore
+    @StateObject var profileService = ProfileService()
     @State var isPresented = false
     var body: some View {
         NavigationView {
             VStack (alignment: .leading) {
-                CommunityMain()
+                ScrollView{
+                    VStack{
+                        ForEach(self.profileService.followingPosts.sorted(by: {$0.date > $1.date}), id:\.postId) {
+                            (post) in
+                            
+                            PostCardImage(post: post)
+                            PostCard(post: post)
+                        }
+                    }
+                }
+                .onAppear{
+                    self.profileService.loadFollowingPosts(userId: Auth.auth().currentUser!.uid)
+                }
             }
             .navigationBarTitle("Explore")
-            .navigationBarItems(trailing:
-                HStack {
-                    Button(action:  {
-                        withAnimation{
-                            self.isPresented.toggle()
-                        }
-                        }) {
-                            Image(systemName: "plus")
-                        
-                    }.foregroundColor(Color.black)
-                }
+            .navigationBarItems(leading: HStack{
+                Button(action:  {
+                    withAnimation{
+                        self.profileService.loadFollowingPosts(userId: Auth.auth().currentUser!.uid)
+                    }
+                }) {
+                    Image(systemName: "arrow.clockwise.icloud.fill")
+                    
+                }.foregroundColor(Color.black)
+            } ,
+                                trailing:
+                                    HStack {
+                                        Button(action:  {
+                                            withAnimation{
+                                                self.isPresented.toggle()
+                                            }
+                                        }) {
+                                            Image(systemName: "plus")
+                                            
+                                        }.foregroundColor(Color.black)
+                                    }
             )
         }.fullScreenCover(isPresented: $isPresented) { PostFullScreenModalView()
+        }
     }
-}
 }
     struct PostFullScreenModalView: View {
             @Environment(\.presentationMode) var presentationMode

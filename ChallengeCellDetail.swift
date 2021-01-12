@@ -10,7 +10,7 @@ import SwiftUI
 struct ChallengeCellDetail: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     @State var presentChallengeAFriend = false
-    @State var myChallenge: Bool
+    @State var myChallenge: Bool = false
     @State var challengeCompletedIncrement = 0
     @State var showCompleteChallengeAlert = false
     
@@ -53,8 +53,8 @@ struct ChallengeCellDetail: View {
                         Spacer()
                         }
                         HStack(alignment: .top) {
-                            Text("\(challengeCellVM.repository.getUsernameBy(challengeCellVM.leaderBoard.first?.0 ?? "")) ")
-                            Text("\(challengeCellVM.leaderBoard.first?.0 ?? "") ")
+//                            Text("\(challengeCellVM.repository.getUsernameBy(challengeCellVM.leaderBoard.first?.0 ?? "")) ")
+//                            Text("\(challengeCellVM.leaderBoard.first?.0 ?? "") ")
                         Spacer()
                         }
                         
@@ -113,9 +113,9 @@ struct ChallengeCellDetail: View {
 }
 }
 
-//
-//struct ChallengeCellDetail_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChallengeCellDetail()
-//    }
-//}
+
+struct ChallengeCellDetail_Previews: PreviewProvider {
+    static var previews: some View {
+        ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: Challenge(id: "123", title: "Workout", category: "Sport", durationDays: 14, interval: "1", searchName: [""], description: "Workout onces a day", completed: false, challengeCreater: "TheDude", userIds: ["4124124123"])))
+    }
+}

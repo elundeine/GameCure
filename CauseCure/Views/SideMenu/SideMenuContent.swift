@@ -23,18 +23,29 @@ struct SideMenuContent: View {
                             self.isPresented.toggle()
                         }
                         }, label: {
+                            HStack{
+                                Image(systemName: "person.circle.fill")
                             Text("My Profile")
+                            }
                         })
                     HStack{
+                        Image(systemName: "heart.fill")
                         Text("Experience")
                         Spacer()
                         Text("\(session.session?.experience ?? 0)")
                         }
                     
-                    Text("Posts").onTapGesture {
+                    HStack {
+                        Image(systemName: "envelope.fill")
+                        Text("Posts")
+                    }.onTapGesture {
                         print("Posts")
                     }
-                    Text("Logout").onTapGesture {
+                    HStack {
+                        Image(systemName: "x.circle.fill")
+                        Text("Logout")
+                    }
+                        .onTapGesture {
                         logOut()
                     }
                     .fullScreenCover(isPresented: $isPresented, content: FullScreenModalView.init)

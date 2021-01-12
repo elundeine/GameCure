@@ -13,7 +13,7 @@ struct CommunityMain: View {
     var body: some View {
         ScrollView{
             VStack{
-                ForEach(self.profileService.posts, id:\.postId) {
+                ForEach(self.profileService.followingPosts.sorted(by: {$0.date > $1.date}), id:\.postId) {
                     (post) in
                     
                     PostCardImage(post: post)
@@ -23,6 +23,7 @@ struct CommunityMain: View {
         }
         .onAppear{
             self.profileService.loadUserPosts(userId: Auth.auth().currentUser!.uid)
+            self.profileService.loadFollowingPosts(userId: Auth.auth().currentUser!.uid)
         }
     }
 }
