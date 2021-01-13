@@ -12,12 +12,13 @@ import Combine
 
 struct optionalTextCard: View {
     
-    @Binding var name: String
+    @State var name = ""
     @Binding var showText: Bool
     @Binding var text: String
-    @Binding var textLimit: Int
+    @State var textLimit = 0
     
     var body: some View {
+        VStack{
         HStack{
             Text(name)
             Spacer()
@@ -33,13 +34,18 @@ struct optionalTextCard: View {
                 }
                 .border(Color.black, width: 1.0)
         }
+    } .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+        .modifier(CardModifier())
+        .padding(.all, 10)
+        .foregroundColor(Color.white)
     }
 }
 
 
 struct optionalNumberCard: View {
     
-    @Binding var name: String
+    @State var name = ""
     @Binding var showNumber: Bool
     @Binding var number: String
     
@@ -65,7 +71,7 @@ struct optionalNumberCard: View {
 
 struct optionalPickerCard: View {
     
-    @Binding var name: String
+    @State var name = ""
     @Binding var showButton: Bool
     @Binding var sheetCase: Bool
     @Binding var showSheet: Bool
@@ -81,10 +87,11 @@ struct optionalPickerCard: View {
     }
         if(showButton){
         Button(value) {
-            sheetCase = true
-            showSheet = true
+            self.sheetCase = true
+            self.showSheet = true
         }
         }
+       
     }
     
 }

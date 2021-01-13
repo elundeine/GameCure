@@ -60,6 +60,7 @@ struct MyProfile: View {
     
     func performOnAppear() {
         listen()
+        loadData()
     }
     
     func listen() {
@@ -93,8 +94,8 @@ struct MyProfile: View {
     
     var body: some View {
         GeometryReader { geometry in
-                VStack {
-                    if(editProfile) {
+            VStack {
+                if(editProfile) {
                         VStack {
                         HStack {
                             VStack {
@@ -108,7 +109,7 @@ struct MyProfile: View {
                                             }
                                     }.clipShape(Circle())
                                     .overlay(Circle().stroke(Color.black, lineWidth: 5))
-                                    
+
                                 } else {
                                     HStack{
                                             WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
@@ -117,7 +118,7 @@ struct MyProfile: View {
                                             .onTapGesture {
                                                 self.showingActionSheet = true
                                             }
-                                                
+
                                     }.clipShape(Circle())
                                     .overlay(Circle().stroke(Color.black, lineWidth: 5))
                                 }
@@ -160,12 +161,13 @@ struct MyProfile: View {
                             Text("Description")
                                 .fontWeight(.semibold)
                                 .font(.system(size: 20))
-                            optionalTextCard(name: "Description", showText: $showDescription, text: $description, textLimit: $descriptionLimit)
-                            //optionalNumberCard(name: "Age", showNumber: $showAge, number: $age)
-                            //optionalNumberCard(name: "Number of Stones", showNumber: $showNumberOfStones, number: $numberOfStones)
-                           //optionalTextCard(name: "Biggest Stone", showText: $showBiggestStone, text: $biggestStone, textLimit: $biggestStoneLimit)
-                            //optionalPickerCard(name: "Mood", showButton: $showMood, sheetCase: $showMoodPicker, showSheet: $showSheet, value: $mood)
-                            //optionalPickerCard(name: "Title", showButton: $showTitle, sheetCase: $showSheet, value: $title)
+//
+                                optionalTextCard(name: "Description", showText: $showDescription, text: $description, textLimit: descriptionLimit)
+                                optionalNumberCard(name: "Age", showNumber: $showAge, number: $age)
+                                optionalNumberCard(name: "Number of Stones", showNumber: $showNumberOfStones, number: $numberOfStones)
+                                optionalTextCard(name: "Biggest Stone", showText: $showBiggestStone, text: $biggestStone, textLimit: biggestStoneLimit)
+                                optionalPickerCard(name: "Mood", showButton: $showMood, sheetCase: $showMoodPicker, showSheet: $showSheet, value: $mood)
+                                optionalPickerCard(name: "Title", showButton: $showTitle, sheetCase: $showTitlePicker, showSheet: $showSheet, value: $title)
                             }
                             VStack {
                                 Text("Stats")
@@ -189,10 +191,10 @@ struct MyProfile: View {
                                     Toggle(isOn: $showActiveSince) {
                                     }
                                 }
-                                
+
                             }
                         }
-                    } .onAppear(perform: self.loadData)
+                        }
                         .sheet(isPresented: $showSheet, onDismiss: DismissSheet) {
                             if(showMoodPicker){
                                 ScrollView {
@@ -236,7 +238,7 @@ struct MyProfile: View {
                                     .padding()
                                     .background(Color.black)
                                     .cornerRadius(8)
-                                    
+
                                 }.padding(30)
                             } else if (showTitlePicker) {
                                 ScrollView {
@@ -252,12 +254,13 @@ struct MyProfile: View {
                                     Button("No Pain no Gain"){
                                         mood = "No Pain no Gain"
                                     }
-                                    
+
                                 }
                             } else if(showImage) {
                             ImagePicker(pickedImage: self.$pickedImage, showImagePicker: self.$showSheet, imageData: self.$imageData)
                             }
-                        }.actionSheet(isPresented: $showingActionSheet) {
+                        }
+                        .actionSheet(isPresented: $showingActionSheet) {
                             ActionSheet(title: Text(""), buttons:[
                                 .default(Text("Choose A Photo")){
                                     self.sourceType = .photoLibrary
@@ -271,61 +274,60 @@ struct MyProfile: View {
                                 }, .cancel()
                             ] )
                         }
+                    
+                } else {
+                    
+                HStack {
+                    VStack {
+                        HStack{
+                                WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
+                                .resizable()
+                                    .frame(width: 100, height: 100)
+                        }.clipShape(Circle())
+                        .overlay(Circle().stroke(Color.black, lineWidth: 5))
                         
-                    } else {
-                        
-                    HStack {
-                        VStack {
-                            HStack{
-                                    WebImage(url: URL(string: session.session?.profileImageUrl ?? ""))
-                                    .resizable()
-                                        .frame(width: 100, height: 100)
-                            }.clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 5))
-                            
-                            HStack{
-                                Text(session.session!.username)
-                                    .fontWeight(.semibold)
-                                    .font(.system(size: 20))
-                            }
-                        }.padding(20)
-                        VStack{
-                            Text("Level 100")
+                        HStack{
+                            Text(session.session!.username)
                                 .fontWeight(.semibold)
                                 .font(.system(size: 20))
-                            HStack(){
-                                Text("Followers")
-                                    .fontWeight(.semibold)
-                                Text("\(session.session!.followers?.count ?? 0)")
-                                    .fontWeight(.semibold)
-                            }
-                            HStack(){
-                                Text("Experience")
-                                    .fontWeight(.semibold)
-                                Text("\(session.session!.experience)")
-                                    .fontWeight(.semibold)
-                            }
-                            
                         }
-                    }
-                VStack {
-                    Picker(selection: $selectedTab,label: Text("")) {
-                                Text("Description").tag(0)
-                                Text("Stats").tag(1)
-                            }.pickerStyle(SegmentedPickerStyle())
-
-                            switch(selectedTab) {
-                                case 0: Description()
-                                case 1: Stats()
-                                default: Description()
-
-                            }
+                    }.padding(20)
+                    VStack{
+                        Text("Level 100")
+                            .fontWeight(.semibold)
+                            .font(.system(size: 20))
+                        HStack(){
+                            Text("Followers")
+                                .fontWeight(.semibold)
+                            Text("\(session.session!.followers?.count ?? 0)")
+                                .fontWeight(.semibold)
+                        }
+                        HStack(){
+                            Text("Experience")
+                                .fontWeight(.semibold)
+                            Text("\(session.session!.experience)")
+                                .fontWeight(.semibold)
                         }
                     }
                 }
-        }
+            VStack {
+                Picker(selection: $selectedTab,label: Text("")) {
+                            Text("Description").tag(0)
+                            Text("Stats").tag(1)
+                        }.pickerStyle(SegmentedPickerStyle())
+
+                        switch(selectedTab) {
+                            case 0: Description()
+                            case 1: Stats()
+                            default: Description()
+
+                        }
+                    }
+                }
+            }
+    
         .onAppear(perform: performOnAppear)
     }
-    
+    }
 }
 
