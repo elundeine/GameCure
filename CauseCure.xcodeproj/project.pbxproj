@@ -13,6 +13,7 @@
 		0FD1CDFC25A76EEF00459242 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */; };
 		C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */; };
 		D50339252593620F006ED209 /* UserChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50339242593620F006ED209 /* UserChallengeCellDetail.swift */; };
+		D50E41E325AF4A9C00B8DC22 /* InvitedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50E41E225AF4A9C00B8DC22 /* InvitedChallengeView.swift */; };
 		D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */; };
 		D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */; };
 		D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51933022591264900681EC3 /* CategoryCellViewModel.swift */; };
@@ -89,6 +90,7 @@
 		59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CauseCure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2E6835F79FE424D2D18555B /* Pods-CauseCure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.debug.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.debug.xcconfig"; sourceTree = "<group>"; };
 		D50339242593620F006ED209 /* UserChallengeCellDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeCellDetail.swift; sourceTree = "<group>"; };
+		D50E41E225AF4A9C00B8DC22 /* InvitedChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedChallengeView.swift; sourceTree = "<group>"; };
 		D51932FC25911E8A00681EC3 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCategoryModel.swift; sourceTree = "<group>"; };
 		D51933022591264900681EC3 /* CategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewModel.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 			children = (
 				D51933082591D47600681EC3 /* SearchChallengeDetailView.swift */,
 				D589C09C257FF8AC005A5464 /* AddCreateChallenge.swift */,
+				D50E41E225AF4A9C00B8DC22 /* InvitedChallengeView.swift */,
 				D50339242593620F006ED209 /* UserChallengeCellDetail.swift */,
 				D57C9C5F2583D1670090CF70 /* ChallengeCellDetail.swift */,
 			);
@@ -625,6 +628,7 @@
 				D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */,
 				D5611B0125A4C3D000443FA5 /* MessageListViewModel.swift in Sources */,
 				D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */,
+				D50E41E325AF4A9C00B8DC22 /* InvitedChallengeView.swift in Sources */,
 				D594A8FF258F5EE800CCAEC7 /* SideMenuContent.swift in Sources */,
 				D5C1DC6425A3BB1200F2DF4E /* PostCardService.swift in Sources */,
 				D53C948625801CB40001244E /* Extensions.swift in Sources */,
@@ -764,7 +768,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
@@ -791,7 +795,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;

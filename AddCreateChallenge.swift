@@ -91,9 +91,11 @@ struct AddCreateChallenge: View {
         Form {
             Section (header: Text("Title")) {
                 TextField("", text: $title)
+                    .keyboardType(.default)
             }
             Section (header: Text("Description")) {
                 TextField("", text: $description)
+                    .keyboardType(.default)
             }
             Section (header: Text("Duration")) {
                 VStack{

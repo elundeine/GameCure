@@ -25,7 +25,7 @@ struct HomeView: View {
 //    @ObservedObject var categoryListVM = CategoryListViewModel()
     @StateObject var completedChallengeListVM = CompletedChallengeListViewModel()
     @State var presentAddNewItem = false
-    
+    @State var isPresented = false
     @State var menuOpen: Bool = false
 
     
@@ -54,8 +54,6 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-//                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
-                
                 MyChallengesView(session: session, userChallengeListVM: userChallengeListVM, completedChallengeListVM: completedChallengeListVM)
                     .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
@@ -73,12 +71,21 @@ struct HomeView: View {
                             }
                         }
                        }, trailing:
-                       //add further nav bar button
-                        HStack {
-                           Text("")
-                       })
-                        
-                           .navigationBarTitle(Text("My Dashboard"))
+                       //add notification view
+                         Text("")
+//                        HStack {
+//                            Button(action:  {
+//                                withAnimation{
+//                                    self.isPresented.toggle()
+//                                }
+//                            }) {
+//                                Image(systemName: "bell.fill")
+//
+//                            }.foregroundColor(Color.black)
+//                        }
+                       )
+            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(session: session, userChallengeListVM: userChallengeListVM)}
+               .navigationBarTitle(Text("My Dashboard"))
                    }
             
         SideMenuView(width: 270,
@@ -91,7 +98,74 @@ struct HomeView: View {
 enum InputError: Error {
   case empty
 }
-
+struct PendingInvitationModalView: View {
+        @ObservedObject var session: SessionStore
+        @ObservedObject var userChallengeListVM : UserChallengeListViewModel
+            @Environment(\.presentationMode) var presentationMode
+            var body: some View {
+                //TODO: add dismiss button
+                VStack{
+                HStack {
+                    Spacer()
+                    Image(systemName: "xmark").onTapGesture {
+                        presentationMode.wrappedValue.dismiss()
+                    }.padding()
+                    
+                }
+                    Text("Your challenge Invitations").font(.title)
+                    if(session.session?.pendingChallengeInvite != nil) {
+                        List{
+                            ForEach(userChallengeListVM.userChallengeInvites) { userChallengeCellVM in
+                                ZStack{
+                                    NavigationLink(destination: InvitedChallengeView(session: session, userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")) {
+                                    EmptyView()
+                                    }   .opacity(0.0)
+                                    .buttonStyle(PlainButtonStyle())
+                                UserChallengeInviteCard(userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")
+                            }
+                        }
+                    }
+                        Spacer()
+                    } else {
+                        Text("You don't have any pending challenge invites. ")
+                    }
+                
+                
+            }
+        }
+}
+struct UserChallengeInviteCard: View {
+    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+    @State var invitedBy = ""
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+                Text("Invited by \(self.invitedBy)")
+                    
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
+        }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color.red)
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
 
 struct ProductCard: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel

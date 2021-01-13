@@ -33,6 +33,7 @@ class Repository: ObservableObject {
     @Published var users = [User]()
     @Published var following = [User]()
     @Published var messages = [Message]()
+    @Published var userChallengeInvites = [Challenge]()
     typealias finished = () -> ()
     init() {
        
@@ -42,6 +43,7 @@ class Repository: ObservableObject {
         loadUsers()
         loadMessages()
         loadCompletedUserChallenges()
+        loadUserChallengeInvites()
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -64,7 +66,7 @@ class Repository: ObservableObject {
             }
           }
     }
-    
+
     private func loadUsers() {
 //        print("before db collection")
         db.collection("users").addSnapshotListener { (querySnapshot, error) in
@@ -90,14 +92,6 @@ class Repository: ObservableObject {
         }
     }
     
-    func sendChallengeInvite (userId: String, myUsername: String, challengeId: String) {
-        guard let myId = Auth.auth().currentUser?.uid else { return }
-                    
-        db.collection("users").document(userId).updateData([
-            "pendingChallengInvite.\(challengeId)": "\(myUsername)"])
-        print("\(userId) got invited to do \(challengeId)")
-    }
-    
     private func loadChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 //        print(userId)
@@ -112,20 +106,6 @@ class Repository: ObservableObject {
             }
         }
     
-    private func loadTodaysChallengesForUser() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-//        print(userId)
-          db.collection("challenges")
-            .whereField("userIds", arrayContains: userId)
-            .addSnapshotListener { (querySnapshot, error) in
-              if let querySnapshot = querySnapshot {
-                self.userChallenges = querySnapshot.documents.compactMap { document -> Challenge? in
-                  try? document.data(as: Challenge.self)
-                }
-              }
-            }
-        }
-        
     private func loadDataForCategory() {
               db.collection("challengecategories")
                 .addSnapshotListener { (querySnapshot, error) in
@@ -136,6 +116,21 @@ class Repository: ObservableObject {
                   }
                 }
             }
+    //TODO
+    private func loadUserChallengeInvites() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+//        print(userId)
+          db.collection("challenges")
+            .whereField("invitedUserIds", arrayContains: userId)
+            .addSnapshotListener { (querySnapshot, error) in
+              if let querySnapshot = querySnapshot {
+                self.userChallengeInvites = querySnapshot.documents.compactMap { document -> Challenge? in
+                  try? document.data(as: Challenge.self)
+                }
+              }
+            }
+        }
+    
     
     func addMessage(_ message: Message) {
         do {
@@ -165,14 +160,46 @@ class Repository: ObservableObject {
             ])
     }
     
-    
-    //Mark: User functions updates
     func addChallengeToUser(_ challenge: Challenge) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         db.collection("users").document(userId).updateData([
             "challenges.\(challenge.id)": ""
         ])
+    }
+    
+    //TODO
+    func removeChallengeToUser(_ challenge: Challenge) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        db.collection("users").document(userId).updateData([
+            "challenges.\(challenge.id)": ""
+        ])
+    }
+    
+    func sendChallengeInvite (userId: String, myUsername: String, challengeId: String) {
+                    
+        db.collection("users").document(userId).updateData([
+            "pendingChallengeInvite.\(challengeId)": "\(myUsername)"])
+        db.collection("challenges").document(challengeId).updateData(["invitedUserIds" : FieldValue.arrayUnion(["\(userId)"])])
+        print("\(userId) got invited to do \(challengeId)")
+    }
+    
+    func deleteChallengeInviteFrom (challengeId: String) {
+        guard let myUserId = Auth.auth().currentUser?.uid else { return }
+        db.collection("users").document(myUserId).updateData([
+            "pendingChallengeInvite.\(challengeId)": FieldValue.delete()])
+        db.collection("challenges").document(challengeId).updateData(["invitedUserIds" : FieldValue.arrayRemove(["\(myUserId)"])])
+        
+    }
+    func acceptChallengeInviteFrom (userId: String, challengeId: String) {
+        guard let myUserId = Auth.auth().currentUser?.uid else { return }
+        db.collection("users").document(myUserId).updateData([
+            "challenges.\(challengeId)": ""
+        ])
+        db.collection("challenges").document(challengeId).updateData(["userIds" : FieldValue.arrayUnion(["\(myUserId)"])])
+        deleteChallengeInviteFrom(challengeId: challengeId)
+        print("\(userId) got invited to do \(challengeId)")
     }
     
     func updateChallenge(_ challenge: Challenge) {
@@ -185,7 +212,6 @@ class Repository: ObservableObject {
         }
     }
     
-
     func checkIfIDoThe(_ challenge: Challenge) -> Bool {
         guard let userId = Auth.auth().currentUser?.uid else { return false }
         guard let challengeUserIds = challenge.userIds else { return false }
@@ -213,7 +239,6 @@ class Repository: ObservableObject {
         print(username)
         return username
     }
-    
     
     func completeAChallenge(_ challenge: Challenge) {
         let group = DispatchGroup()

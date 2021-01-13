@@ -14,7 +14,7 @@ class UserChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
     @Published var repository = Repository()
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
-    
+    @Published var userChallengeInvites = [UserChallengeCellViewModel]()
     
     private var cancellabels = Set<AnyCancellable>()
     
@@ -26,6 +26,14 @@ class UserChallengeListViewModel: ObservableObject {
             }
             .assign(to: \.userChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
+        repository.$userChallengeInvites.map { userChallenge in
+            userChallenge.map { userChallenge in
+                    UserChallengeCellViewModel(userChallenge: userChallenge)
+                }
+            }
+            .assign(to: \.userChallengeInvites, on: self)
+            .store(in: &cancellabels)
+
     }
     
     

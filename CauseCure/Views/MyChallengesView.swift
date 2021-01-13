@@ -12,13 +12,28 @@ struct MyChallengesView: View {
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
     @ObservedObject var completedChallengeListVM : CompletedChallengeListViewModel
     
+    func headerView(type: String) -> some View{
+        return HStack {
+            Text("\(type)")
+            Spacer()
+        }.padding(.trailing, 20).font(.subheadline)
+    }
+
     var body: some View {
-//        if(session.session?.pendingChallengInvite != nil) {
-//            List{
-//
-//            }
-//        }
         List {
+            if(session.session?.pendingChallengeInvite != nil) {
+                    ForEach(userChallengeListVM.userChallengeInvites) { userChallengeCellVM in
+                        ZStack{
+                            NavigationLink(destination: InvitedChallengeView(session: session, userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")) {
+                            EmptyView()
+                            }   .opacity(0.0)
+                            .buttonStyle(PlainButtonStyle())
+                        UserChallengeInviteCard(userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")
+                    }
+                }
+            
+                Spacer()
+            }
             ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
                 ZStack{
                     NavigationLink(destination: UserChallengeCellDetail(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
@@ -32,6 +47,7 @@ struct MyChallengesView: View {
         }
     }
 }
+
 
 struct UserChallengeCard: View {
     @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
