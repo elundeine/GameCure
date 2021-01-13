@@ -11,6 +11,7 @@ struct MyChallengesView: View {
     @ObservedObject var session: SessionStore
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
     @ObservedObject var completedChallengeListVM : CompletedChallengeListViewModel
+    @AppStorage("selectedTab") private var selectedTab = "house.fill"
     
     func headerView(type: String) -> some View{
         return HStack {
@@ -20,6 +21,43 @@ struct MyChallengesView: View {
     }
 
     var body: some View {
+        Text("")
+        if(userChallengeListVM.userChallengeCellViewModels.isEmpty){
+            HStack(){
+                Spacer()
+                VStack(){
+                    Spacer()
+                    Text("You have no Challenges!")
+                        .font(Font.title.bold().lowercaseSmallCaps())
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                    Button(action: {
+                            selectedTab = "magnifyingglass"
+                    }) {
+                        Text("Browse Challenges")
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    Spacer()
+                    Button(action: {
+                            selectedTab = "plus.circle.fill"
+                    }) {
+                        Text("Create a Challenge")
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    Spacer()
+                }
+                Spacer()
+            }
+        } else {
+            
         List {
             if(session.session?.pendingChallengeInvite != nil) {
                     ForEach(userChallengeListVM.userChallengeInvites) { userChallengeCellVM in
@@ -43,6 +81,7 @@ struct MyChallengesView: View {
                    UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
                
                }
+            }
         }
         }
     }

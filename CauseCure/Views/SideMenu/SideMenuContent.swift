@@ -75,14 +75,31 @@ struct SideMenuContent: View {
 }
     
 struct FullScreenModalView: View {
+    
+        @EnvironmentObject var session: SessionStore
+    
         @Environment(\.presentationMode) var presentationMode
+    
+        @State var editProfile = false
         var body: some View {
             VStack {
                 
                 VStack(alignment: .leading){
                     HStack{
-                        Text("Edit Profile")
+                        if(editProfile){
+                            Text("Cancel").onTapGesture {
+                                editProfile = false
+                            }
                             .font(.system(size: 20))
+                            
+                        } else {
+                            Text("Edit Profile").onTapGesture {
+                                editProfile = true
+                            }
+                            .font(.system(size: 20))
+                            
+                        }
+                        
                         Spacer()
                         Text("Dismiss").onTapGesture {
                             presentationMode.wrappedValue.dismiss()
@@ -91,7 +108,7 @@ struct FullScreenModalView: View {
                     }.padding(15)
                 }
             //TODO: add dismiss button
-            MyProfile()
+                MyProfile(editProfile: $editProfile)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .edgesIgnoringSafeArea(.all)

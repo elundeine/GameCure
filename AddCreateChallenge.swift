@@ -104,7 +104,8 @@ struct AddCreateChallenge: View {
                                Text(self.durationOptions[$0])
                             }
                         }
-                }
+                }.frame(width: 20)
+                .clipped()
             }
             
 //            Section (header: Text("Interval")) {

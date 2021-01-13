@@ -45,6 +45,14 @@ struct Description: View {
                 Text("IN PAIN!")
                     .fontWeight(.semibold)
             }
+            HStack(){
+                Text("Title")
+                    .fontWeight(.semibold)
+                Spacer()
+                Text("Stone Cutter")
+                    .fontWeight(.semibold)
+            }
+            
         }.padding(EdgeInsets(top:0, leading:10, bottom:10, trailing: 10))
     }
 }

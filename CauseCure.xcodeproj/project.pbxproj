@@ -11,6 +11,7 @@
 		0F970470259BD1AF00C4AE29 /* Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F97046F259BD1AF00C4AE29 /* Description.swift */; };
 		0F970474259BDA4A00C4AE29 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F970473259BDA4A00C4AE29 /* Stats.swift */; };
 		0FD1CDFC25A76EEF00459242 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */; };
+		0FFDA58E25AE414D0054A033 /* ProfileAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FFDA58D25AE414D0054A033 /* ProfileAssets.swift */; };
 		C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */; };
 		D50339252593620F006ED209 /* UserChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50339242593620F006ED209 /* UserChallengeCellDetail.swift */; };
 		D50E41E325AF4A9C00B8DC22 /* InvitedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50E41E225AF4A9C00B8DC22 /* InvitedChallengeView.swift */; };
@@ -86,6 +87,7 @@
 		0F97046F259BD1AF00C4AE29 /* Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Description.swift; sourceTree = "<group>"; };
 		0F970473259BDA4A00C4AE29 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		0FFDA58D25AE414D0054A033 /* ProfileAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAssets.swift; sourceTree = "<group>"; };
 		2F7BABFF7F027B774A08D05F /* Pods-CauseCure.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.release.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.release.xcconfig"; sourceTree = "<group>"; };
 		59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CauseCure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2E6835F79FE424D2D18555B /* Pods-CauseCure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.debug.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.debug.xcconfig"; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				0F970473259BDA4A00C4AE29 /* Stats.swift */,
 				0F97046F259BD1AF00C4AE29 /* Description.swift */,
 				0F1A715225A4D42800782049 /* Followers.swift */,
+				0FFDA58D25AE414D0054A033 /* ProfileAssets.swift */,
 			);
 			path = UserProfiles;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				D579941825A8AA570005A263 /* CompletedChallengeListViewModel.swift in Sources */,
 				D594D638258003D9003B44DD /* SignUpView.swift in Sources */,
 				D5C1DC4325A396E700F2DF4E /* Post.swift in Sources */,
+				0FFDA58E25AE414D0054A033 /* ProfileAssets.swift in Sources */,
 				D5BA4B992598972A00706AD1 /* ChatService.swift in Sources */,
 				D51C8CC225969FD900F8FB3D /* UserCellViewModel.swift in Sources */,
 				D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */,

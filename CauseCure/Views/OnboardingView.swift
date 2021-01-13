@@ -21,7 +21,12 @@ struct OnboardingView: View {
                         selectedTab += 1
                     }) {
                         Text("Start your Jorney")
-                    }
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
                     Spacer()
                 }
             case 1:
@@ -31,7 +36,12 @@ struct OnboardingView: View {
                         selectedTab += 1
                     }) {
                         Text("Open Profile")
-                    }
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
                     Spacer()
                 }
             case 2:
@@ -41,7 +51,12 @@ struct OnboardingView: View {
                         selectedTab += 1
                     }) {
                         Text("Find Challenges")
-                    }
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
                     Spacer()
                 }
             case 3:
@@ -51,7 +66,12 @@ struct OnboardingView: View {
                         selectedTab += 1
                     }) {
                         Text("Create your own Challenge")
-                    }
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
                     Spacer()
                 }
             case 4:
@@ -61,7 +81,13 @@ struct OnboardingView: View {
                         selectedTab += 1
                     }) {
                         Text("Finish Tutorial")
-                    }
+                            .font(Font.title2.bold().lowercaseSmallCaps())
+                            .multilineTextAlignment(.center)
+                        
+                    }.foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(8)
                     Spacer()
                 }
             default: lastOnboarding()

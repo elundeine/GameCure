@@ -18,7 +18,7 @@ var body: some View {
             Text("Publications")
                 .fontWeight(.semibold)
             Spacer()
-            Text("100")
+            Text("0")
                 .fontWeight(.semibold)
         }
         HStack(){
@@ -35,13 +35,6 @@ var body: some View {
             Text("\(session.session!.experience)")
                 .fontWeight(.semibold)
         }
-        HStack(){
-            Text("Points")
-                .fontWeight(.semibold)
-            Spacer()
-            Text("1984 Stone Coins")
-                .fontWeight(.semibold)
-                    }
             }.padding(EdgeInsets(top:10, leading:10, bottom:10, trailing: 10))
     }
 }

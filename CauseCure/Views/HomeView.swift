@@ -27,8 +27,6 @@ struct HomeView: View {
     @State var presentAddNewItem = false
     @State var isPresented = false
     @State var menuOpen: Bool = false
-
-    
     
     func homeViewSetup() {
         listen()
