@@ -9,8 +9,7 @@ import SwiftUI
 import UIKit
 
 struct CustomSearchBar: View {
-    @ObservedObject var repository : Repository
-//    @Binding var challenges : [Challenge]
+    @ObservedObject var repository : ChallengeService
     @State var txt = ""
     @State private var showCancelButton: Bool = false
     var body: some View {
@@ -47,6 +46,7 @@ struct CustomSearchBar: View {
                                 .padding(.horizontal)
                                 .navigationBarHidden(showCancelButton) // .animation(.default) // animation does not work properly
         NavigationView{
+//        Text("Results").font(.subheadline)
         List(self.repository.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
             NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: repository.checkIfIDoThe(i) )) {
                             Text(i.title)

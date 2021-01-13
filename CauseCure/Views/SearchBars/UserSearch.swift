@@ -46,6 +46,7 @@ struct UserSearch: View {
             .navigationBarHidden(showCancelButton)
            
             NavigationView{
+//            Text("Results").font(.subheadline)
             List(self.repository.users.filter { $0.username.lowercased().contains(self.txt.lowercased())}) { i in
                 NavigationLink(destination: UserProfile(userCellVM: UserCellViewModel(user: i))) {
                                     Text(i.username)

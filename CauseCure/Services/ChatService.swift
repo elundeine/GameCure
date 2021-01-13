@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class ChatService: ObservableObject {
+//    @Published var isLoading = false
+//    @Published var chats: [Chat] = []
+//    
+    
+}

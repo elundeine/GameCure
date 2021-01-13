@@ -20,15 +20,13 @@ import SDWebImageSwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var challengeListVM = ChallengeListViewModel()
-    @ObservedObject var userChallengeListVM = UserChallengeListViewModel()
-    @ObservedObject var categoryListVM = CategoryListViewModel()
-    
+//    @ObservedObject var challengeListVM = ChallengeListViewModel()
+    @StateObject var userChallengeListVM = UserChallengeListViewModel()
+//    @ObservedObject var categoryListVM = CategoryListViewModel()
+    @StateObject var completedChallengeListVM = CompletedChallengeListViewModel()
     @State var presentAddNewItem = false
     
     @State var menuOpen: Bool = false
-
-    
     
     func homeViewSetup() {
         listen()
@@ -56,7 +54,7 @@ struct HomeView: View {
             VStack (alignment: .leading) {
 //                CustomSearchBar(challengeRepository: challengeRepository).padding(.top)
                 
-                MyChallengesView(userChallengeListVM: userChallengeListVM)
+                MyChallengesView(userChallengeListVM: userChallengeListVM,completedChallengeListVM: completedChallengeListVM)
                     .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
                        HStack {

@@ -14,6 +14,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 import SwiftUI
+import UIKit
 
 class Repository: ObservableObject {
     
@@ -28,17 +29,19 @@ class Repository: ObservableObject {
     @Published var userChallenges = [Challenge]()
     @Published var userChallengesToday = [Challenge]()
     @Published var challengeCategories = [ChallengeCategory]()
+    @Published var completedUserChallenges = [CompletedChallenge]()
     @Published var users = [User]()
     @Published var following = [User]()
     @Published var messages = [Message]()
-    
+    typealias finished = () -> ()
     init() {
        
-        loadChallenges()
+//        loadChallenges()
         loadChallengesForUser()
         loadDataForCategory()
         loadUsers()
         loadMessages()
+        loadCompletedUserChallenges()
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -49,6 +52,19 @@ class Repository: ObservableObject {
             }
           }
     }
+    
+    private func loadCompletedUserChallenges() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        db.collection("completedChallenges").whereField("userId", isEqualTo: userId)
+          .addSnapshotListener { (querySnapshot, error) in
+            if let querySnapshot = querySnapshot {
+              self.completedUserChallenges = querySnapshot.documents.compactMap { document -> CompletedChallenge? in
+                try? document.data(as: CompletedChallenge.self)
+              }
+            }
+          }
+    }
+    
     private func loadUsers() {
 //        print("before db collection")
         db.collection("users").addSnapshotListener { (querySnapshot, error) in
@@ -62,6 +78,7 @@ class Repository: ObservableObject {
             }
         }
     }
+    
     private func loadMessages() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         db.collection("messages").addSnapshotListener { (querySnapshot, error) in
@@ -72,26 +89,6 @@ class Repository: ObservableObject {
             }
         }
     }
-    
-    
-    private func loadFollowing() {
-        //NOT USED ATM
-//        guard let userId = Auth.auth().currentUser?.uid else { return }
-//        db.collection("users").document(userId).getDocument { (querySnapshot, error) in
-//            if let error = error {
-//                print("error getting document")
-//            } else if let querySnapshot = querySnapshot {
-//                for 
-//            }
-//            
-//        }
-        //Todo: This should be in a different repository?
-        //      Or we should rename the Challenge Repository to a general repository
-
-    }
-    //Todo: This should be in a different repository?
-    //      Or we should rename the Challenge Repository to a general repository
-    
  
     private func loadChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -106,6 +103,7 @@ class Repository: ObservableObject {
               }
             }
         }
+    
     private func loadTodaysChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 //        print(userId)
@@ -130,6 +128,7 @@ class Repository: ObservableObject {
                   }
                 }
             }
+    
     func addMessage(_ message: Message) {
         do {
             print("adding")
@@ -178,6 +177,7 @@ class Repository: ObservableObject {
         }
     }
     
+
     func checkIfIDoThe(_ challenge: Challenge) -> Bool {
         guard let userId = Auth.auth().currentUser?.uid else { return false }
         guard let challengeUserIds = challenge.userIds else { return false }
@@ -206,44 +206,95 @@ class Repository: ObservableObject {
         return username
     }
     
-    func completeChallenge (_ challenge: Challenge) {
+    
+    func completeAChallenge(_ challenge: Challenge) {
+        let group = DispatchGroup()
         guard let userId = Auth.auth().currentUser?.uid else { return }
-//        print(userId)
         let userRef = db.collection("users").document(userId)
-             
-        let date = NSDate(timeIntervalSince1970: TimeInterval(Timestamp(date: Date()).seconds))
-        print("\(date)")
-        userRef.updateData(["completedChallenges.\(String(describing: challenge.id))" : "\(Timestamp(date: Date()))"])
-//        let experience = userRef.get("experience") as! Int
-        let docRef = Firestore.firestore().collection("users").document(userId ?? "")
-                
-                // Get data
-                docRef.getDocument { (document, error) in
-                    if let document = document, document.exists {
-                        let dataDescription = document.data()
-                        if dataDescription?["experience"] != nil {
-                            let experience = dataDescription?["experience"] as! Int
-                            userRef.updateData(["experience" : (experience + 50 )])
-                        } else {
-                            userRef.updateData(["experience" : (50)])
+        let userDocRef = Firestore.firestore().collection("users").document(userId )
+        let challengeRef = Firestore.firestore().collection("challenges").document(challenge.id ?? "")
+        userDocRef.getDocument { (document, error) in
+            print("get user document")
+            if let document = document, document.exists {
+                let dataDescription = document.data()
+                if dataDescription?["completedChallenges"] != nil {
+                    print("user has completed some challenges")
+                    
+                    let completedChallengesByUser = dataDescription!["completedChallenges"] as! Dictionary<String, String>
+                    group.enter()
+//                    DispatchQueue.global(){
+                    print("group enter")
+                    for (key, _) in completedChallengesByUser {
+                        
+                        print("user completedChallenges IDs \(key)")
+                        group.enter()
+                        let completedChallengeRef = self.db.collection("completedChallenges").document(key)
+                        completedChallengeRef.getDocument { (completedChallengeDocument, error) in
+                            print("get completed Challenge by user")
+                            if let completedChallengeDocument = completedChallengeDocument, completedChallengeDocument.exists {
+                                let completedChallengedataDescription = completedChallengeDocument.data()
+                                if completedChallengedataDescription?["challengeId"] != nil  && completedChallengedataDescription?["userId"] != nil {
+                                    guard let completedChallengeId = completedChallengedataDescription?["challengeId"] as? String else {return}
+                                    if completedChallengeId == challenge.id {
+                                        print("found the completed Challenge ID of the challenge")
+                                        // add new entry
+                                        //challenge already has
+                                        let timesCompleted = completedChallengedataDescription?["timesCompleted"] as! Int
+                                        completedChallengeRef.updateData(["completed" : FieldValue.arrayUnion([Date().timeIntervalSince1970])])
+                                        completedChallengeRef.updateData(["timesCompleted" : (timesCompleted + 1 )])
+                                        if dataDescription?["experience"] != nil {
+                                            let experience = dataDescription?["experience"] as! Int
+                                            userRef.updateData(["experience" : (experience + 50 )])
+                                        } else {
+                                            userRef.updateData(["experience" : (50)])
+                                        }
+                                        return
+                                    }
+                                }
+                            }
+                            group.leave()
                         }
-                    } else {
-                        print("Document does not exist")
-                        
-                        
                     }
-                }
+                    group.leave()
+                    print("group leave")
+                    group.notify(queue: DispatchQueue.global()) {
+                    print("non of the user completedChallenges is equal to \(challenge.id), we create a new Completed Challenges Collection")
+                    let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                        userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(challenge.id)"])
+                    challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(userId)"])
+                    print("Completed Challenges Collection was created id: \(newCompletedChallengesID)")
+                    }
+            } else {
+                
+                
+                print("user \(userId) has never completed a challenge")
+                let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
+                challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
+                print("first Completed Challenges Collection was created id: \(newCompletedChallengesID)")
+            
+            }
+        }
+        
+    }
+}
+    
+    
+    func addNewCompletedChallenge(_ challenge: Challenge, userId: String, timeInterval: Double) -> String {
         
         
-        guard let challengeId = challenge.id else { return }
-        let challengeRef = db.collection("challenges").document(challengeId)
-        challengeRef.updateData(["completedBy.\(Timestamp(date: Date()))" : "\(String(describing: userId))"])
+        do {
+            print("adding")
+            
+            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
+            print(result.documentID)
+            return result.documentID
+        } catch {
+            fatalError("Unable to encode challenge: \(error.localizedDescription)")
+        }
+        
     }
-    
-    func getChallengeStreak (_ challenge: Challenge) {
-        //TODO
-    }
-    
+
     func followUser (userIdToFollow: String, usernameToFollow: String) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         

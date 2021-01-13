@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MyChallengesView: View {
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
+    @ObservedObject var completedChallengeListVM : CompletedChallengeListViewModel
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     
     var body: some View {
@@ -48,18 +49,19 @@ struct MyChallengesView: View {
                 Spacer()
             }
         } else {
-            List {
-                ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
-                    ZStack{
-                    NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM)) {
-                        EmptyView()
-                    }.opacity(0.0)
-                    .buttonStyle(PlainButtonStyle())
-                       UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
-                   
-                   }
-                }
+            
+        List {
+            ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
+                ZStack{
+                    NavigationLink(destination: UserChallengeCellDetail(userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
+                    EmptyView()
+                }.opacity(0.0)
+                .buttonStyle(PlainButtonStyle())
+                   UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
+               
+               }
             }
+        }
         }
     }
 }
@@ -95,29 +97,7 @@ struct UserChallengeCard: View {
     }
 }
 
-struct ProgressBar: View {
-    @Binding var progress: Float
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 20.0)
-                .opacity(0.3)
-                .foregroundColor(Color.red)
-            
-            Circle()
-                .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
-                .foregroundColor(Color.red)
-                .rotationEffect(Angle(degrees: 270.0))
-                .animation(.linear)
 
-            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
-                .font(.largeTitle)
-                .bold()
-        }
-    }
-}
 
 //struct MyChallengesView_Previews: PreviewProvider {
 //    static var previews: some View {

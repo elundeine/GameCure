@@ -14,10 +14,10 @@ struct Challenge: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var title: String
     var category: String
-    var durationDays: String
+    var durationDays: Int
     var interval: String
     var searchName: [String]
-    var completedBy: [String : String]?
+    var completedChallenge: [String : String]?
     var description: String
     var completed: Bool
     var challengeCreater: String
