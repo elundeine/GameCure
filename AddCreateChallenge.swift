@@ -87,40 +87,37 @@ struct AddCreateChallenge: View {
     var body: some View {
         NavigationView {
         VStack{
-        Text("Add a new Challenge").font(.title)
+        Text("Add a new daily Challenge").font(.title)
         Form {
             Section (header: Text("Title")) {
                 TextField("", text: $title)
-                    .keyboardType(.default)
+                    .textFieldStyle(MyTextFieldStyle())
+                
             }
-            Section (header: Text("Description")) {
+            Section (header: Text("Do")) {
                 TextField("", text: $description)
-                    .keyboardType(.default)
+                    .textFieldStyle(MyTextFieldStyle())
             }
-            Section (header: Text("Duration")) {
+            Section (header: Text("For")) {
                 VStack{
                 Picker(selection: $selectedDuration, label: Text("Choose a Challenge Duration")) {
                             ForEach(0 ..< durationOptions.count) {
                                Text(self.durationOptions[$0])
                             }
                         }
-                }.frame(width: 20)
+                }.frame(maxWidth: .infinity)
                 .clipped()
             }
-            
-//            Section (header: Text("Interval")) {
-//                Picker(selection: $selectedInterval, label: Text("Color")) {
-//                                   ForEach(0..<3, id: \.self) { index in
-//                                       Text(self.intervalOptions[index]).tag(index)
-//                                   }
-//                               }.pickerStyle(SegmentedPickerStyle())
-//            }
             Section (header: Text("Category")) {
                 Picker(selection: $selectedCategory, label: Text("Color")) {
                     ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
                         Text(categoryCellVM.name).tag(categoryCellVM.name)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(Color.blue, lineWidth: 3)
+                )
             }
             Button(action:  {self.uploadPost()}) {
                 Text("save")
@@ -142,6 +139,18 @@ struct AddCreateChallenge: View {
         }
         .onAppear(perform: listen)    }
     }
+    }
+}
+struct MyTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+        .padding(15)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.blue, lineWidth: 3)
+        )
+            .keyboardType(.default)
+            
     }
 }
 
