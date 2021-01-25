@@ -8,35 +8,23 @@
 import SwiftUI
 
 struct Stats: View {
+    
+    @State var challengesFinished: Bool
+    @State var currentChallenges: Bool
+    @State var activeSince: Bool
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 15){
-            HStack(){
-                Text("Challenges finished")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("35")
-                    .fontWeight(.semibold)
-            }
-            HStack(){
-                Text("Current Challenges")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("4")
-                    .fontWeight(.semibold)
-            }
-            HStack(){
-                Text("Active since")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("10.12.2020")
-                    .fontWeight(.semibold)
-            }
-        }.padding(EdgeInsets(top:10, leading:10, bottom:10, trailing: 10))
-    }
-}
-
-struct Stats_Previews: PreviewProvider {
-    static var previews: some View {
-        Stats()
+        if(challengesFinished){
+            textCardHorizontal(titel: "Challenges finished", text: "35")
+        }
+        if(currentChallenges){
+            textCardHorizontal(titel: "Current Challenges", text: "4")
+        }
+        if(activeSince){
+            textCardHorizontal(titel: "Active since", text: "10.12.2020")
+        }
+        if(!challengesFinished && !currentChallenges && !activeSince){
+            textCard(titel: "Empty Profile", text: "You haven't selected any Information to be shown here. Edit your profile to show yourself to the world!")
+        }
     }
 }

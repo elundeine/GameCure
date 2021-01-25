@@ -108,7 +108,7 @@ struct FullScreenModalView: View {
                     }.padding(15)
                 }
             //TODO: add dismiss button
-                MyProfile(editProfile: $editProfile)
+                MyProfile(editProfile: $editProfile, session: session)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .edgesIgnoringSafeArea(.all)

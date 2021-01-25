@@ -29,6 +29,53 @@ class StorageService {
         return storagePost.child(postId)
     }
     
+    static func updateProfileImage(userId: String, imageData: Data, metaData: StorageMetadata, storageProfileImageRef: StorageReference, onSuccess: @escaping(_ user: User) -> Void, onError: @escaping(_ errorMessage: String)-> Void) {
+        
+        storageProfileImageRef.delete()
+        
+        storageProfileImageRef.putData(imageData, metadata: metaData) {
+            (StorageMetadata, error) in
+            
+            if error != nil {
+                onError(error!.localizedDescription)
+                return
+            }
+            /*
+            storageProfileImageRef.downloadURL {
+                (url, error) in
+                if let metaImageUrl = url?.absoluteString {
+                    
+                    if let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest() {
+                        changeRequest.photoURL = url
+                        changeRequest.displayName = username
+                        changeRequest.commitChanges {
+                            (error) in
+                            if error != nil {
+                                onError(error!.localizedDescription)
+                                return
+                            }
+                        }
+                    }
+                    
+                    let firestoreUserId = AuthService.getUserId(userId: userId)
+                    let user = User.init(uid: userId, email: email, profileImageUrl: metaImageUrl, username: username, experience: 0, searchName: username.splitStringtoArray(), bio: "", loggedInDates: [""], completedTour: false)
+                     
+                    guard let dict = try?user.asDictionary() else { return }
+                    
+                    firestoreUserId.setData(dict) {
+                        (error) in
+                        if error != nil {
+                            onError(error!.localizedDescription)
+                        }
+                    }
+                    
+                    onSuccess(user)
+                }
+            }
+             */
+        }
+    }
+    
     static func saveProfileImage(userId: String, username: String, email: String, imageData: Data, metaData: StorageMetadata, storageProfileImageRef: StorageReference, onSuccess: @escaping(_ user: User) -> Void, onError: @escaping(_ errorMessage: String)-> Void) {
         
         storageProfileImageRef.putData(imageData, metadata: metaData) {

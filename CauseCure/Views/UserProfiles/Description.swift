@@ -8,57 +8,49 @@
 import SwiftUI
 
 struct Description: View {
+    
+    @State var description:String
+    @State var showDescription = false
+    
+    @State var age = ""
+    @State var showAge = false
+    
+    @State var numberOfStones = ""
+    @State var showNumberOfStones = false
+    
+    @State var biggestStone = ""
+    @State var showBiggestStone = false
+    
+    @State var mood = "Doing Fine"
+    @State var showMood = false
+    
+    @State var title = "Stone Cutter"
+    @State var showTitle = false
+    
     var body: some View {
-        VStack(spacing: 15){
-            Text("Description")
-                .fontWeight(.semibold)
-            Text("I am a very cool Person! Unfortunatley I have very bad kidney stone pain, but I will manage this as I always do, because I am a strong person!")
-                .fontWeight(.semibold)
-        }.padding(EdgeInsets(top:20, leading:10, bottom:10, trailing: 10))
-        
-        VStack(alignment: .leading, spacing: 15){
-            HStack(){
-                Text("Age")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("25")
-                    .fontWeight(.semibold)
+        ScrollView {
+            if(showDescription){
+                textCard(titel: "Description", text: description)
             }
-            HStack(){
-                Text("Number of Stones")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("12")
-                    .fontWeight(.semibold)
+            if(showAge){
+                textCardHorizontal(titel: "Age", text: age)
             }
-            HStack(){
-                Text("Biggest Stone")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("3mm")
-                    .fontWeight(.semibold)
+            if(showNumberOfStones){
+                textCardHorizontal(titel: "Number of Stones", text: numberOfStones)
             }
-            HStack(){
-                Text("Status")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("IN PAIN!")
-                    .fontWeight(.semibold)
+            if(showBiggestStone){
+                textCardHorizontal(titel: "Biggest Stone", text: biggestStone)
             }
-            HStack(){
-                Text("Title")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text("Stone Cutter")
-                    .fontWeight(.semibold)
+            if(showMood){
+                textCardHorizontal(titel: "Status", text: mood)
             }
-            
-        }.padding(EdgeInsets(top:0, leading:10, bottom:10, trailing: 10))
+            if(showTitle){
+                textCardHorizontal(titel: "Title", text: title)
+            }
+            if(!showDescription && !showAge && !showNumberOfStones && !showBiggestStone && !showMood && !showTitle){
+                textCard(titel: "Empty Profile", text: "You haven't selected any Information to be shown here. Edit your profile to show yourself to the world!")
+            }
+        }
     }
 }
 
-struct Description_Previews: PreviewProvider {
-    static var previews: some View {
-        Stats()
-    }
-}

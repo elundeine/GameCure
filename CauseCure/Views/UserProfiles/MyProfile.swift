@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 import Combine
 
 struct MyProfile: View {
-    @EnvironmentObject var session: SessionStore
+    @State var session: SessionStore
     @State private var imageURL = URL(string: "")
     
     @State private var profileImage: Image?
@@ -27,40 +27,115 @@ struct MyProfile: View {
     
     @State private var showingActionSheet = false
     @State private var showImage = false
-    @State private var showSheet = false
+    @State private var showSheet: Bool
     
-    @State private var username =  ""
+    @State private var username: String
     let usernameLimit = 10
     
-    @State private var description = ""
+    @State var description: String
     let descriptionLimit = 75
-    @State private var showDescription = true
+    @State private var showDescription: Bool
     
-    @State private var age = ""
-    @State private var showAge = true
+    @State private var age: String
+    @State private var showAge: Bool
     
-    @State private var numberOfStones = ""
-    @State private var showNumberOfStones = true
+    @State private var numberOfStones: String
+    @State private var showNumberOfStones: Bool
     
-    @State private var biggestStone = ""
+    @State private var biggestStone: String
     let biggestStoneLimit = 20
-    @State private var showBiggestStone = true
+    @State private var showBiggestStone: Bool
     
-    @State private var mood = "Doing Fine"
-    @State private var showMood = true
-    @State private var showMoodPicker = false
+    @State private var mood:String
+    @State private var showMood:Bool
+    @State private var showMoodPicker:Bool
     
-    @State private var title = "Stone Cutter"
-    @State private var showTitle = true
-    @State private var showTitlePicker = false
+    @State private var title: String
+    @State private var showTitle: Bool
+    @State private var showTitlePicker: Bool
     
-    @State private var showFinishedChallenges = true
-    @State private var showCurrentChallenges = true
-    @State private var showActiveSince = true
+    @State private var showFinishedChallenges: Bool
+    @State private var showCurrentChallenges: Bool
+    @State private var showActiveSince: Bool
+    
+    init(editProfile: Binding<Bool>, session: SessionStore ){
+        _session = State(initialValue: session)
+        _username = State(initialValue: session.session!.username)
+        _showSheet = State(initialValue: false)
+        _showMoodPicker = State(initialValue: false)
+        _showTitlePicker = State(initialValue: false)
+        if(session.session!.description == nil){
+            _showDescription = State(initialValue: false)
+            _description = State(initialValue: "")
+            _showAge = State(initialValue: false)
+            _age = State(initialValue: "")
+            _showNumberOfStones = State(initialValue: false)
+            _numberOfStones = State(initialValue: "")
+            _showBiggestStone = State(initialValue: false)
+            _biggestStone = State(initialValue: "")
+            _showMood = State(initialValue: false)
+            _mood = State(initialValue: "Doing Fine")
+            _showTitle = State(initialValue: false)
+            _title = State(initialValue: "Stone Cutter")
+        } else {
+            _showDescription = State(initialValue: session.session!.description!.showDescription)
+            if(session.session!.description!.showDescription){
+                _description = State(initialValue: session.session!.description!.description!)
+            } else {
+                _description = State(initialValue: "")
+            }
+            
+            _showAge = State(initialValue: session.session!.description!.showAge)
+            if(session.session!.description!.showAge){
+                _age = State(initialValue: session.session!.description!.age!)
+            } else {
+                _age = State(initialValue: "")
+            }
+            
+            _showNumberOfStones = State(initialValue: session.session!.description!.showNumberOfStones)
+            if(session.session!.description!.showNumberOfStones){
+                _numberOfStones = State(initialValue: session.session!.description!.numberOfStones!)
+            } else {
+                _numberOfStones = State(initialValue: "")
+            }
+            
+            _showBiggestStone = State(initialValue: session.session!.description!.showBiggestStone)
+            if(session.session!.description!.showBiggestStone){
+                _biggestStone = State(initialValue: session.session!.description!.biggestStone!)
+            } else {
+                _biggestStone = State(initialValue: "")
+            }
+            
+            _showMood = State(initialValue: session.session!.description!.showMood)
+            if(session.session!.description!.showMood){
+                _mood = State(initialValue: session.session!.description!.mood!)
+            } else {
+                _mood = State(initialValue: "Doing Fine")
+            }
+            
+            _showTitle = State(initialValue: session.session!.description!.showTitle)
+            if(session.session!.description!.showTitle){
+                _title = State(initialValue: session.session!.description!.title!)
+            } else {
+                _title = State(initialValue: "Stone Cutter")
+            }
+            
+        }
+        
+        if(session.session!.stats == nil){
+            _showFinishedChallenges = State(initialValue: false)
+            _showCurrentChallenges = State(initialValue: false)
+            _showActiveSince = State(initialValue: false)
+        } else {
+            _showFinishedChallenges = State(initialValue: session.session!.stats!.challengesFinished)
+            _showCurrentChallenges = State(initialValue: session.session!.stats!.currentChallenges)
+            _showActiveSince = State(initialValue: session.session!.stats!.activeSince)
+        }
+            self._editProfile = editProfile
+    }
     
     func performOnAppear() {
         listen()
-        loadData()
     }
     
     func listen() {
@@ -88,8 +163,9 @@ struct MyProfile: View {
         newImage = true
     }
     
-    func loadData(){
-        username = session.session!.username
+    func saveChanges(){
+        session.addDescriptionStats(description: DescriptionModel(description: description, showDescription: showDescription, age: age, showAge: showAge, numberOfStones: numberOfStones, showNumberOfStones: showNumberOfStones, biggestStone: biggestStone, showBiggestStone: showBiggestStone, mood: mood, showMood: showMood, title: title, showTitle: showTitle),stats: StatsModel(challengesFinished: showFinishedChallenges, currentChallenges: showCurrentChallenges, activeSince: showActiveSince))
+        StorageService.updateProfileImage(userId: session.session!.uid!, imageData: imageData, metaData: StorageMetadata(), storageProfileImageRef: StorageService.storageProfileId(userId: session.session!.uid!), onSuccess: {_ in }, onError: {_ in })
     }
     
     var body: some View {
@@ -146,16 +222,29 @@ struct MyProfile: View {
                             Text("General")
                             .fontWeight(.semibold)
                             .font(.system(size: 20))
-                                Text("Username")
-                            TextField("", text: $username)
-                                .fixedSize()
-                                .onReceive(Just(username)) { newValue in
-                                    if(newValue.count > usernameLimit) {
-                                        username = String(username.prefix(usernameLimit))
+                                VStack {
+                                    HStack {
+                                        Text("Username")
+                                        Spacer()
+                                        Spacer()
+                                    }.padding(.all, 20)
+                                    TextField("", text: $username)
+                                        .onReceive(Just(username)) { newValue in
+                                            if(newValue.count > usernameLimit) {
+                                            username = String(username.prefix(usernameLimit))
+                                        }
                                     }
-                                }
-                                .padding()
-                                .border(Color.white, width: 1.0)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .border(Color.white, width: 1.0)
+                                    .padding(.bottom, 20)
+                                    .padding(.leading, 20)
+                                    .padding(.trailing, 20)
+                                    .foregroundColor(Color.black)
+                                } .frame(maxWidth: .infinity, alignment: .center)
+                                .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+                                .modifier(CardModifier())
+                                .padding(.all, 10)
+                                .foregroundColor(Color.white)
                             }
                             VStack {
                             Text("Description")
@@ -175,24 +264,57 @@ struct MyProfile: View {
                                 .font(.system(size: 20))
                                 HStack{
                                     Text("Challenges finished")
+                                        .padding(.leading, 10)
                                     Spacer()
                                     Toggle(isOn: $showFinishedChallenges) {
                                     }
-                                }
+                                    .padding(.trailing, 10)
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 10)
+                                }.frame(maxWidth: .infinity, alignment: .center)
+                                .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+                                .modifier(CardModifier())
+                                .padding(.all, 10)
+                                .foregroundColor(Color.white)
                                 HStack{
                                     Text("Current Challenges")
+                                        .padding(.leading, 10)
                                     Spacer()
                                     Toggle(isOn: $showCurrentChallenges) {
                                     }
-                                }
+                                    .padding(.trailing, 10)
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 10)
+                                }.frame(maxWidth: .infinity, alignment: .center)
+                                .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+                                .modifier(CardModifier())
+                                .padding(.all, 10)
+                                .foregroundColor(Color.white)
                                 HStack{
                                     Text("Active Since")
+                                        .padding(.leading, 10)
                                     Spacer()
                                     Toggle(isOn: $showActiveSince) {
                                     }
-                                }
-
+                                    .padding(.trailing, 10)
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 10)
+                                }.frame(maxWidth: .infinity, alignment: .center)
+                                .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+                                .modifier(CardModifier())
+                                .padding(.all, 10)
+                                .foregroundColor(Color.white)
                             }
+                            Button(action: {
+                                saveChanges()
+                            }) {
+                                Text("Save Changes")
+                                    .font(Font.title2.bold().lowercaseSmallCaps())
+                                    .multilineTextAlignment(.center)
+                            }.foregroundColor(.white)
+                            .padding()
+                            .background(Color.black)
+                            .cornerRadius(8)
                         }
                         }
                         .sheet(isPresented: $showSheet, onDismiss: DismissSheet) {
@@ -242,20 +364,52 @@ struct MyProfile: View {
                                 }.padding(30)
                             } else if (showTitlePicker) {
                                 ScrollView {
-                                    Button("Stone Cutter"){
+                                    
+                                    Button(action: {
                                         mood = "Stone Cutter"
-                                    }
-                                    Button("Water Connoiseur"){
+                                    }) {
+                                        Text("Stone Cutter")
+                                            .font(Font.title2.bold().lowercaseSmallCaps())
+                                            .multilineTextAlignment(.center)
+                                    }.foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.black)
+                                    .cornerRadius(8)
+                                    
+                                    Button(action: {
                                         mood = "Water Connoiseur"
-                                    }
-                                    Button("Shake Shake Shake it"){
+                                    }) {
+                                        Text("Water Connoiseur")
+                                            .font(Font.title2.bold().lowercaseSmallCaps())
+                                            .multilineTextAlignment(.center)
+                                    }.foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.black)
+                                    .cornerRadius(8)
+                                    
+                                    Button(action: {
                                         mood = "Shake Shake Shake it"
-                                    }
-                                    Button("No Pain no Gain"){
-                                        mood = "No Pain no Gain"
-                                    }
-
-                                }
+                                    }) {
+                                        Text("Shake Shake Shake it")
+                                            .font(Font.title2.bold().lowercaseSmallCaps())
+                                            .multilineTextAlignment(.center)
+                                    }.foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.black)
+                                    .cornerRadius(8)
+                                    
+                                    Button(action: {
+                                        mood = "NO PAIN NO GAIN"
+                                    }) {
+                                        Text("NO PAIN NO GAIN")
+                                            .font(Font.title2.bold().lowercaseSmallCaps())
+                                            .multilineTextAlignment(.center)
+                                    }.foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.black)
+                                    .cornerRadius(8)
+                                    
+                                }.padding(30)
                             } else if(showImage) {
                             ImagePicker(pickedImage: self.$pickedImage, showImagePicker: self.$showSheet, imageData: self.$imageData)
                             }
@@ -274,7 +428,6 @@ struct MyProfile: View {
                                 }, .cancel()
                             ] )
                         }
-                    
                 } else {
                     
                 HStack {
@@ -287,7 +440,7 @@ struct MyProfile: View {
                         .overlay(Circle().stroke(Color.black, lineWidth: 5))
                         
                         HStack{
-                            Text(session.session!.username)
+                            Text(username)
                                 .fontWeight(.semibold)
                                 .font(.system(size: 20))
                         }
@@ -315,17 +468,14 @@ struct MyProfile: View {
                             Text("Description").tag(0)
                             Text("Stats").tag(1)
                         }.pickerStyle(SegmentedPickerStyle())
-
                         switch(selectedTab) {
-                            case 0: Description()
-                            case 1: Stats()
-                            default: Description()
-
+                        case 0: Description(description: description, showDescription: showDescription, age: age, showAge: showAge, numberOfStones: numberOfStones, showNumberOfStones: showNumberOfStones, biggestStone: biggestStone, showBiggestStone: showBiggestStone, mood: mood, showMood: showMood, title: title, showTitle: showTitle)
+                        case 1: Stats(challengesFinished: showFinishedChallenges, currentChallenges: showCurrentChallenges, activeSince: showActiveSince)
+                        default: Description(description: description, showDescription: showDescription, age: age, showAge: showAge, numberOfStones: numberOfStones, showNumberOfStones: showNumberOfStones, biggestStone: biggestStone, showBiggestStone: showBiggestStone, mood: mood, showMood: showMood, title: title, showTitle: showTitle)
                         }
                     }
                 }
             }
-    
         .onAppear(perform: performOnAppear)
     }
     }

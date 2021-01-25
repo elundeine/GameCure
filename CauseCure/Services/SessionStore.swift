@@ -27,6 +27,12 @@ class SessionStore: ObservableObject {
     var handle: AuthStateDidChangeListenerHandle?
     let db = Firestore.firestore()
 
+    func addDescriptionStats(description: DescriptionModel, stats: StatsModel){
+        guard let descdic = try? description.asDictionary() else { return }
+        guard let statsdic = try? stats.asDictionary() else { return }
+        db.collection("users").document(session!.uid!).updateData(["description": descdic, "stats": statsdic])
+    }
+
 
     func listen() {
         handle = Auth.auth().addStateDidChangeListener({
