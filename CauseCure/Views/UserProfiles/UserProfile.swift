@@ -80,10 +80,10 @@ struct UserProfile: View {
                         }.pickerStyle(SegmentedPickerStyle())
 
                         switch(selectedTab) {
-                            case 0: Stats()
-                            case 1: Stats()
-                            case 2: Stats()
-                            default: Stats()
+                            case 0: Stats(challengesFinished: true, currentChallenges: true, activeSince: true)
+                            case 1: Stats(challengesFinished: true, currentChallenges: true, activeSince: true)
+                            case 2: Stats(challengesFinished: true, currentChallenges: true, activeSince: true)
+                            default: Stats(challengesFinished: true, currentChallenges: true, activeSince: true)
 
                     }
             }
