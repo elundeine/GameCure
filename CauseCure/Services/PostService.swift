@@ -12,6 +12,8 @@ import SwiftUI
 import FirebaseStorage
 import FirebaseFirestore
 
+// MARK: Post Service for sending out Community posts with Text and Image to the Firestore and Firebase Storage
+
 class PostService {
     
     static var Posts = AuthService.storeRoot.collection("posts")

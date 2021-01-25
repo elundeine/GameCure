@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChallengeCellDetail: View {
+    @ObservedObject var session: SessionStore
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     @State var presentChallengeAFriend = false
     @State var myChallenge: Bool = false
@@ -15,7 +16,7 @@ struct ChallengeCellDetail: View {
     @State var showCompleteChallengeAlert = false
     
     func completeChallenge() {
-        challengeCellVM.repository.completeAChallenge(challengeCellVM.challenge)
+        challengeCellVM.repository.completeAChallenge(challenge: challengeCellVM.challenge, username: session.session?.username ?? "")
     }
     
     func addToMyChallenges() {
@@ -111,11 +112,4 @@ struct ChallengeCellDetail: View {
        
                 
 }
-}
-
-
-struct ChallengeCellDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: Challenge(id: "123", title: "Workout", category: "Sport", durationDays: 14, interval: "1", searchName: [""], description: "Workout onces a day", completed: false, challengeCreater: "TheDude", userIds: ["4124124123"])))
-    }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct CustomSearchBar: View {
+    @ObservedObject var session : SessionStore
     @ObservedObject var repository : ChallengeService
     @State var txt = ""
     @State private var showCancelButton: Bool = false
@@ -48,7 +49,7 @@ struct CustomSearchBar: View {
         NavigationView{
 //        Text("Results").font(.subheadline)
         List(self.repository.challenges.filter { $0.title.lowercased().contains(self.txt.lowercased())}) { i in
-            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: repository.checkIfIDoThe(i))) {
+            NavigationLink(destination: ChallengeCellDetail(session: session, challengeCellVM: ChallengeCellViewModel(challenge: i), myChallenge: repository.checkIfIDoThe(i))) {
                             Text(i.title)
                             
                         }

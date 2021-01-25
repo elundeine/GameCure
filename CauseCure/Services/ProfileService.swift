@@ -14,6 +14,9 @@ import FirebaseFirestoreSwift
 import Combine
 import SwiftUI
 import UIKit
+
+// MARK: This service retrieves the Posts of Users the current User is following.
+
 class ProfileService: ObservableObject {
     
     @Published var posts: [PostModel] = []

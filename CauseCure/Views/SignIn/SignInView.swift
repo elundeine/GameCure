@@ -62,6 +62,11 @@ struct SignInView: View {
         NavigationView {
             VStack(spacing: 20) {
                 VStack {
+                    Image("kidney")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 150)
+                        .padding(.all, 20)
                     Text("CauseCure")
                     
                     //TODO:Place Logo

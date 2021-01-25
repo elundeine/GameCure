@@ -30,7 +30,7 @@ struct SideMenuContent: View {
                         })
                     HStack{
                         Image(systemName: "heart.fill")
-                        Text("Experience")
+                        Text("CauseCoins")
                         Spacer()
                         Text("\(session.session?.experience ?? 0)")
                         }

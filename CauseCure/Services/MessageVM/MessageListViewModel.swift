@@ -15,6 +15,9 @@ class MessageListViewModel: ObservableObject {
     @Published var repository = Repository()
     @Published var messageCellViewModels = [MessageCellViewModel]()
     
+    var userId = ""
+    var receiverId = ""
+    
     
     private var cancellabels = Set<AnyCancellable>()
     

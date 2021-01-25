@@ -14,6 +14,8 @@ import FirebaseStorage
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+// MARK: This service sets up a logged in Session which allows the user to skip the login process when reopening the CauseCure app.
+
 class SessionStore: ObservableObject {
     
     
@@ -51,7 +53,23 @@ class SessionStore: ObservableObject {
         })
     }
     
-   
+//    func buyStoneCrusherGame(userId: String, experience: Int) -> Bool {
+//        
+//        if (experience >= 50) {
+//            db.collection("users").document(userId).updateData([
+//            "experience.\(experience - 50)": ""
+//        ])
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
+    func payforStoneCrusherGame(userId: String, experience: Int) {
+        
+        db.collection("users").document(userId).updateData([
+            "experience.\(experience - 50)": ""])
+    }
+    
     func logout() {
         do{
             try Auth.auth().signOut()

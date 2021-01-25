@@ -11,6 +11,8 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseFirestore
 
+
+// MARK: Setup Service of Firebase User Authentication
 class AuthService {
     
     static var storeRoot = Firestore.firestore()

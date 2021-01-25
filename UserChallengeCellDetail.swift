@@ -14,23 +14,27 @@ struct UserChallengeCellDetail: View {
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
         @ObservedObject var userListVM = UserListViewModel()
         
+        @State var challengeDone = false
         @State var showCompleteChallengeAlert = false
-        var noLeaderboardEntries = ["first place", "second place", "third place" ]
         @State var progressValue: Float = 0.0
         @State var doneToday = false
         @State var experience = 0
         @State var challengeEnded = false
         @State var timesCompleted = 0
     
-        @State var challengeFriedPresented = false
+        @State var showModal = false
+        @State var recommendChallengeToFriendPresented = false
+        @State var challengeFriendPresented = false
+    
     
     func completeChallenge() {
-
+            print("completing challenge")
+        
             self.experience = 50
             self.showCompleteChallengeAlert.toggle()
             self.doneToday = true
             self.timesCompleted += 1
-            userChallengeCellVM.repository.completeAChallenge(userChallengeCellVM.userChallenge)
+            userChallengeCellVM.repository.completeAChallenge(challenge: userChallengeCellVM.userChallenge, username: session.session?.username ?? "")
             let timesCompletedTemp = 100 * self.timesCompleted
              
             let duration = userChallengeCellVM.userChallenge.durationDays
@@ -38,41 +42,46 @@ struct UserChallengeCellDetail: View {
             print(progress)
             self.progressValue = progress / 100
             print(self.progressValue)
-            if (userChallengeCellVM.userChallenge.durationDays == completedChallengeCellVM.completedChallenge.timesCompleted) {
-                //Full Challenge Completed
+        if (completedChallengeCellVM.checkIfTodayIsLastDay()) {
+                // end challenge
+//                self.challengeDone = true
+//                endChallenge()
+        }
+    }
+    func stopChallenge() {
+        if (timesCompleted > 0) {
+            userChallengeCellVM.repository.challengeDone(challenge: userChallengeCellVM.userChallenge, timesCompleted: timesCompleted)
+        } else {
+            userChallengeCellVM.repository.removeChallengefromUser(userChallengeCellVM.userChallenge)
+        }
+    }
+    func endChallenge() {
+        userChallengeCellVM.repository.challengeDone(challenge: userChallengeCellVM.userChallenge, timesCompleted: timesCompleted)
+    }
+    
+    func progressSetup() {
+        print("Mike completed: \(completedChallengeCellVM.completedChallenge.id)")
+//        if (completedChallengeCellVM.checkIfChallengeIsOver() == false) {
+            if completedChallengeCellVM.completedChallenge.timesCompleted != 0 {
+                let timesCompletedTemp = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
+                self.timesCompleted = timesCompletedTemp / 100
+                let duration = userChallengeCellVM.userChallenge.durationDays
+                print(timesCompleted)
+                print(duration)
+                let progress = Float((timesCompletedTemp) / (duration))
+                print(progress)
+                self.progressValue = progress / 100
+                self.doneToday = completedChallengeCellVM.checkIfCompletedToday()
+                print(progressValue)
                 
             } else {
                 
             }
-        if (self.timesCompleted == userChallengeCellVM.userChallenge.durationDays) {
-                // end challenge
-        } else {
-            
-        }
-    }
-    
-    func progressSetup() {
-        if completedChallengeCellVM.completedChallenge.timesCompleted != 0 {
-            
-            
-            
-            print("calculating percentage")
-            print(completedChallengeCellVM.completedChallenge.timesCompleted ?? 0)
-            print(userChallengeCellVM.userChallenge.durationDays)
-            let timesCompletedTemp = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
-            self.timesCompleted = timesCompletedTemp / 100
-            let duration = userChallengeCellVM.userChallenge.durationDays
-            print(timesCompleted)
-            print(duration)
-            let progress = Float((timesCompletedTemp) / (duration))
-            print(progress)
-            self.progressValue = progress / 100
-            self.doneToday = completedChallengeCellVM.checkIfCompletedToday()
-            print(progressValue)
-            
-        } else {
-            
-        }
+//        } else {
+//            self.challengeDone = true
+//            endChallenge()
+//
+//        }
         
     }
         var body: some View {
@@ -88,7 +97,7 @@ struct UserChallengeCellDetail: View {
                             Text($userChallengeCellVM.userChallenge.title.wrappedValue)
                                 .font(.title)
                             Text($userChallengeCellVM.userChallenge.description.wrappedValue)
-                            Divider()
+                        
                         } else {
                             ProgressBar(progress: self.$progressValue)
                                 .frame(width: 150.0, height: 150.0)
@@ -99,6 +108,7 @@ struct UserChallengeCellDetail: View {
                         }
                         
                     }
+                    Divider()
                     VStack(alignment: .leading) {
 //                        HStack(alignment: .top) {
 //                            Text("Completed by Community")
@@ -117,15 +127,7 @@ struct UserChallengeCellDetail: View {
                             Text("\((self.timesCompleted)) / \(userChallengeCellVM.userChallenge.durationDays) times")
                                 .font(.subheadline)
                         }.padding()
-                        HStack(alignment: .top) {
-                            Text("Challenge Created by")
-                                .font(.subheadline)
-                                .bold()
-                            Spacer()
-                            Text($userChallengeCellVM.userChallenge.challengeCreater.wrappedValue)
-                                .font(.subheadline)
-                        }.padding()
-                        Divider()
+                       
                         // Mark: History
 //                        if (completedChallengeCellVM.completedChallenge.timesCompleted != 0) {
 //                        VStack {
@@ -215,14 +217,15 @@ struct UserChallengeCellDetail: View {
                             }
                         HStack(alignment: .top) {
                             Spacer()
-                            Button(action: { self.challengeFriedPresented.toggle()
-                                print("toggled")
+                            Button(action: {
+                                self.recommendChallengeToFriendPresented.toggle()
+                                self.showModal.toggle()
                             }) {
                                 HStack {
                                     Image(systemName: "plus.circle.fill")
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                    Text("Challenge a friend!")
+                                    Text("Recommend the challenge to a friend!")
                                 }.foregroundColor(Color.white)
                             }.frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
                             .background(Color.blue)
@@ -234,6 +237,7 @@ struct UserChallengeCellDetail: View {
                             HStack(alignment: .top) {
                                 Spacer()
                                 Button(action: {
+                                 
                                     completeChallenge()
                                 }) {
                                     HStack {
@@ -246,7 +250,40 @@ struct UserChallengeCellDetail: View {
                                 .padding()
                                 Spacer()
                             }.padding()
+                            HStack(alignment: .top) {
+                                Spacer()
+                                Button(action: {
+                                    self.challengeFriendPresented.toggle()
+                                    self.showModal.toggle()
+                                }) {
+                                    HStack {
+                                        Text("Start the challenge with a friend!")
+                                            .foregroundColor(Color.white)
+                                    }
+                                }.frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
+                                .background(Color.blue)
+                                .cornerRadius(5)
+                                .padding()
+                                Spacer()
+                            }.padding()
+
                         }
+                        HStack(alignment: .top) {
+                            Spacer()
+                            Button(action: {
+                                self.stopChallenge()
+                            }) {
+                                HStack {
+                        
+                                    Text("Stop Challenge")
+                                        .foregroundColor(Color.white)
+                                }
+                            }.frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
+                            .background(Color.blue)
+                            .cornerRadius(5)
+                            .padding()
+                            Spacer()
+                        }.padding()
                         HStack(alignment: .top) {
                             Spacer()
                             Text("by \($userChallengeCellVM.userChallenge.challengeCreater.wrappedValue)")
@@ -259,20 +296,31 @@ struct UserChallengeCellDetail: View {
                 }
             }
             .onAppear(perform: self.progressSetup)
-            .alertX(isPresented: $showCompleteChallengeAlert) {
-                
-                AlertX(title: Text("Completed for Today! Congratulation!"),
-                       primaryButton: .default(Text("You earned \(self.experience) experience")),
-                           theme: .light(withTransparency: true, roundedCorners: true))
-
-                
+            .alert(isPresented: $showCompleteChallengeAlert) {
+                Alert(title: Text("Completed for Today! Congratulation!"), message: Text("You earned \(self.experience) CauseCoins"), dismissButton: .default(Text("Ok")))
             }
-            .fullScreenCover(isPresented: $challengeFriedPresented) { InviteFriendModalView(session: session, userListVM: userListVM, userChallengeCellVM: userChallengeCellVM)
+//            .alertX(isPresented: $showCompleteChallengeAlert) {
+//
+//                AlertX(title: Text("Completed for Today! Congratulation!"),
+//                       primaryButton: .default(Text("You earned \(self.experience) CauseCoins")),
+//                           theme: .light(withTransparency: true, roundedCorners: true))
+//
+//
+//            }
+//            .alertX(isPresented: $challengeDone) {
+//                
+////                AlertX(title: Text("Congratulations you went throw the whole challenge!"),
+////                       primaryButton: .default(Text("You earned completed the challenge \(self.timesCompleted) / \(userChallengeCellVM.userChallenge.durationDays) times. You will extra CauseCoins when you stick to the Challenge.")),
+////                           theme: .light(withTransparency: true, roundedCorners: true))
+////
+////
+////            }
+            .fullScreenCover(isPresented: $showModal) { FriendModalView(session: session, userListVM: userListVM, userChallengeCellVM: userChallengeCellVM, recommendFollower: $recommendChallengeToFriendPresented,challengeFollower: $challengeFriendPresented)
             }
             
             } else {
                 Text("Congratulations you completed the challenge!")
-                Text("you earned yourself bonus EXP!")
+                Text("you earned yourself bonus CauseCoins!")
             }
         }
 }
@@ -299,55 +347,97 @@ struct ProgressBar: View {
         }
     }
 }
-    struct InviteFriendModalView: View {
-            @ObservedObject var session: SessionStore
-            @ObservedObject var userListVM: UserListViewModel
-            @Environment(\.presentationMode) var presentationMode
-            @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
-            @State var challengeFriendAlert = false
+struct FriendModalView: View {
+        @ObservedObject var session: SessionStore
+        @ObservedObject var userListVM: UserListViewModel
+        @Environment(\.presentationMode) var presentationMode
+        @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+        @State var challengeFriendAlert = false
+        @Binding var recommendFollower: Bool
+        @Binding var challengeFollower: Bool
+    
+    func recommendChallengeToFollower(userID: String) {
+        print("User \(userID) was recommended challenged")
         
-        func challengeFollower(userID: String) {
-            print("User \(userID) was challenged")
-            
-            userListVM.repository.sendChallengeInvite(userId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id)
-            self.challengeFriendAlert = true
-        }
+        userListVM.repository.sendChallengeInvite(userId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id)
+        self.challengeFriendAlert = true
+    }
+    func challengeFollower(userID: String) {
+        print("User \(userID) was challenged")
         
-        var body: some View {
-            //TODO: add dismiss button
-            VStack{
-                HStack {
-                    Spacer()
-                    Image(systemName: "xmark").onTapGesture {
-                        presentationMode.wrappedValue.dismiss()
-                    }.padding()
-                    
-                }
-                Text("Challenge a Follower").font(.title)
-                if(session.session?.followers != nil) {
-                }
-                List {
-                    ForEach(userListVM.userCellViewModels.filter {
-                                session.session!.followers!.keys.contains($0.user.uid!)}) {
-                        userCellVM in
-                        ZStack {
-                            EmptyView()
-                        }.opacity(0.0)
-                        .buttonStyle(PlainButtonStyle())
-                        FriendCard(userCellVM: userCellVM)
-                            .onTapGesture {
-                                challengeFollower(userID: userCellVM.id)
-                            }
-                    }
+        userListVM.repository.sendSharedChallengeInvite(userId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id)
+        self.challengeFriendAlert = true
+    }
+    
+    var body: some View {
+        //TODO: add dismiss button
+        if (challengeFollower){
+        VStack{
+            HStack {
+                Spacer()
+                Image(systemName: "xmark").onTapGesture {
+                    self.challengeFollower = false
+                    presentationMode.wrappedValue.dismiss()
+                }.padding()
+                
+            }
+            Text("Challenge a Follower").font(.title)
+            if(session.session?.followers != nil) {
+            }
+            List {
+                ForEach(userListVM.userCellViewModels.filter {
+                            session.session!.followers!.keys.contains($0.user.uid!)}) {
+                    userCellVM in
+                    ZStack {
+                        EmptyView()
+                    }.opacity(0.0)
+                    .buttonStyle(PlainButtonStyle())
+                    FriendCard(userCellVM: userCellVM)
+                        .onTapGesture {
+                            challengeFollower(userID: userCellVM.id)
+                        }
                 }
             }
+        }
+        Spacer()
+        .alert(isPresented: $challengeFriendAlert) {
+            Alert(title: Text("Sent out a challenge invite!"), message: Text("The challenge invitation is now displayed in your followers dashboard."), dismissButton: .default(Text("Ok")))
+        }
+    } else {
+    VStack{
+        HStack {
             Spacer()
-            .alert(isPresented: $challengeFriendAlert) {
-                Alert(title: Text("Sent out a challenge invite!"), message: Text("The challenge invitation is now displayed in your followers dashboard."), dismissButton: .default(Text("Ok")))
+            Image(systemName: "xmark").onTapGesture {
+                self.recommendFollower = false
+                presentationMode.wrappedValue.dismiss()
+            }.padding()
+            
+        }
+        Text("Recommend to a Follower").font(.title)
+        if(session.session?.followers != nil) {
+        }
+        List {
+            ForEach(userListVM.userCellViewModels.filter {
+                        session.session!.followers!.keys.contains($0.user.uid!)}) {
+                userCellVM in
+                ZStack {
+                    EmptyView()
+                }.opacity(0.0)
+                .buttonStyle(PlainButtonStyle())
+                FriendCard(userCellVM: userCellVM)
+                    .onTapGesture {
+                        recommendChallengeToFollower(userID: userCellVM.id)
+                    }
             }
         }
     }
-
+    Spacer()
+    .alert(isPresented: $challengeFriendAlert) {
+        Alert(title: Text("Sent out a challenge invite!"), message: Text("The challenge invitation is now displayed in your followers dashboard."), dismissButton: .default(Text("Ok")))
+    }
+    }
+    }
+}
 struct CustomAlertView: View {
     @Binding var show: Bool
     @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel

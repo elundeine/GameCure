@@ -15,6 +15,8 @@ class UserChallengeListViewModel: ObservableObject {
     @Published var repository = Repository()
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
     @Published var userChallengeInvites = [UserChallengeCellViewModel]()
+    @Published var userSharedChallengeInvites = [UserChallengeCellViewModel]()
+    @Published var userSharedChallengeCellViewModels = [UserChallengeCellViewModel]()
     
     private var cancellabels = Set<AnyCancellable>()
     
@@ -26,14 +28,29 @@ class UserChallengeListViewModel: ObservableObject {
             }
             .assign(to: \.userChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
-        repository.$userChallengeInvites.map { userChallenge in
+        
+            repository.$userChallengeInvites.map { userChallenge in
             userChallenge.map { userChallenge in
                     UserChallengeCellViewModel(userChallenge: userChallenge)
                 }
             }
             .assign(to: \.userChallengeInvites, on: self)
             .store(in: &cancellabels)
-
+        
+            repository.$userSharedChallengeInvites.map { userChallenge in
+            userChallenge.map { userChallenge in
+                    UserChallengeCellViewModel(userChallenge: userChallenge)
+                }
+            }
+            .assign(to: \.userSharedChallengeInvites, on: self)
+            .store(in: &cancellabels)
+            repository.$userSharedChallenges.map { userChallenge in
+            userChallenge.map { userChallenge in
+                    UserChallengeCellViewModel(userChallenge: userChallenge)
+                }
+            }
+            .assign(to: \.userSharedChallengeCellViewModels, on: self)
+            .store(in: &cancellabels)
     }
     
     

@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import SwiftUI
 
+// MARK: The PostcardService retrieves all Posts the current User of CauseCure will receive in conjunction wit the ProfileService.
 
 class PostCardService: ObservableObject {
     @Published var post: PostModel!

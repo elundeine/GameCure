@@ -14,6 +14,8 @@ import FirebaseFirestoreSwift
 import Combine
 import SwiftUI
 
+// MARK: This service loads all globally created Challenges
+
 
 class ChallengeService: ObservableObject {
     
@@ -90,7 +92,7 @@ class ChallengeService: ObservableObject {
         return username
     }
     
-    func completeAChallenge(_ challenge: Challenge) {
+    func completeAChallenge(challenge: Challenge, username: String) {
         
         guard let userId = Auth.auth().currentUser?.uid else { return }
         let userRef = db.collection("users").document(userId)
@@ -126,14 +128,14 @@ class ChallengeService: ObservableObject {
                         }
                     }
                     print("non of the user completedChallenges is equal to \(challenge.id), we create a new Completed Challenges Collection")
-                    let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                    let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, username: username, timeInterval: Date().timeIntervalSince1970)
                     userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
                     challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
                     print("Completed Challenges Collection was created id: \(newCompletedChallengesID)")
                 
             } else {
                 print("user \(userId) has never completed a challenge")
-                let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, username: username, timeInterval: Date().timeIntervalSince1970)
                 userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
                 challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
                 print("first Completed Challenges Collection was created id: \(newCompletedChallengesID)")
@@ -144,19 +146,18 @@ class ChallengeService: ObservableObject {
         }
     }
     
-    func addNewCompletedChallenge(_ challenge: Challenge, userId: String, timeInterval: Double) -> String {
+    func addNewCompletedChallenge(_ challenge: Challenge, userId: String, username: String, timeInterval: Double) -> String {
         
         
         do {
             print("adding")
             
-            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
+            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, username: username, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
             print(result.documentID)
             return result.documentID
         } catch {
             fatalError("Unable to encode challenge: \(error.localizedDescription)")
         }
-        
     }
         
     

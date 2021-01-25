@@ -24,6 +24,10 @@ struct User: Codable, Hashable {
     var completedChallenges: [String : String]?
     var completedTour: Bool
     var pendingChallengeInvite: [String : String]?
+    var pendingSharedChallengeInvite: [String : String]?
+    var doneChallenges: [String]?
+    var chats: [String : String]?
+    var sharedChallenges: [String : String]?
 }
 
 extension User: Identifiable {

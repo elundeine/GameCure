@@ -53,6 +53,26 @@ class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
             }
         }
     }
+    
+    func checkIfTodayIsLastDay() -> Bool{
+        let day = Date().getTodaysDate()
+        guard let lastChallengeDay = challengeDays.last else { return false }
+        if (Date(timeIntervalSince1970: lastChallengeDay).getTodaysDate() == day) {
+            return true
+        } else {
+            return false
+        }
+    }
+    func checkIfChallengeIsOver() -> Bool{
+        let day = Date().getTodaysDate()
+        guard let lastChallengeDay = challengeDays.last else { return false }
+        if (day > Date(timeIntervalSince1970: lastChallengeDay).getTodaysDate()) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func checkIfCompletedToday() -> Bool {
         let day = Date().getTodaysDate()
         let historyAsDates = history.map { Date(timeIntervalSince1970: $0).getTodaysDate()}

@@ -14,6 +14,7 @@ struct CompletedChallenge: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var challengeId: String
     var userId: String
+    var username: String
     var completed: [Double]?
     var timesCompleted: Int?
     var firstCompleted: Double

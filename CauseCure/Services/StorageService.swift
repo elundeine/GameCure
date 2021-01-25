@@ -11,6 +11,11 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseFirestoreSwift
 
+
+// MARK: The StorageService handles all Data which needs to be stored in the Firebase Storage:
+//  -Profile Images
+//  -Post Images
+
 class StorageService {
     
     static var storage = Storage.storage()

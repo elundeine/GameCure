@@ -21,7 +21,7 @@ struct ExploreView: View {
                 List {
                     ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
                         ZStack{
-                            NavigationLink(destination: CategoryCell(categoryCellVM: categoryCellVM)) {
+                            NavigationLink(destination: CategoryCell(session: session, categoryCellVM: categoryCellVM)) {
                                 EmptyView()
                             }.opacity(0.0)
                             .buttonStyle(PlainButtonStyle())
@@ -43,13 +43,14 @@ struct ExploreView: View {
                     }.foregroundColor(Color.black)
                 }
             )
-        }.fullScreenCover(isPresented: $isPresented) { FullScreenSearchModalView(repository: repository)
+        }.fullScreenCover(isPresented: $isPresented) { FullScreenSearchModalView(session: session, repository: repository)
         }
         
     }
 }
 
 struct FullScreenSearchModalView: View {
+        @ObservedObject var session : SessionStore
         @Environment(\.presentationMode) var presentationMode
         @ObservedObject var repository: ChallengeService
         var body: some View {
@@ -63,7 +64,7 @@ struct FullScreenSearchModalView: View {
                 
             }
                 Text("Search for challenges").font(.title)
-            CustomSearchBar(repository: repository)
+                CustomSearchBar(session: session, repository: repository)
 //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .edgesIgnoringSafeArea(.all)
@@ -74,6 +75,7 @@ struct FullScreenSearchModalView: View {
     }
 
 struct CategoryCell: View {
+    @ObservedObject var session: SessionStore
     @ObservedObject var categoryCellVM: CategoryCellViewModel
     @ObservedObject var challengeListVM = ChallengeListViewModel()
     var body: some View {
@@ -84,7 +86,7 @@ struct CategoryCell: View {
                 VStack (alignment: .leading) {
                     List {
                         ForEach(challengeListVM.challengeCellViewModels.filter { categoryCellVM.category.challenges.keys.contains($0.challenge.id!)}) { challengeCellVM in
-                            NavigationLink(destination: ChallengeCellDetail(challengeCellVM: challengeCellVM, myChallenge: challengeCellVM.repository.checkIfIDoThe(challengeCellVM.challenge))) {
+                            NavigationLink(destination: ChallengeCellDetail(session: session, challengeCellVM: challengeCellVM, myChallenge: challengeCellVM.repository.checkIfIDoThe(challengeCellVM.challenge))) {
                                 ChallengeCard(challengeCellVM: challengeCellVM)
                                 }
                         }

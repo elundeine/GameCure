@@ -16,6 +16,8 @@ import Combine
 import SwiftUI
 import UIKit
 
+// MARK: This service handels all User linked Challenges and loads the data upon View initialisation for the View Models.
+
 class Repository: ObservableObject {
     
 
@@ -28,22 +30,29 @@ class Repository: ObservableObject {
     @Published var challenges = [Challenge]()
     @Published var userChallenges = [Challenge]()
     @Published var userChallengesToday = [Challenge]()
+    @Published var userSharedChallenges = [Challenge]()
     @Published var challengeCategories = [ChallengeCategory]()
     @Published var completedUserChallenges = [CompletedChallenge]()
+    @Published var sharedCompletedUserChallenges = [CompletedChallenge]()
     @Published var users = [User]()
     @Published var following = [User]()
     @Published var messages = [Message]()
     @Published var userChallengeInvites = [Challenge]()
+    @Published var userSharedChallengeInvites = [Challenge]()
     typealias finished = () -> ()
     init() {
        
 //        loadChallenges()
         loadChallengesForUser()
+        loadSharedChallengesForUser()
         loadDataForCategory()
         loadUsers()
-        loadMessages()
+//        loadMessages()
+//        loadSharedCompletedUserChallenges()
         loadCompletedUserChallenges()
         loadUserChallengeInvites()
+        loadUserSharedChallengeInvites()
+        print(userSharedChallengeInvites.first)
     }
     private func loadChallenges() {
         db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
@@ -66,6 +75,10 @@ class Repository: ObservableObject {
             }
           }
     }
+    
+        
+        
+        
 
     private func loadUsers() {
 //        print("before db collection")
@@ -92,6 +105,7 @@ class Repository: ObservableObject {
         }
     }
     
+    
     private func loadChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 //        print(userId)
@@ -105,6 +119,56 @@ class Repository: ObservableObject {
               }
             }
         }
+    private func loadSharedChallengesForUser() {
+        
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+//        print(userId)
+            db.collection("challenges")
+                .addSnapshotListener { (querySnapshot, error) in
+                    if let querySnapshot = querySnapshot {
+                        let challenges = querySnapshot.documents.compactMap { document -> Challenge? in
+                            try? document.data(as: Challenge.self)
+                        }
+                        for challenge in challenges {
+                            
+                            if (challenge.sharedUserIds != nil){
+                                for (key, value) in challenge.sharedUserIds!{
+                                if (key == userId) {
+                                    self.userSharedChallenges.append(challenge)
+                                    self.loadSharedCompletedUserChallenges(userId: value, challengeId: challenge.id!)
+                                    
+                                } else {
+                                if (value == userId) {
+                                    self.userSharedChallenges.append(challenge)
+                                    self.loadSharedCompletedUserChallenges(userId: key, challengeId: challenge.id!)
+                                }
+                                }
+                                
+                                
+                            }
+                        }
+                    }
+            }
+        }
+    }
+    
+    func loadSharedCompletedUserChallenges(userId: String, challengeId: String) {
+       
+        db.collection("completedChallenges").whereField("userId", isEqualTo: userId).whereField("challengeId", isEqualTo: challengeId)
+          .addSnapshotListener { (querySnapshot, error) in
+            if let querySnapshot = querySnapshot {
+              self.sharedCompletedUserChallenges = querySnapshot.documents.compactMap { document -> CompletedChallenge? in
+                try? document.data(as: CompletedChallenge.self)
+              }
+            }
+          }
+
+    }
+    
+    func getSharedChallengeFromUser(userId: String) {
+        
+    }
+    
     
     private func loadDataForCategory() {
               db.collection("challengecategories")
@@ -124,7 +188,21 @@ class Repository: ObservableObject {
             .whereField("invitedUserIds", arrayContains: userId)
             .addSnapshotListener { (querySnapshot, error) in
               if let querySnapshot = querySnapshot {
+                print("Found invite")
                 self.userChallengeInvites = querySnapshot.documents.compactMap { document -> Challenge? in
+                  try? document.data(as: Challenge.self)
+                }
+              }
+            }
+        }
+    private func loadUserSharedChallengeInvites() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+          db.collection("challenges")
+            .whereField("invitedSharedUserIds", arrayContains: userId)
+            .addSnapshotListener { (querySnapshot, error) in
+              if let querySnapshot = querySnapshot {
+                self.userSharedChallengeInvites = querySnapshot.documents.compactMap { document -> Challenge? in
                   try? document.data(as: Challenge.self)
                 }
               }
@@ -153,6 +231,14 @@ class Repository: ObservableObject {
         }
     }
     
+    func challengeDone(challenge: Challenge, timesCompleted: Int) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        removeChallengefromUser(challenge)
+        
+        db.collection("users").document(userId).updateData(["doneChallenges": FieldValue.arrayUnion(["\(challenge.id)"])])
+        
+    }
+    
     func updateCategory(challengeId: String, challengeName: String, category: String) {
 //            print("updating")
             db.collection("challengecategories").document(category).updateData([
@@ -166,22 +252,30 @@ class Repository: ObservableObject {
         db.collection("users").document(userId).updateData([
             "challenges.\(challenge.id)": ""
         ])
+        
     }
     
     //TODO
-    func removeChallengeToUser(_ challenge: Challenge) {
+    func removeChallengefromUser(_ challenge: Challenge) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
-        db.collection("users").document(userId).updateData([
-            "challenges.\(challenge.id)": ""
-        ])
+        db.collection("challenges").document(challenge.id ?? "").updateData(["userIds" : FieldValue.arrayRemove(["\(userId)"])])
     }
     
     func sendChallengeInvite (userId: String, myUsername: String, challengeId: String) {
-                    
+        print("send Challenge Invite")
         db.collection("users").document(userId).updateData([
             "pendingChallengeInvite.\(challengeId)": "\(myUsername)"])
         db.collection("challenges").document(challengeId).updateData(["invitedUserIds" : FieldValue.arrayUnion(["\(userId)"])])
+        print("\(userId) got invited to do \(challengeId)")
+        
+    }
+    func sendSharedChallengeInvite (userId: String, myUsername: String, challengeId: String) {
+        print("send SHARED Challenge Invite")
+        guard let myUserId = Auth.auth().currentUser?.uid else { return }
+        db.collection("users").document(userId).updateData([
+            "pendingSharedChallengeInvite.\(challengeId)": "\(myUserId)"])
+        db.collection("challenges").document(challengeId).updateData(["invitedSharedUserIds" : FieldValue.arrayUnion(["\(userId)"])])
         print("\(userId) got invited to do \(challengeId)")
     }
     
@@ -195,13 +289,33 @@ class Repository: ObservableObject {
     func acceptChallengeInviteFrom (userId: String, challengeId: String) {
         guard let myUserId = Auth.auth().currentUser?.uid else { return }
         db.collection("users").document(myUserId).updateData([
-            "challenges.\(challengeId)": ""
+            "challenges.\(challengeId)": userId
         ])
+        
         db.collection("challenges").document(challengeId).updateData(["userIds" : FieldValue.arrayUnion(["\(myUserId)"])])
         deleteChallengeInviteFrom(challengeId: challengeId)
         print("\(userId) got invited to do \(challengeId)")
     }
     
+    func acceptSharedChallengeInviteFrom (userId: String, challengeId: String) {
+        guard let myUserId = Auth.auth().currentUser?.uid else { return }
+        db.collection("users").document(myUserId).updateData([
+            "sharedChallenges.\(challengeId)": userId
+        ])
+        db.collection("users").document(userId).updateData([
+            "sharedChallenges.\(challengeId)": myUserId
+        ])
+        db.collection("challenges").document(challengeId).updateData(["sharedUserIds.\(userId)": "\(myUserId)"])
+        deleteSharedChallengeInviteFrom(challengeId: challengeId)
+        
+    }
+    
+    func deleteSharedChallengeInviteFrom (challengeId: String) {
+        guard let myUserId = Auth.auth().currentUser?.uid else { return }
+        db.collection("users").document(myUserId).updateData([
+            "pendingSharedChallengeInvite.\(challengeId)": FieldValue.delete()])
+        db.collection("challenges").document(challengeId).updateData(["invitedSharedUserIds" : FieldValue.arrayRemove(["\(myUserId)"])])
+    }
     func updateChallenge(_ challenge: Challenge) {
         if let challengeID = challenge.id {
             do {
@@ -240,7 +354,7 @@ class Repository: ObservableObject {
         return username
     }
     
-    func completeAChallenge(_ challenge: Challenge) {
+    func completeAChallenge(challenge: Challenge, username: String) {
         let group = DispatchGroup()
         guard let userId = Auth.auth().currentUser?.uid else { return }
         let userRef = db.collection("users").document(userId)
@@ -292,7 +406,7 @@ class Repository: ObservableObject {
                     print("group leave")
                     group.notify(queue: DispatchQueue.global()) {
                     print("non of the user completedChallenges is equal to \(challenge.id), we create a new Completed Challenges Collection")
-                    let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                        let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, username: username, timeInterval: Date().timeIntervalSince1970)
                         userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(challenge.id)"])
                     challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(userId)"])
                     print("Completed Challenges Collection was created id: \(newCompletedChallengesID)")
@@ -301,7 +415,7 @@ class Repository: ObservableObject {
                 
                 
                 print("user \(userId) has never completed a challenge")
-                let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, timeInterval: Date().timeIntervalSince1970)
+                let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, username: username, timeInterval: Date().timeIntervalSince1970)
                 userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
                 challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
                 print("first Completed Challenges Collection was created id: \(newCompletedChallengesID)")
@@ -313,13 +427,13 @@ class Repository: ObservableObject {
 }
     
     
-    func addNewCompletedChallenge(_ challenge: Challenge, userId: String, timeInterval: Double) -> String {
+    func addNewCompletedChallenge(_ challenge: Challenge, userId: String, username: String, timeInterval: Double) -> String {
         
         
         do {
             print("adding")
             
-            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
+            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, username: username, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
             print(result.documentID)
             return result.documentID
         } catch {

@@ -70,19 +70,19 @@ struct HomeView: View {
                         }
                        }, trailing:
                        //add notification view
-                         Text("")
-//                        HStack {
-//                            Button(action:  {
-//                                withAnimation{
-//                                    self.isPresented.toggle()
-//                                }
-//                            }) {
-//                                Image(systemName: "bell.fill")
-//
-//                            }.foregroundColor(Color.black)
-//                        }
+//                         Text("")
+                        HStack {
+                            Button(action:  {
+                                withAnimation{
+                                    self.isPresented.toggle()
+                                }
+                            }) {
+                                Image(systemName: "plus")
+
+                            }.foregroundColor(Color.black)
+                        }
                        )
-            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(session: session, userChallengeListVM: userChallengeListVM)}
+            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView()}
                .navigationBarTitle(Text("My Dashboard"))
                    }
             
@@ -97,8 +97,6 @@ enum InputError: Error {
   case empty
 }
 struct PendingInvitationModalView: View {
-        @ObservedObject var session: SessionStore
-        @ObservedObject var userChallengeListVM : UserChallengeListViewModel
             @Environment(\.presentationMode) var presentationMode
             var body: some View {
                 //TODO: add dismiss button
@@ -110,23 +108,7 @@ struct PendingInvitationModalView: View {
                     }.padding()
                     
                 }
-                    Text("Your challenge Invitations").font(.title)
-                    if(session.session?.pendingChallengeInvite != nil) {
-                        List{
-                            ForEach(userChallengeListVM.userChallengeInvites) { userChallengeCellVM in
-                                ZStack{
-                                    NavigationLink(destination: InvitedChallengeView(session: session, userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")) {
-                                    EmptyView()
-                                    }   .opacity(0.0)
-                                    .buttonStyle(PlainButtonStyle())
-                                UserChallengeInviteCard(userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")
-                            }
-                        }
-                    }
-                        Spacer()
-                    } else {
-                        Text("You don't have any pending challenge invites. ")
-                    }
+                   AddCreateChallenge()
                 
                 
             }
@@ -165,6 +147,39 @@ struct UserChallengeInviteCard: View {
     }
 }
 
+struct SharedUserChallengeInviteCard: View {
+    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+    @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
+    @State var invitedBy = ""
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+            Text("Challenged by Hannah")
+                    
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
+        }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color.blue)
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
 struct ProductCard: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     
