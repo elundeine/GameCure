@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 
+// Main entry point
 @main
 struct CauseCureApp: App {
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
@@ -21,6 +22,7 @@ struct CauseCureApp: App {
     }
 }
 
+// AppDelegate to setup Firebase connection
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         print("Firebase...")

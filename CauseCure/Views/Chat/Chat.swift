@@ -11,7 +11,7 @@ struct ChatView: View {
     @ObservedObject var session: SessionStore
     @ObservedObject var repository = Repository()
     @ObservedObject var userListVM = UserListViewModel()
-    @ObservedObject var messageListVM = MessageListViewModel()
+//    @ObservedObject var messageListVM = MessageListViewModel()
     @State var isPresented = false
     //TODO:
     
@@ -38,10 +38,10 @@ struct ChatView: View {
                                 session.session!.following!.keys.contains($0.user.uid!)}) {
                                     userCellVM in
                                 ZStack {
-                                NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
-                                    EmptyView()
-                                }.opacity(0.0)
-                                .buttonStyle(PlainButtonStyle())
+//                                NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
+//                                    EmptyView()
+//                                }.opacity(0.0)
+//                                .buttonStyle(PlainButtonStyle())
                                 FriendCard(userCellVM: userCellVM)
                                      
                         

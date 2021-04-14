@@ -223,8 +223,9 @@ struct SharedChallengeCellDetailView: View {
                         Text("Challenge Description")
                             .font(.subheadline)
                             .bold()
+                            .padding()
                         Spacer()
-                    }
+                    }.padding()
                         HStack{
                             Text($userChallengeCellVM.userChallenge.description.wrappedValue)
                             Spacer()
@@ -238,7 +239,7 @@ struct SharedChallengeCellDetailView: View {
                                     .font(.subheadline)
                                     .bold()
                                 Spacer()
-                            }
+                            }.padding()
                           
                             ScrollView(.horizontal){
                                 HStack(alignment: .top) {
@@ -338,7 +339,7 @@ struct SharedChallengeCellDetailView: View {
                     }
                     Spacer()
                 }
-            }
+            }.padding()
             .onAppear(perform: self.progressSetup)
             .alert(isPresented: $showCompleteChallengeAlert) {
                 Alert(title: Text("Completed for Today! Congratulation!"), message: Text("You earned \(self.experience) CauseCoins"), dismissButton: .default(Text("Ok")))

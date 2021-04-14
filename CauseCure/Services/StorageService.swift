@@ -26,12 +26,18 @@ class StorageService {
     
     static var storagePost = storageRoot.child("posts")
     
+    static var storageChat = storageRoot.child("chat")
+    
     static func storageProfileId(userId: String) -> StorageReference {
         return storageProfile.child(userId)
     }
     
     static func storagePostId(postId: String) -> StorageReference {
         return storagePost.child(postId)
+    }
+    
+    static func storageChatId(chatId: String) -> StorageReference {
+        return storageChat.child(chatId)
     }
     
     static func updateProfileImage(userId: String, imageData: Data, metaData: StorageMetadata, storageProfileImageRef: StorageReference, onSuccess: @escaping(_ user: User) -> Void, onError: @escaping(_ errorMessage: String)-> Void) {
@@ -161,5 +167,52 @@ class StorageService {
                 }
                         
         }
+    }
+    
+    static func saveChatPhoto(messageId: String, recipientId: String, recipientProfile: String, recipientName: String, senderProfile: String, senderId: String, senderUsername: String, imageData: Data, metadata: StorageMetadata, storageChatRef: StorageReference, onSuccess: @escaping() -> Void, onError: @escaping(_ error: String)-> Void) {
+        
+        
+        storageChatRef.putData(imageData, metadata: metadata) {
+            (StorageMetadata, err) in
+            
+            if(err != nil) {
+                onError(err!.localizedDescription)
+                
+                return
+            }
+            storageChatRef.downloadURL {
+                (url, error) in
+                
+                if let metaImageUrl = url?.absoluteString {
+                    let chat = Chat(messageId: messageId, textMessage: "", profile: senderProfile, photoUrl: metaImageUrl, sender: senderId, username: senderUsername, timestamp: Date().timeIntervalSince1970, isPhoto: true)
+                    
+                    guard let dict = try? chat.asDictionary() else {return}
+                    
+                    ChatService.conversation(sender: senderId, recipient: recipientId).document(messageId).setData(dict) {
+                        (error) in
+                        
+                        if error == nil {
+                            ChatService.conversation(sender: recipientId, recipient: senderId).document(messageId).setData(dict)
+                            
+                            let senderMessage = Message(lastMessage: "", username: senderUsername, isPhoto: true, timestamp: Date().timeIntervalSince1970, userID: senderId, profile: senderProfile)
+                            let recipientMessage = Message(lastMessage: "", username: recipientName, isPhoto: true, timestamp: Date().timeIntervalSince1970, userID: recipientId, profile: recipientProfile)
+                            
+                            guard let senderDict = try? senderMessage.asDictionary() else {return}
+                            
+                            guard let recipientDict = try? recipientMessage.asDictionary() else {return}
+                            
+                            ChatService.messagesId(senderId: senderId, recipientId: recipientId).setData(recipientDict)
+                            ChatService.messagesId(senderId: recipientId, recipientId: senderId).setData(senderDict)
+                            
+                            onSuccess()
+                        } else {
+                            onError(error!.localizedDescription)
+                        }
+                    }
+                }
+            }
+        }
+        
+        
     }
 }

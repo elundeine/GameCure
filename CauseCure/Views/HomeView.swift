@@ -19,7 +19,7 @@ import SDWebImageSwiftUI
 
 
 struct HomeView: View {
-    @ObservedObject var session: SessionStore
+    @EnvironmentObject var session: SessionStore
 //    @ObservedObject var challengeListVM = ChallengeListViewModel()
     @StateObject var userChallengeListVM = UserChallengeListViewModel()
 //    @ObservedObject var categoryListVM = CategoryListViewModel()

@@ -17,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if (session.session != nil) {
-                TabBar(session: self.session)
+                TabBar()
             } else {
                 SignInView(session: self.session)
             }

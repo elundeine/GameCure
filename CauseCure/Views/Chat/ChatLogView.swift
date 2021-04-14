@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatLogView: View {
-    @ObservedObject var messageListVM : MessageListViewModel
+//    @ObservedObject var messageListVM : MessageListViewModel
     @ObservedObject var session : SessionStore
     @State var write = ""
     @State private var messageImage: Image?
@@ -41,11 +41,11 @@ struct ChatLogView: View {
 //            }
             ScrollView(.vertical, showsIndicators: false){
                 VStack(alignment: .center){
-                    ForEach(messageListVM.messageCellViewModels) { message in
-                        ChatRow(message: message.message, uid: session.session?.uid ?? "")
-                        Text(message.message.textMessage)
-                        .padding(.vertical,6)
-                    }
+//                    ForEach(messageListVM.messageCellViewModels) { message in
+//                        ChatRow(message: message.l, uid: session.session?.uid ?? "")
+//                        Text(message.message.textMessage)
+//                        .padding(.vertical,6)
+//                    }
                 }.frame(width: 374)
             }
 

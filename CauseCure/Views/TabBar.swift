@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct TabBar: View {
-    @ObservedObject var session : SessionStore
+    @EnvironmentObject var session: SessionStore
     
     //@EnvironmentObject var model: Model
     @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
@@ -53,7 +53,7 @@ struct CustomTabView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
             TabView(selection: $selectedTab) {
-                HomeView(session: self.session)
+                HomeView()
                     .tag("house.fill")
                 ExploreView()
                     .tag("magnifyingglass")

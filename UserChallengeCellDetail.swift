@@ -415,8 +415,9 @@ struct FriendModalView: View {
         }
         Text("Recommend to a Follower").font(.title)
         if(session.session?.followers != nil) {
-        }
         List {
+            
+            //
             ForEach(userListVM.userCellViewModels.filter {
                         session.session!.followers!.keys.contains($0.user.uid!)}) {
                 userCellVM in
@@ -430,6 +431,7 @@ struct FriendModalView: View {
                     }
             }
         }
+    }
     }
     Spacer()
     .alert(isPresented: $challengeFriendAlert) {

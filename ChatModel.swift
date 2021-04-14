@@ -10,7 +10,7 @@ import Firebase
 import FirebaseAuth
 import UIKit
 
-struct Message: Encodable, Decodable, Hashable {
+struct Chat: Encodable, Decodable, Hashable {
     var messageId: String
     var textMessage: String
     var profile: String
@@ -21,8 +21,5 @@ struct Message: Encodable, Decodable, Hashable {
     var isCurrentUser: Bool {
         return Auth.auth().currentUser!.uid == sender
     }
-    var isPhoto:Bool
-}
-extension Message: Identifiable {
-    var id: Message { self }
+    var isPhoto: Bool
 }
