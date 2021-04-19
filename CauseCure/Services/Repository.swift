@@ -42,13 +42,13 @@ class Repository: ObservableObject {
     typealias finished = () -> ()
     init() {
        
-//        loadChallenges()
+//      loadChallenges()
         loadChallengesForUser()
         loadSharedChallengesForUser()
         loadDataForCategory()
-        loadUsers()
-//        loadMessages()
-//        loadSharedCompletedUserChallenges()
+//        loadUsers()
+//      loadMessages()
+//      loadSharedCompletedUserChallenges()
         loadCompletedUserChallenges()
         loadUserChallengeInvites()
         loadUserSharedChallengeInvites()
@@ -61,7 +61,7 @@ class Repository: ObservableObject {
                 try? document.data(as: Challenge.self)
               }
             }
-          }
+        }
     }
     
     private func loadCompletedUserChallenges() {
@@ -73,26 +73,26 @@ class Repository: ObservableObject {
                 try? document.data(as: CompletedChallenge.self)
               }
             }
-          }
+        }
     }
     
         
         
         
-
-    private func loadUsers() {
-//        print("before db collection")
-        db.collection("users").addSnapshotListener { (querySnapshot, error) in
-//            print("loading user")
-            if let querySnapshot = querySnapshot {
-                
-//                  print("in querySnapshot of users")
-              self.users = querySnapshot.documents.compactMap { document -> User? in
-                try? document.data(as: User.self)
-              }
-            }
-        }
-    }
+    //creating a snapshot for all users in order to search for users.
+//    private func loadUsers() {
+////        print("before db collection")
+//        db.collection("users").addSnapshotListener { (querySnapshot, error) in
+////            print("loading user")
+//            if let querySnapshot = querySnapshot {
+//
+////                  print("in querySnapshot of users")
+//              self.users = querySnapshot.documents.compactMap { document -> User? in
+//                try? document.data(as: User.self)
+//              }
+//            }
+//        }
+//    }
     
     private func loadMessages() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -119,10 +119,9 @@ class Repository: ObservableObject {
               }
             }
         }
+    
     private func loadSharedChallengesForUser() {
-        
         guard let userId = Auth.auth().currentUser?.uid else { return }
-//        print(userId)
             db.collection("challenges")
                 .addSnapshotListener { (querySnapshot, error) in
                     if let querySnapshot = querySnapshot {
@@ -133,18 +132,16 @@ class Repository: ObservableObject {
                             
                             if (challenge.sharedUserIds != nil){
                                 for (key, value) in challenge.sharedUserIds!{
-                                if (key == userId) {
-                                    self.userSharedChallenges.append(challenge)
-                                    self.loadSharedCompletedUserChallenges(userId: value, challengeId: challenge.id!)
+                                    if (key == userId) {
+                                        self.userSharedChallenges.append(challenge)
+                                        self.loadSharedCompletedUserChallenges(userId: value, challengeId: challenge.id!)
                                     
-                                } else {
-                                if (value == userId) {
-                                    self.userSharedChallenges.append(challenge)
-                                    self.loadSharedCompletedUserChallenges(userId: key, challengeId: challenge.id!)
+                                    } else {
+                                        if (value == userId) {
+                                            self.userSharedChallenges.append(challenge)
+                                            self.loadSharedCompletedUserChallenges(userId: key, challengeId: challenge.id!)
+                                    }
                                 }
-                                }
-                                
-                                
                             }
                         }
                     }
