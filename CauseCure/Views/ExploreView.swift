@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExploreView: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var repository = ChallengeService()
+    
     @ObservedObject var categoryListVM = CategoryListViewModel()
     
     @State var isPresented = false
@@ -43,7 +43,7 @@ struct ExploreView: View {
                     }.foregroundColor(Color.black)
                 }
             )
-        }.fullScreenCover(isPresented: $isPresented) { FullScreenSearchModalView(session: session, repository: repository)
+        }.fullScreenCover(isPresented: $isPresented) { FullScreenSearchModalView(session: session)
         }
         
     }
@@ -52,7 +52,6 @@ struct ExploreView: View {
 struct FullScreenSearchModalView: View {
         @ObservedObject var session : SessionStore
         @Environment(\.presentationMode) var presentationMode
-        @ObservedObject var repository: ChallengeService
         var body: some View {
             //TODO: add dismiss button
             VStack{
@@ -64,7 +63,7 @@ struct FullScreenSearchModalView: View {
                 
             }
                 Text("Search for challenges").font(.title)
-                CustomSearchBar(session: session, repository: repository)
+                CustomSearchBar(session: session)
 //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .edgesIgnoringSafeArea(.all)

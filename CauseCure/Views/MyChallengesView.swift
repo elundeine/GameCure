@@ -22,7 +22,7 @@ struct MyChallengesView: View {
 
     var body: some View {
         if(userChallengeListVM.userChallengeCellViewModels.isEmpty && session.session?.pendingChallengeInvite != nil){
-            HStack(){
+            HStack() {
                 Spacer()
                 VStack(){
                     Spacer()
