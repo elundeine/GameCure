@@ -17,11 +17,11 @@ class MessageService: ObservableObject {
     
     @Published var message: [Message] = []
     
- 
     func postSorting(first: PostModel, second: PostModel) -> Bool{
         print("sorting")
         return Date(timeIntervalSince1970: first.date) > Date(timeIntervalSince1970: second.date)
     }
+    
     func loadUserChats(userId: String) {
 //        guard let myId = Auth.auth().currentUser?.uid else { return }
 //        let group = DispatchGroup()

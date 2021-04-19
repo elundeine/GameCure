@@ -40,6 +40,7 @@
 		D54FF90D25BB132300AF8260 /* SharedCompletedChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54FF90C25BB132300AF8260 /* SharedCompletedChallengeModel.swift */; };
 		D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5578F2E25836B9A0038F956 /* ChallengeListViewModel.swift */; };
 		D5578F3225836CD10038F956 /* ChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5578F3125836CD10038F956 /* ChallengeCellViewModel.swift */; };
+		D55E6E73262DCADA00771331 /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55E6E72262DCADA00771331 /* UserSearchService.swift */; };
 		D5611AFA25A4B89300443FA5 /* ChatLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611AF925A4B89300443FA5 /* ChatLogView.swift */; };
 		D5611AFD25A4BA2B00443FA5 /* Keyboard+notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611AFC25A4BA2B00443FA5 /* Keyboard+notification.swift */; };
 		D5611B0125A4C3D000443FA5 /* MessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5611B0025A4C3D000443FA5 /* MessageListViewModel.swift */; };
@@ -127,6 +128,7 @@
 		D54FF90C25BB132300AF8260 /* SharedCompletedChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCompletedChallengeModel.swift; sourceTree = "<group>"; };
 		D5578F2E25836B9A0038F956 /* ChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeListViewModel.swift; sourceTree = "<group>"; };
 		D5578F3125836CD10038F956 /* ChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellViewModel.swift; sourceTree = "<group>"; };
+		D55E6E72262DCADA00771331 /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
 		D5611AF925A4B89300443FA5 /* ChatLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogView.swift; sourceTree = "<group>"; };
 		D5611AFC25A4BA2B00443FA5 /* Keyboard+notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard+notification.swift"; sourceTree = "<group>"; };
 		D5611B0025A4C3D000443FA5 /* MessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewModel.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				D579942725A99DFC0005A263 /* ProfileService.swift */,
 				D53C949825802DC30001244E /* SessionStore.swift */,
 				D579941125A76B910005A263 /* ChallengeService.swift */,
+				D55E6E72262DCADA00771331 /* UserSearchService.swift */,
 				D5DEDF2E2580EE69006A39B0 /* Repository.swift */,
 				D579941625A8AA310005A263 /* CompletedChallengesVM */,
 				D5611AFF25A4C3B100443FA5 /* MessageVM */,
@@ -651,6 +654,7 @@
 				D54FF90625BAFC8F00AF8260 /* InvitedSharedChallengeView.swift in Sources */,
 				D5578F2F25836B9A0038F956 /* ChallengeListViewModel.swift in Sources */,
 				D51C8CB8259690A600F8FB3D /* UserSearch.swift in Sources */,
+				D55E6E73262DCADA00771331 /* UserSearchService.swift in Sources */,
 				D579941825A8AA570005A263 /* CompletedChallengeListViewModel.swift in Sources */,
 				D594D638258003D9003B44DD /* SignUpView.swift in Sources */,
 				D5C1DC4325A396E700F2DF4E /* Post.swift in Sources */,

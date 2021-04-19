@@ -10,7 +10,7 @@ import UIKit
 
 struct CustomSearchBar: View {
     @ObservedObject var session : SessionStore
-    @ObservedObject var repository : ChallengeService
+    @ObservedObject var repository = ChallengeService()
     @State var txt = ""
     @State private var showCancelButton: Bool = false
     var body: some View {

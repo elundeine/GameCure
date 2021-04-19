@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserSearch: View {
-        @ObservedObject var repository : Repository
+        @ObservedObject var userSearch = UserSearchService()
         //    @Binding var challenges : [Challenge]
         @State var txt = ""
         @State private var showCancelButton: Bool = false
@@ -47,7 +47,7 @@ struct UserSearch: View {
            
             NavigationView{
 //            Text("Results").font(.subheadline)
-            List(self.repository.users.filter { $0.username.lowercased().contains(self.txt.lowercased())}) { i in
+            List(self.userSearch.users.filter { $0.username.lowercased().contains(self.txt.lowercased())}) { i in
                 NavigationLink(destination: UserProfile(userCellVM: UserCellViewModel(user: i))) {
                                     Text(i.username)
                                 }

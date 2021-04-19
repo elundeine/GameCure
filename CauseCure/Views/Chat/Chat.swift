@@ -92,8 +92,8 @@ struct UserFullScreenSearchModalView: View {
                 
             }
                 Text("Search for other Users").font(.title)
-            UserSearch(repository: repository)
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            UserSearch()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .edgesIgnoringSafeArea(.all)
             }

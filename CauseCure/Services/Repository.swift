@@ -27,7 +27,7 @@ class Repository: ObservableObject {
         return storeRoot.collection("users").document(userId)
     }
     let db = Firestore.firestore()
-    @Published var challenges = [Challenge]()
+
     @Published var userChallenges = [Challenge]()
     @Published var userChallengesToday = [Challenge]()
     @Published var userSharedChallenges = [Challenge]()
@@ -53,15 +53,6 @@ class Repository: ObservableObject {
         loadUserChallengeInvites()
         loadUserSharedChallengeInvites()
         print(userSharedChallengeInvites.first)
-    }
-    private func loadChallenges() {
-        db.collection("challenges").addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-              self.challenges = querySnapshot.documents.compactMap { document -> Challenge? in
-                try? document.data(as: Challenge.self)
-              }
-            }
-        }
     }
     
     private func loadCompletedUserChallenges() {
