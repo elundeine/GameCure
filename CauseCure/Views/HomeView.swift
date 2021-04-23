@@ -19,6 +19,7 @@ import SDWebImageSwiftUI
 
 
 struct HomeView: View {
+    @ObservedObject var repository : Repository
     @EnvironmentObject var session: SessionStore
     @State var presentAddNewItem = false
     @State var isPresented = false
@@ -48,7 +49,7 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                MyChallengesView(session)
+                MyChallengesView(repository: repository, session: session)
                     .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
                        HStack {
@@ -78,7 +79,7 @@ struct HomeView: View {
                             }.foregroundColor(Color.black)
                         }
                        )
-            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView()}
+            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(repository: repository)}
                .navigationBarTitle(Text("My Dashboard"))
                    }
             
@@ -93,6 +94,7 @@ enum InputError: Error {
   case empty
 }
 struct PendingInvitationModalView: View {
+            @ObservedObject var repository: Repository
             @Environment(\.presentationMode) var presentationMode
             var body: some View {
                 //TODO: add dismiss button
@@ -104,7 +106,7 @@ struct PendingInvitationModalView: View {
                     }.padding()
                     
                 }
-                   AddCreateChallenge()
+                   AddCreateChallenge(repository: repository)
                 
                 
             }

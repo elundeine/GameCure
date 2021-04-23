@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ChatView: View {
     @ObservedObject var session: SessionStore
-    @ObservedObject var repository = Repository()
-    @ObservedObject var userListVM = UserListViewModel()
+    @ObservedObject var repository: Repository
+    @StateObject var userListVM : UserListViewModel
 //    @ObservedObject var messageListVM = MessageListViewModel()
     @State var isPresented = false
     //TODO:
@@ -20,7 +20,12 @@ struct ChatView: View {
     
     //2 search
     
-    //3 
+    //3
+    init(session: SessionStore, repository: Repository){
+        self.session = session
+        self.repository = repository
+        _userListVM = StateObject(wrappedValue:UserListViewModel(repository: repository))
+    }
     
     var body: some View {
         VStack{
@@ -79,8 +84,12 @@ struct ChatView: View {
 
 struct UserFullScreenSearchModalView: View {
         @Environment(\.presentationMode) var presentationMode
-        @ObservedObject var repository = Repository()
-        @ObservedObject var userListVM = UserListViewModel()
+        @ObservedObject var repository : Repository
+        @ObservedObject var userListVM : UserListViewModel
+        init(repository: Repository){
+        self.repository = repository
+            userListVM =  UserListViewModel(repository: repository)
+        }
         var body: some View {
             //TODO: add dismiss button
             VStack{
