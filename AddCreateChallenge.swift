@@ -10,7 +10,7 @@ import SwiftUI
 struct AddCreateChallenge: View {
     @EnvironmentObject var session: SessionStore
     @ObservedObject var challengeListVM = ChallengeListViewModel()
-    @ObservedObject var categoryListVM = CategoryListViewModel()
+    @ObservedObject var categoryListVM = CategoryListViewModel(repository: Repository())
     
     @State private var title = ""
     @State private var durationDays = 7

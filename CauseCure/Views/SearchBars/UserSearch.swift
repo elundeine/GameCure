@@ -54,7 +54,7 @@ struct UserSearch: View {
                             }.frame(height: UIScreen.main.bounds.height / 5)
                 
                         }
-
+            .onDisappear(perform: userSearch.deleteUserSnapshots)
                     }
             }
 

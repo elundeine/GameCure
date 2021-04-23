@@ -56,6 +56,7 @@ struct CustomSearchBar: View {
                     }.frame(height: UIScreen.main.bounds.height / 5)
         }
         Spacer()
+            .onDisappear(perform: repository.deleteChallengesSnapshots)
     }
             
 }

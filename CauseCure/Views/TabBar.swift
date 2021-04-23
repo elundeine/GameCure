@@ -11,7 +11,7 @@ import SwiftUI
 struct TabBar: View {
     @EnvironmentObject var session: SessionStore
     
-    //@EnvironmentObject var model: Model
+
     @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
 //    @State private var needsOnboarding = true
     
@@ -44,9 +44,7 @@ private enum Tab: String, Equatable, CaseIterable{
 }
 struct CustomTabView: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var repository = Repository()
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
-    //@State private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
     var body: some View {

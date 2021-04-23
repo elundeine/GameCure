@@ -39,6 +39,10 @@ class ChallengeService: ObservableObject {
         }
     }
     
+    func deleteChallengesSnapshots() {
+        self.challenges = []
+    }
+    
     func addChallenge(_ challenge: Challenge) {
         do {
             print("adding")
