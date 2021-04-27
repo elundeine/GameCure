@@ -19,7 +19,7 @@ struct ContentView: View {
             if (session.session != nil) {
                 TabBar()
             } else {
-                SignInView(session: self.session)
+                SignInView()
             }
         }.onAppear(perform: listen)
         
