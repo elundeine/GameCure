@@ -9,12 +9,16 @@ import SwiftUI
 
 struct ExploreView: View {
     @EnvironmentObject var session: SessionStore
-    
-    @ObservedObject var categoryListVM = CategoryListViewModel()
+    @ObservedObject var repository : Repository
+    @StateObject var categoryListVM : CategoryListViewModel
     
     @State var isPresented = false
     @State var menuOpen = false
     
+    init(repository: Repository){
+        self.repository = repository
+        _categoryListVM = StateObject(wrappedValue: CategoryListViewModel(repository: repository))
+    }
     var body: some View {
         NavigationView {
             VStack (alignment: .leading) {

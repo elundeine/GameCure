@@ -32,7 +32,10 @@ class UserSearchService: ObservableObject {
     init() {
         loadUsers()
     }
-
+    func deleteUserSnapshots() {
+        self.users = []
+    }
+    
 
 
 //creating a snapshot for all users in order to search for users.

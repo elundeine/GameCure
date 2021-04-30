@@ -13,7 +13,7 @@ struct SharedChallengeCellDetailView: View {
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
         @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
-        @ObservedObject var userListVM = UserListViewModel()
+        @ObservedObject var userListVM : UserListViewModel
         
         @State var challengeDone = false
         @State var showCompleteChallengeAlert = false

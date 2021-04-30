@@ -52,7 +52,6 @@ class Repository: ObservableObject {
         loadCompletedUserChallenges()
         loadUserChallengeInvites()
         loadUserSharedChallengeInvites()
-        print(userSharedChallengeInvites.first)
     }
     
     private func loadCompletedUserChallenges() {
@@ -67,7 +66,7 @@ class Repository: ObservableObject {
         }
     }
     
-        
+    
         
         
     //creating a snapshot for all users in order to search for users.
@@ -171,12 +170,12 @@ class Repository: ObservableObject {
     //TODO
     private func loadUserChallengeInvites() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
-//        print(userId)
+        print(userId)
           db.collection("challenges")
             .whereField("invitedUserIds", arrayContains: userId)
             .addSnapshotListener { (querySnapshot, error) in
               if let querySnapshot = querySnapshot {
-                print("Found invite")
+                print("Found SOMETHING")
                 self.userChallengeInvites = querySnapshot.documents.compactMap { document -> Challenge? in
                   try? document.data(as: Challenge.self)
                 }

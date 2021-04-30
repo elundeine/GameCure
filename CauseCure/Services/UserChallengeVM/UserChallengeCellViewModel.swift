@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 class UserChallengeCellViewModel: ObservableObject, Identifiable {
-    @Published var repository = Repository()
+    @Published var repository: Repository
     
     @Published var userChallenge: Challenge
     
@@ -31,13 +31,13 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     
     static func newChallenge() -> UserChallengeCellViewModel {
         print("here")
-        return UserChallengeCellViewModel(userChallenge: Challenge(title: "", category: "", durationDays: 7, interval: "", searchName: [""], description: "", completed: false, challengeCreater: Auth.auth().currentUser?.uid ?? "" ))
+        return UserChallengeCellViewModel(userChallenge: Challenge(title: "", category: "", durationDays: 7, interval: "", searchName: [""], description: "", completed: false, challengeCreater: Auth.auth().currentUser?.uid ?? "" ), repository: Repository())
     }
     
     static func newChallenge(title: String, durationDays: Int, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String) -> UserChallengeCellViewModel {
         print("here")
 
-        return UserChallengeCellViewModel(userChallenge: Challenge(title: title, category: "", durationDays: durationDays, interval: interval, searchName: searchName, description: description, completed: completed, challengeCreater: challengeCreater))
+        return UserChallengeCellViewModel(userChallenge: Challenge(title: title, category: "", durationDays: durationDays, interval: interval, searchName: searchName, description: description, completed: completed, challengeCreater: challengeCreater), repository: Repository())
     }
     
     func getUsernameFor (id : String) -> String {
@@ -47,9 +47,10 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     }
     
     
-    init(userChallenge: Challenge) {
-        self.userChallenge = userChallenge
+    init(userChallenge: Challenge, repository: Repository) {
         
+        self.userChallenge = userChallenge
+        self.repository = repository
         $userChallenge
             .map { userChallenge in
                 userChallenge.completed ? "checkmark.circle.fill" : "bell.circle.fill"

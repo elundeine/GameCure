@@ -14,23 +14,24 @@ import SwiftUI
 
 class CompletedChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
-    @Published var repository = Repository()
+    @Published var repository : Repository
     @Published var completedChallengeCellViewModels = [CompletedChallengeCellViewModel]()
     @Published var sharedCompletedChallengeViewModels = [CompletedChallengeCellViewModel]()
     
     private var cancellabels = Set<AnyCancellable>()
     
-    init() {
+    init(repository: Repository){
+        self.repository = repository
         repository.$completedUserChallenges.map { completedChallenge in
             completedChallenge.map { completedChallenge in
-                CompletedChallengeCellViewModel(completedChallenge: completedChallenge)
+                CompletedChallengeCellViewModel(completedChallenge: completedChallenge, repository: repository)
                 }
             }
             .assign(to: \.completedChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
         repository.$sharedCompletedUserChallenges.map { completedChallenge in
             completedChallenge.map { completedChallenge in
-                CompletedChallengeCellViewModel(completedChallenge: completedChallenge)
+                CompletedChallengeCellViewModel(completedChallenge: completedChallenge, repository: repository)
                 }
             }
             .assign(to: \.sharedCompletedChallengeViewModels, on: self)

@@ -10,7 +10,7 @@ import SwiftUI
 struct AddCreateChallenge: View {
     @EnvironmentObject var session: SessionStore
     @ObservedObject var challengeListVM = ChallengeListViewModel()
-    @ObservedObject var categoryListVM = CategoryListViewModel()
+    @ObservedObject var categoryListVM : CategoryListViewModel
     
     @State private var title = ""
     @State private var durationDays = 7
@@ -34,6 +34,10 @@ struct AddCreateChallenge: View {
     @State private var selectedDuration = 0
     var durationOptions = ["1 Week","2 Weeks","3 Weeks", "4 Weeks"]
    // static func newChallenge(title: String, durationDays: String, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String)
+    init(repository: Repository){
+        self.categoryListVM = CategoryListViewModel(repository: repository)
+    }
+    
     func listen() {
         session.listen()
     }
@@ -154,11 +158,11 @@ struct MyTextFieldStyle: TextFieldStyle {
     }
 }
 
-struct AddCreateChallenge_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCreateChallenge()
-    }
-}
+//struct AddCreateChallenge_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddCreateChallenge()
+//    }
+//}
 
 
 //if presentAddNewItem {
