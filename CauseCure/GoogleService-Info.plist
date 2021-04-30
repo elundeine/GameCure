@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>889169956517-0dlh8mo5tsufeafev83vhko1brh2gsfi.apps.googleusercontent.com</string>
+	<string>47997853999-0cac7g24h769ksvaailbd1rsdi7m4f7t.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.889169956517-0dlh8mo5tsufeafev83vhko1brh2gsfi</string>
+	<string>com.googleusercontent.apps.47997853999-0cac7g24h769ksvaailbd1rsdi7m4f7t</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAtRKqMp8Xlz2d6LjFaVTAI8GDzYMJkK-s</string>
+	<string>AIzaSyCAWT4zas-d-IqMBC6eY9MGe9t6FBL_xz0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>889169956517</string>
+	<string>47997853999</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>user.GameCure</string>
+	<string>GameCure.CauseCure.tc</string>
 	<key>PROJECT_ID</key>
-	<string>gamecure-81680</string>
+	<string>gamecuredev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>gamecure-81680.appspot.com</string>
+	<string>gamecuredev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:889169956517:ios:9fdac67327fe0fda0ac74c</string>
+	<string>1:47997853999:ios:7f4540837408d52fd781da</string>
 </dict>
 </plist>
