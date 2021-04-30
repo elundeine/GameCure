@@ -20,7 +20,7 @@ struct TabBar: View {
     }
     var body: some View {
             VStack{
-                CustomTabView(repository: repository).environmentObject(SessionStore())
+                CustomTabView(repository: repository).environmentObject(session)
             }
             .onAppear(perform: onAppear)
             .sheet(isPresented: $needsOnboarding){
@@ -52,7 +52,7 @@ struct CustomTabView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
             TabView(selection: $selectedTab) {
-                HomeView(repository: repository).environmentObject(session)
+                HomeView(repository: repository)
                     .tag("house.fill")
                 ExploreView(repository: repository)
                     .tag("magnifyingglass")
