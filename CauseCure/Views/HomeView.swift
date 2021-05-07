@@ -21,6 +21,7 @@ import SDWebImageSwiftUI
 struct HomeView: View {
     @ObservedObject var repository : Repository
     @EnvironmentObject var session: SessionStore
+
     @State var presentAddNewItem = false
     @State var isPresented = false
     @State var menuOpen: Bool = false
@@ -51,6 +52,7 @@ struct HomeView: View {
             VStack (alignment: .leading) {
                 MyChallengesView(repository: repository, session: session)
                     .listStyle(PlainListStyle())
+
             }.navigationBarItems(leading:
                        HStack {
                         Button(action:  {self.openMenu()}) {
@@ -193,5 +195,3 @@ struct ProductCard: View {
         .padding(.all, 10)
     }
 }
-
-

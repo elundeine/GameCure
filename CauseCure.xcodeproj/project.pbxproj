@@ -12,6 +12,7 @@
 		0F970474259BDA4A00C4AE29 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F970473259BDA4A00C4AE29 /* Stats.swift */; };
 		0FD1CDFC25A76EEF00459242 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */; };
 		0FFDA58E25AE414D0054A033 /* ProfileAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FFDA58D25AE414D0054A033 /* ProfileAssets.swift */; };
+		3AD3A4AA264553C3004B841D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3AD3A4A9264553C3004B841D /* GoogleService-Info.plist */; };
 		C17BB7F7B96293E6EDE7CE80 /* Pods_CauseCure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */; };
 		D50339252593620F006ED209 /* UserChallengeCellDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50339242593620F006ED209 /* UserChallengeCellDetail.swift */; };
 		D50E41E325AF4A9C00B8DC22 /* InvitedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50E41E225AF4A9C00B8DC22 /* InvitedChallengeView.swift */; };
@@ -48,7 +49,6 @@
 		D56292AA25925FD2002762D7 /* MyChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292A925925FD2002762D7 /* MyChallengesView.swift */; };
 		D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */; };
 		D56292B025935A55002762D7 /* UserChallengeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */; };
-		D5642C9625B82F0500D039C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5642C9525B82F0500D039C7 /* GoogleService-Info.plist */; };
 		D5642C9925B8373F00D039C7 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5642C9825B8373F00D039C7 /* MessageService.swift */; };
 		D564F09625B233C9007D226C /* StoneCrusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564F09525B233C9007D226C /* StoneCrusher.swift */; };
 		D564F09A25B233E5007D226C /* LinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564F09925B233E5007D226C /* LinesView.swift */; };
@@ -100,6 +100,7 @@
 		0FD1CDFB25A76EEF00459242 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		0FFDA58D25AE414D0054A033 /* ProfileAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAssets.swift; sourceTree = "<group>"; };
 		2F7BABFF7F027B774A08D05F /* Pods-CauseCure.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.release.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.release.xcconfig"; sourceTree = "<group>"; };
+		3AD3A4A9264553C3004B841D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59ED15A1A4F480C7355FB187 /* Pods_CauseCure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CauseCure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2E6835F79FE424D2D18555B /* Pods-CauseCure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CauseCure.debug.xcconfig"; path = "Target Support Files/Pods-CauseCure/Pods-CauseCure.debug.xcconfig"; sourceTree = "<group>"; };
 		D50339242593620F006ED209 /* UserChallengeCellDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeCellDetail.swift; sourceTree = "<group>"; };
@@ -136,7 +137,6 @@
 		D56292A925925FD2002762D7 /* MyChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChallengesView.swift; sourceTree = "<group>"; };
 		D56292AC259359ED002762D7 /* UserChallengeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeListViewModel.swift; sourceTree = "<group>"; };
 		D56292AF25935A55002762D7 /* UserChallengeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChallengeCellViewModel.swift; sourceTree = "<group>"; };
-		D5642C9525B82F0500D039C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D5642C9825B8373F00D039C7 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		D564F09525B233C9007D226C /* StoneCrusher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoneCrusher.swift; sourceTree = "<group>"; };
 		D564F09925B233E5007D226C /* LinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinesView.swift; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 			children = (
 				D589C08A257FEF21005A5464 /* Info.plist */,
 				D589C081257FEF20005A5464 /* CauseCureApp.swift */,
-				D5642C9525B82F0500D039C7 /* GoogleService-Info.plist */,
+				3AD3A4A9264553C3004B841D /* GoogleService-Info.plist */,
 				D589C085257FEF21005A5464 /* Assets.xcassets */,
 				D53C948825801F7D0001244E /* Services */,
 				D53C948025801BDA0001244E /* Models */,
@@ -558,8 +558,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D589C089257FEF21005A5464 /* Preview Assets.xcassets in Resources */,
+				3AD3A4AA264553C3004B841D /* GoogleService-Info.plist in Resources */,
 				D589C086257FEF21005A5464 /* Assets.xcassets in Resources */,
-				D5642C9625B82F0500D039C7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
