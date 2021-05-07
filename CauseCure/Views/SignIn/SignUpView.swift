@@ -55,6 +55,7 @@ struct SignUpView: View {
         AuthService.signUp(username: username, email: email, password: password, imageData: imageData, onSuccess: {
             (user) in
             self.clear()
+            
         }) {
             (errorMessage) in
             print("Error \(errorMessage)")
@@ -62,6 +63,7 @@ struct SignUpView: View {
             self.showingAlert = true
             return
         }
+       
         
     }
     
@@ -110,7 +112,7 @@ struct SignUpView: View {
                     FormField(value: $password, icon: "lock", placeholder: password, isSecure: true)
                     
                     Button(action: signUp) {
-                        Text("Sign In").font(.title).modifier(ButtonModifier())
+                        Text("Sign Up").font(.title).modifier(ButtonModifier())
                         
                     }.alert(isPresented: $showingAlert) {
                         Alert(title: Text(alertTitle), message: Text(error), dismissButton: .default(Text("Ok")))

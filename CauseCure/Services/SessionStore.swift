@@ -20,10 +20,7 @@ class SessionStore: ObservableObject {
     
     
     var didChange = PassthroughSubject<SessionStore, Never>()
-    @Published var session: User? {
-        didSet{
-            self.didChange.send(self)
-        }}
+    @Published var session: User? {didSet{self.didChange.send(self)}}
     @Published var messages = [Message]()
     @Published var messagesDictionary = [String:Message]()
     var handle: AuthStateDidChangeListenerHandle?

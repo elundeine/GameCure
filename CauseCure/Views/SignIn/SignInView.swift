@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SignInView: View {
 //    @EnvironmentObject var sharedInt:SharedInt
-    @ObservedObject var session : SessionStore
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -24,7 +23,6 @@ struct SignInView: View {
             return "Please fill in a valid email and password"
             
         }
-        print ("nil error")
         return nil
     }
     
@@ -40,6 +38,7 @@ struct SignInView: View {
             print("here")
             self.error = error
             self.showingAlert = true
+            self.clear()
             return
         }
         AuthService.signIn(email: email, password: password, onSuccess: {
@@ -82,7 +81,7 @@ struct SignInView: View {
                     FormField(value: $email, icon: "mail", placeholder: "E-mail")
                     FormField(value: $password, icon: "lock", placeholder: password, isSecure: true)
                     
-                Button(action: {signIn()}) {
+                Button(action: signIn) {
                         Text("Sign In").font(.title).modifier(ButtonModifier())
                         
                     }.alert(isPresented: $showingAlert) {

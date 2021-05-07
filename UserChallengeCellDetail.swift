@@ -347,6 +347,7 @@ struct ProgressBar: View {
         }
     }
 }
+
 struct FriendModalView: View {
         @ObservedObject var session: SessionStore
         @ObservedObject var userListVM: UserListViewModel

@@ -19,6 +19,7 @@ struct Challenge: Codable, Identifiable, Hashable {
     var searchName: [String]
     var completedChallenge: [String : String]?
     var description: String
+    //Not necessary:
     var completed: Bool
     var challengeCreater: String
     var userIds: [String]?

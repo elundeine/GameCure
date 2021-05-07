@@ -43,9 +43,9 @@ class AuthService {
         }
     }
     
-    func signInn(email:String,password:String,handler : @escaping AuthDataResultCallback){
-        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
-    }
+//    func signInn(email:String,password:String,handler : @escaping AuthDataResultCallback){
+//        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
+//    }
     
     static func signIn(email: String, password: String, onSuccess: @escaping(_ user: User) -> Void,onError: @escaping(_ errorMessage: String)-> Void) {
     
