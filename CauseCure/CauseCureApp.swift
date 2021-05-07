@@ -8,18 +8,21 @@
 import SwiftUI
 import Firebase
 
+// Main entry point
 @main
 struct CauseCureApp: App {
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
+    
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(SessionStore())
-                .environmentObject(SharedInt())
         }
+      
     }
 }
 
+// AppDelegate to setup Firebase connection
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         print("Firebase...")
@@ -27,8 +30,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         return true
     }
-}
-
-class SharedInt: ObservableObject {
-    @Published var myInt = 0
 }

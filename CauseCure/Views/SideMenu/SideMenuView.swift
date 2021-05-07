@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+
 struct SideMenuView: View {
     let width: CGFloat
     let isOpen: Bool
     let menuClose: () -> Void
+    
     
     var body: some View {
         ZStack {
@@ -23,7 +25,6 @@ struct SideMenuView: View {
             .onTapGesture {
                 self.menuClose()
             }
-            
             HStack {
                 SideMenuContent()
                     .frame(width: self.width)

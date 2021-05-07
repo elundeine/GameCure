@@ -1,11 +1,9 @@
 //
-//  ChallengeCategorieModel.swift
+//  ChallengeCategoryModel.swift
 //  CauseCure
 //
-//  Created by Oscar Lange on 12/21/20.
+//  Created by Lukas Ebeling on 21.12.20.
 //
-
-
 import Foundation
 import Firebase
 import FirebaseFirestore

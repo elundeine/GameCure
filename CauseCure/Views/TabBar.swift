@@ -10,25 +10,32 @@ import SwiftUI
 
 struct TabBar: View {
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var sharedInt: SharedInt
-    //@EnvironmentObject var model: Model
+    @ObservedObject var repository = Repository()
+
+    @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
+//    @State private var needsOnboarding = true
     
+    func onAppear() {
+        UITableView.appearance().backgroundColor = .white
+    }
     var body: some View {
             VStack{
-                CustomTabView().environmentObject(SessionStore())
-                    .environmentObject(SharedInt())
-
+                CustomTabView(repository: repository).environmentObject(session)
+            }
+            .onAppear(perform: onAppear)
+            .sheet(isPresented: $needsOnboarding){
+                OnboardingView()
             }
     }
     
 }
 
-var tabs = ["house.fill","person.fill","plus.circle.fill","message.fill","person.3.fill"]
+var tabs = ["house.fill","magnifyingglass","gamecontroller.fill","message.fill","person.3.fill"]
 
 private enum Tab: String, Equatable, CaseIterable{
     case first = "house.fill"
-    case second = "person.fill"
-    case third = "plus"
+    case second = "magnifyingglass"
+    case third = "gamecontroller.fill"
     case fourth = "message.fill"
     case fifth = "person.3.fill"
     
@@ -37,21 +44,21 @@ private enum Tab: String, Equatable, CaseIterable{
 }
 struct CustomTabView: View {
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var sharedInt: SharedInt
-    @State private var selectedTab = "house.fill"
+    @ObservedObject var repository: Repository
+    @AppStorage("selectedTab") private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
+            
             TabView(selection: $selectedTab) {
-                HomeView().environmentObject(SessionStore())
+                HomeView(repository: repository)
                     .tag("house.fill")
-                UserProfileDetail().environmentObject(SessionStore())
-                    .environmentObject(SharedInt())
-                    .tag("person.fill")
-                AddCreateChallenge()
-                    .tag("plus.circle.fill")
-                Chat()
+                ExploreView(repository: repository)
+                    .tag("magnifyingglass")
+                PaymentCheck()
+                    .tag("gamecontroller.fill")
+                ChatView(session: self.session, repository: self.repository)
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")

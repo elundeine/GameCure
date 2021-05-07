@@ -16,14 +16,14 @@ struct ContentView: View {
     
     var body: some View {
         Group {
+            Text(session.session?.username ?? "NICHT VERGEBEN")
             if (session.session != nil) {
-                TabBar().environmentObject(SessionStore())
-                
+                TabBar()
             } else {
-                    SignInView()
-                }
-        }.onAppear(perform: listen)
-        
+                SignInView()
+            }
+        }
+        .onAppear(perform: listen)
     }
 }
 

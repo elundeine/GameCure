@@ -11,10 +11,12 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseFirestore
 
+
+// MARK: Setup Service of Firebase User Authentication
 class AuthService {
     
     static var storeRoot = Firestore.firestore()
-    
+    let uid = Auth.auth().currentUser?.uid ?? "uid"
     static func getUserId(userId: String) -> DocumentReference {
         return storeRoot.collection("users").document(userId)
     }
@@ -40,6 +42,10 @@ class AuthService {
             
         }
     }
+    
+//    func signInn(email:String,password:String,handler : @escaping AuthDataResultCallback){
+//        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
+//    }
     
     static func signIn(email: String, password: String, onSuccess: @escaping(_ user: User) -> Void,onError: @escaping(_ errorMessage: String)-> Void) {
     

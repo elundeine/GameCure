@@ -19,17 +19,12 @@ import SDWebImageSwiftUI
 
 
 struct HomeView: View {
+    @ObservedObject var repository : Repository
     @EnvironmentObject var session: SessionStore
-    
-    //@ObservedObject var challengeListVM = ChallengeListViewModel()
-    
-    @ObservedObject var categoryListVM = CategoryListViewModel()
-    //    @ObservedObject var userModel = UserRepository()
-    @State var presentAddNewItem = false
-    
-    @State var menuOpen: Bool = false
 
-    
+    @State var presentAddNewItem = false
+    @State var isPresented = false
+    @State var menuOpen: Bool = false
     
     func homeViewSetup() {
         listen()
@@ -38,6 +33,9 @@ struct HomeView: View {
         session.session?.loggedInDates
     }
     
+    func performOnAppear() {
+        listen()
+    }
     func listen() {
         session.listen()
     }
@@ -50,18 +48,11 @@ struct HomeView: View {
         
         //TODO: If challenge is empty case
         ZStack{
-        
         NavigationView {
             VStack (alignment: .leading) {
-                List {
-                    ForEach(categoryListVM.categoryCellViewModels) { categoryCellVM in
-                        NavigationLink(destination: CategoryCell(categoryCellVM: categoryCellVM)) {
-                            CategoryCard(categoryCellVM: categoryCellVM)
-                        }
-                    }
-                
-                //
-                }.listStyle(PlainListStyle())
+                MyChallengesView(repository: repository, session: session)
+                    .listStyle(PlainListStyle())
+
             }.navigationBarItems(leading:
                        HStack {
                         Button(action:  {self.openMenu()}) {
@@ -77,76 +68,126 @@ struct HomeView: View {
                             }
                         }
                        }, trailing:
-                       //add further nav bar button
+                       //add notification view
+//                         Text("")
                         HStack {
-                           Text("")
-                       })
-                        
-                           .navigationBarTitle(Text("Challenges"))
+                            Button(action:  {
+                                withAnimation{
+                                    self.isPresented.toggle()
+                                }
+                            }) {
+                                Image(systemName: "plus")
+
+                            }.foregroundColor(Color.black)
+                        }
+                       )
+            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(repository: repository)}
+               .navigationBarTitle(Text("My Dashboard"))
                    }
             
         SideMenuView(width: 270,
                         isOpen: self.menuOpen,
                         menuClose: self.openMenu)
-        .onAppear(perform: listen)
+        .onAppear(perform: performOnAppear)
         }
     }
 }
 enum InputError: Error {
   case empty
 }
-
-struct ChallengeCell: View {
-    @ObservedObject var challengeCellVM: ChallengeCellViewModel
-
-    var onCommit: (Result<Challenge, InputError>) -> Void = {_ in }
-
-        var body: some View {
-            HStack{
-                Image(systemName: challengeCellVM.completionStateIconName)
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .onTapGesture {
-                      self.challengeCellVM.challenge.completed.toggle()
-                    }
-                TextField("Enter the challenges title", text: $challengeCellVM.challenge.title, onCommit: {
-                    if !self.challengeCellVM.challenge.title.isEmpty {
-                      self.onCommit(.success(self.challengeCellVM.challenge))
-                    }
-                    else {
-                      self.onCommit(.failure(.empty))
-                    }
-        }).id(challengeCellVM.id)
-      }
+struct PendingInvitationModalView: View {
+            @ObservedObject var repository: Repository
+            @Environment(\.presentationMode) var presentationMode
+            var body: some View {
+                //TODO: add dismiss button
+                VStack{
+                HStack {
+                    Spacer()
+                    Image(systemName: "xmark").onTapGesture {
+                        presentationMode.wrappedValue.dismiss()
+                    }.padding()
+                    
+                }
+                   AddCreateChallenge(repository: repository)
+                
+                
+            }
+        }
+}
+struct UserChallengeInviteCard: View {
+    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+    @State var invitedBy = ""
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+                Text("Invited by \(self.invitedBy)")
+                    
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
+        }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color.red)
+        .modifier(CardModifier())
+        .padding(.all, 10)
     }
 }
 
+struct SharedUserChallengeInviteCard: View {
+    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+    @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
+    @State var invitedBy = ""
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+            Text("Challenged by Hannah")
+                    
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
+        }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color.blue)
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
 struct ProductCard: View {
     @ObservedObject var challengeCellVM: ChallengeCellViewModel
     
     var body: some View {
         HStack(alignment: .center) {
-            Image("trophy")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100)
-                .padding(.all, 20)
-            
-            VStack(alignment: .leading) {
                 Text("\($challengeCellVM.challenge.title.wrappedValue)")
                     .font(.system(size: 26, weight: .bold, design: .default))
                     .foregroundColor(.white)
-                Text("\($challengeCellVM.challenge.description.wrappedValue)")
-                    .font(.system(size: 16, weight: .bold, design: .default))
-                    .foregroundColor(.gray)
-                HStack {
-                    Text("daily")
-                        .font(.system(size: 16, weight: .bold, design: .default))
-                        .foregroundColor(.white)
-                        .padding(.top, 8)
-                }
-            }.padding(.trailing, 20)
-            Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .background(Color(red: 32/255, green: 36/255, blue: 38/255))
@@ -154,56 +195,3 @@ struct ProductCard: View {
         .padding(.all, 10)
     }
 }
-
-
-struct CategoryCell: View {
-    @ObservedObject var categoryCellVM: CategorCellViewModel
-        var body: some View {
-            HStack{
-                Text("\($categoryCellVM.category.name.wrappedValue)")
-                    .font(.system(size: 26, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-      }
-    }
-}
-
-struct CategoryCard: View {
-    @ObservedObject var categoryCellVM: CategorCellViewModel
-    
-    var body: some View {
-        HStack(alignment: .center) {
-            Image("trophy")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100)
-                .padding(.all, 20)
-            
-            VStack(alignment: .leading) {
-                Text("\($categoryCellVM.category.name.wrappedValue)")
-                    .font(.system(size: 26, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-                HStack {
-                    Text("daily")
-                        .font(.system(size: 16, weight: .bold, design: .default))
-                        .foregroundColor(.white)
-                        .padding(.top, 8)
-                }
-            }.padding(.trailing, 20)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
-        .modifier(CardModifier())
-        .padding(.all, 10)
-    }
-}
-
-struct CardModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 0)
-    }
-    
-}
-

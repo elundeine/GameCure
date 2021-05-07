@@ -10,16 +10,22 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Challenge: Codable, Identifiable {
+struct Challenge: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var title: String
-    var durationDays: String
+    var category: String
+    var durationDays: Int
     var interval: String
     var searchName: [String]
+    var completedChallenge: [String : String]?
     var description: String
+    //Not necessary:
     var completed: Bool
     var challengeCreater: String
     var userIds: [String]?
+    var sharedUserIds: [String : String]?
+    var invitedUserIds: [String]?
+    var invitedSharedUserIds: [String]?
     @ServerTimestamp var createdTime: Timestamp?
 }
 
