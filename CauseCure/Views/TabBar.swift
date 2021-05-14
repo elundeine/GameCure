@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TabBar: View {
     @EnvironmentObject var session: SessionStore
-    
+    @ObservedObjectO var repository = Repository()
     //@EnvironmentObject var model: Model
     @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
 //    @State private var needsOnboarding = true
@@ -20,7 +20,7 @@ struct TabBar: View {
     }
     var body: some View {
             VStack{
-                CustomTabView().environmentObject(SessionStore())
+                CustomTabView(repository: Repository).environmentObject(SessionStore())
             }
             .onAppear(perform: onAppear)
             .sheet(isPresented: $needsOnboarding){
@@ -44,7 +44,7 @@ private enum Tab: String, Equatable, CaseIterable{
 }
 struct CustomTabView: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject var repository = Repository()
+    @ObservedObject var repository : Repository
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     //@State private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
@@ -53,13 +53,13 @@ struct CustomTabView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
             TabView(selection: $selectedTab) {
-                HomeView()
+                HomeView(repository: repository)
                     .tag("house.fill")
-                ExploreView()
+                ExploreView(repository: repository)
                     .tag("magnifyingglass")
                 PaymentCheck()
                     .tag("gamecontroller.fill")
-                ChatView(session: self.session)
+                ChatView(session: self.session, repository: self.repository)
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")
