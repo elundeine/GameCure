@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TabBar: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObjectO var repository = Repository()
+    @ObservedObject var repository = Repository()
     //@EnvironmentObject var model: Model
     @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
 //    @State private var needsOnboarding = true
@@ -20,7 +20,7 @@ struct TabBar: View {
     }
     var body: some View {
             VStack{
-                CustomTabView(repository: Repository).environmentObject(SessionStore())
+                CustomTabView(repository: repository).environmentObject(SessionStore())
             }
             .onAppear(perform: onAppear)
             .sheet(isPresented: $needsOnboarding){
@@ -55,7 +55,7 @@ struct CustomTabView: View {
             TabView(selection: $selectedTab) {
                 HomeView(repository: repository)
                     .tag("house.fill")
-                ExploreView(repository: repository)
+                ExploreView()
                     .tag("magnifyingglass")
                 PaymentCheck()
                     .tag("gamecontroller.fill")

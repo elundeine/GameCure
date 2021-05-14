@@ -24,14 +24,14 @@ class CompletedChallengeListViewModel: ObservableObject {
         self.repository = repository
         repository.$completedUserChallenges.map { completedChallenge in
             completedChallenge.map { completedChallenge in
-                CompletedChallengeCellViewModel(completedChallenge: completedChallenge)
+                CompletedChallengeCellViewModel(completedChallenge: completedChallenge, repository: repository)
                 }
             }
             .assign(to: \.completedChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
         repository.$sharedCompletedUserChallenges.map { completedChallenge in
             completedChallenge.map { completedChallenge in
-                CompletedChallengeCellViewModel(completedChallenge: completedChallenge)
+                CompletedChallengeCellViewModel(completedChallenge: completedChallenge, repository: repository)
                 }
             }
             .assign(to: \.sharedCompletedChallengeViewModels, on: self)

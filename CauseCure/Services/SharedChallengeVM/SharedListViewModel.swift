@@ -23,7 +23,7 @@ class SharedChallengeListViewModel: ObservableObject {
         self.repository = repository
             repository.$userSharedChallenges.map { sharedChallenge in
                 sharedChallenge.map { sharedChallenge in
-                        SharedChallengeCellViewModel(sharedChallenge: sharedChallenge)
+                    SharedChallengeCellViewModel(sharedChallenge: sharedChallenge, repository: repository)
                     }
                 }
                 .assign(to: \.sharedChallengeCellViewModels, on: self)

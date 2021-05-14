@@ -23,7 +23,7 @@ class UserChallengeListViewModel: ObservableObject {
         self.repository = repository
         repository.$userChallenges.map { userChallenge in
             userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge)
+                UserChallengeCellViewModel(userChallenge: userChallenge, repository: repository)
                 }
             }
             .assign(to: \.userChallengeCellViewModels, on: self)

@@ -23,7 +23,7 @@ class InviteListViewModel: ObservableObject {
         self.repository = repository
         repository.$invites.map { invite in
             invite.map { invite in
-                InviteCellViewModel(invite: invite)
+                InviteCellViewModel(invite: invite, repository: repository)
                 }
             }
             .assign(to: \.invites, on: self)

@@ -23,11 +23,8 @@ struct HomeView: View {
     @EnvironmentObject var session: SessionStore
     
 //    @ObservedObject var challengeListVM = ChallengeListViewModel()
-    @StateObject var userChallengeListVM = UserChallengeListViewModel()
-    @StateObject var inviteListVM = InviteListViewModel()
-    @StateObject var sharedListVM = SharedChallengeListViewModel()
+    
 //    @ObservedObject var categoryListVM = CategoryListViewModel()
-    @StateObject var completedChallengeListVM = CompletedChallengeListViewModel()
     
     @State var presentAddNewItem = false
     @State var isPresented = false
@@ -57,7 +54,7 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                MyChallengesView(session: session, repository: repository, userChallengeListVM: userChallengeListVM, inviteListVM: inviteListVM, sharedListVM: sharedListVM, completedChallengeListVM: completedChallengeListVM)
+                MyChallengesView(session: session, repository: repository)
                     .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
                        HStack {
