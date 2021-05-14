@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct TabBar: View {
-    @EnvironmentObject var session: SessionStore
+    @ObservedObject var session: SessionStore
     @ObservedObject var repository = Repository()
     //@EnvironmentObject var model: Model
     @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
@@ -20,7 +20,7 @@ struct TabBar: View {
     }
     var body: some View {
             VStack{
-                CustomTabView(repository: repository).environmentObject(SessionStore())
+                CustomTabView(session: session, repository: repository)
             }
             .onAppear(perform: onAppear)
             .sheet(isPresented: $needsOnboarding){
@@ -43,7 +43,7 @@ private enum Tab: String, Equatable, CaseIterable{
 
 }
 struct CustomTabView: View {
-    @EnvironmentObject var session: SessionStore
+    @ObservedObject var session: SessionStore
     @ObservedObject var repository : Repository
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     //@State private var selectedTab = "house.fill"
@@ -53,7 +53,7 @@ struct CustomTabView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
             TabView(selection: $selectedTab) {
-                HomeView(repository: repository)
+                HomeView(repository: repository, session: session)
                     .tag("house.fill")
                 ExploreView()
                     .tag("magnifyingglass")

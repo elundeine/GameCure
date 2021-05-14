@@ -20,7 +20,7 @@ import SDWebImageSwiftUI
 
 struct HomeView: View {
     @ObservedObject var repository: Repository
-    @EnvironmentObject var session: SessionStore
+    @ObservedObject var session: SessionStore
     
 //    @ObservedObject var challengeListVM = ChallengeListViewModel()
     
@@ -43,6 +43,7 @@ struct HomeView: View {
     func listen() {
         session.listen()
     }
+    
     
     func openMenu() {
            self.menuOpen.toggle()

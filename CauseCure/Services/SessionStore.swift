@@ -79,6 +79,7 @@ class SessionStore: ObservableObject {
     func logout() {
         do{
             try Auth.auth().signOut()
+            self.session = nil
         } catch {
             
         }
