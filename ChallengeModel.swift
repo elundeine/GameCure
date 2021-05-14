@@ -22,9 +22,6 @@ struct Challenge: Codable, Identifiable, Hashable {
     var completed: Bool
     var challengeCreater: String
     var userIds: [String]?
-    var sharedUserIds: [String : String]?
-    var invitedUserIds: [String]?
-    var invitedSharedUserIds: [String]?
     @ServerTimestamp var createdTime: Timestamp?
 }
 

@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
+struct Dashboard: Codable, Identifiable, Hashable {
+    @DocumentID var id: String?
+    var userId: String
+    var activeChallenges: [String]?
+    var completedChallenges: [String]?
+    var invites: [String]?
+    
+}

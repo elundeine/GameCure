@@ -12,6 +12,7 @@ import SwiftUI
 
 class UserChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
+//    @Published var repository = Repository()
     @Published var repository = Repository()
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
     @Published var userChallengeInvites = [UserChallengeCellViewModel]()
@@ -29,28 +30,6 @@ class UserChallengeListViewModel: ObservableObject {
             .assign(to: \.userChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
         
-            repository.$userChallengeInvites.map { userChallenge in
-            userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge)
-                }
-            }
-            .assign(to: \.userChallengeInvites, on: self)
-            .store(in: &cancellabels)
-        
-            repository.$userSharedChallengeInvites.map { userChallenge in
-            userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge)
-                }
-            }
-            .assign(to: \.userSharedChallengeInvites, on: self)
-            .store(in: &cancellabels)
-            repository.$userSharedChallenges.map { userChallenge in
-            userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge)
-                }
-            }
-            .assign(to: \.userSharedChallengeCellViewModels, on: self)
-            .store(in: &cancellabels)
     }
     
     

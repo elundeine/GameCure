@@ -358,14 +358,14 @@ struct FriendModalView: View {
     
     func recommendChallengeToFollower(userID: String) {
         print("User \(userID) was recommended challenged")
+        userListVM.repository.sendChallengeInvite(challengedUserId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id, challengeTitle: userChallengeCellVM.userChallenge.title, challengeDescription: userChallengeCellVM.userChallenge.description, durationDays: userChallengeCellVM.userChallenge.durationDays, shared: false)
         
-        userListVM.repository.sendChallengeInvite(userId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id)
         self.challengeFriendAlert = true
     }
     func challengeFollower(userID: String) {
         print("User \(userID) was challenged")
+        userListVM.repository.sendChallengeInvite(challengedUserId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id, challengeTitle: userChallengeCellVM.userChallenge.title, challengeDescription: userChallengeCellVM.userChallenge.description, durationDays: userChallengeCellVM.userChallenge.durationDays, shared: true)
         
-        userListVM.repository.sendSharedChallengeInvite(userId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id)
         self.challengeFriendAlert = true
     }
     

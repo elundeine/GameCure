@@ -10,6 +10,8 @@ import SwiftUI
 struct MyChallengesView: View {
     @ObservedObject var session: SessionStore
     @ObservedObject var userChallengeListVM : UserChallengeListViewModel
+    @ObservedObject var inviteListVM : InviteListViewModel
+    @ObservedObject var sharedListVM : SharedChallengeListViewModel
     @ObservedObject var completedChallengeListVM : CompletedChallengeListViewModel
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     
@@ -21,7 +23,7 @@ struct MyChallengesView: View {
     }
 
     var body: some View {
-        if(userChallengeListVM.userChallengeCellViewModels.isEmpty && session.session?.pendingChallengeInvite != nil){
+        if(userChallengeListVM.userChallengeCellViewModels.isEmpty && inviteListVM.repository.invites == nil) {
             HStack() {
                 Spacer()
                 VStack(){
@@ -57,30 +59,29 @@ struct MyChallengesView: View {
             }
         }
             
-        List {
-            if(session.session?.pendingSharedChallengeInvite?.isEmpty == false) {
-
-                    ForEach(userChallengeListVM.userSharedChallengeInvites) { userChallengeCellVM in
+     List {
+        if(inviteListVM.invites.isEmpty == false) {
+                    ForEach(inviteListVM.invites) { invite in
                         ZStack{
-                            NavigationLink(destination: InvitedSharedChallengeView(session: session, userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingSharedChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")) {
+                            NavigationLink(destination: InvitedChallengeView(session: session, inviteCellVM: invite)) {
                             EmptyView()
                             }   .opacity(0.0)
                             .buttonStyle(PlainButtonStyle())
-                            SharedUserChallengeInviteCard(userChallengeCellVM: userChallengeCellVM, sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == userChallengeCellVM.id}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)), invitedBy: session.session?.pendingSharedChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")
+                            ChallengeInviteCard(inviteCellVM: invite)
                     }
                 }
             }
-            if(session.session?.pendingChallengeInvite != nil) {
-                    ForEach(userChallengeListVM.userChallengeInvites) { userChallengeCellVM in
-                        ZStack{
-                            NavigationLink(destination: InvitedChallengeView(session: session, userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")) {
-                            EmptyView()
-                            }   .opacity(0.0)
-                            .buttonStyle(PlainButtonStyle())
-                        UserChallengeInviteCard(userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")
-                    }
-                }
-            }
+//            if(session.session?.pendingChallengeInvite != nil) {
+//                    ForEach(userChallengeListVM.userChallengeInvites) { userChallengeCellVM in
+//                        ZStack{
+//                            NavigationLink(destination: InvitedChallengeView(session: session, userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")) {
+//                            EmptyView()
+//                            }   .opacity(0.0)
+//                            .buttonStyle(PlainButtonStyle())
+//                        UserChallengeInviteCard(userChallengeCellVM: userChallengeCellVM, invitedBy: session.session?.pendingChallengeInvite!.first(where: {$0.key == userChallengeCellVM.id})?.value  ?? "")
+//                    }
+//                }
+//            }
             ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
                 ZStack{
                     NavigationLink(destination: UserChallengeCellDetail(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
@@ -88,20 +89,20 @@ struct MyChallengesView: View {
                 }.opacity(0.0)
                 .buttonStyle(PlainButtonStyle())
                    UserChallengeCard(userChallengeCellVM: userChallengeCellVM)
-               
+
                }
             }
-            ForEach(userChallengeListVM.userSharedChallengeCellViewModels) { userChallengeCellVM in
-                ZStack{
-                    NavigationLink(destination: SharedChallengeCellDetailView(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId == userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)), sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == userChallengeCellVM.id}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
-                    EmptyView()
-                }.opacity(0.0)
-                .buttonStyle(PlainButtonStyle())
-                   SharedUserChallengeCard(userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId == userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)), sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == userChallengeCellVM.id}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))
+//            ForEach(userChallengeListVM.userSharedChallengeCellViewModels) { userChallengeCellVM in
+//                ZStack{
+//                    NavigationLink(destination: SharedChallengeCellDetailView(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId == userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)), sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == userChallengeCellVM.id}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
+//                    EmptyView()
+//                }.opacity(0.0)
+//                .buttonStyle(PlainButtonStyle())
+//                   SharedUserChallengeCard(userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId == userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)), sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == userChallengeCellVM.id}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))
+//
                
-               }
-            }
-        
+            
+//
         }
     }
 }

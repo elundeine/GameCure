@@ -6,3 +6,18 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
+struct Invite: Codable, Identifiable, Hashable {
+    @DocumentID var id: String?
+    var challengedUserId: String
+    var challengerUserId: String
+    var challengerUsername: String
+    var challengeId: String
+    var challengeTitle: String
+    var challengeDescription: String
+    var durationDays: Int
+    var shared: Bool
+}

@@ -47,6 +47,7 @@ struct AddCreateChallenge: View {
             self.durationDays = 28
         }
         DispatchQueue.main.async {
+            
             self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
         }
     }

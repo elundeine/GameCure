@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import Combine
+import SwiftUI
+
 class InviteListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
 //    @Published var repository = Repository()
@@ -22,14 +25,8 @@ class InviteListViewModel: ObservableObject {
                 InviteCellViewModel(invite: invite)
                 }
             }
-            .assign(to: \.userChallengeCellViewModels, on: self)
+            .assign(to: \.invites, on: self)
             .store(in: &cancellabels)
     }
-    
-    
-    func addChallenge(userChallenge: Challenge) {
-        repository.addChallenge(userChallenge)
-//        let challengeVM = ChallengeCellViewModel(challenge: challenge)
-//        self.challengeCellViewModels.append(challengeVM)
-    }
+
 }

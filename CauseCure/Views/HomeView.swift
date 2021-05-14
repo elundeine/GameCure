@@ -22,8 +22,11 @@ struct HomeView: View {
     @EnvironmentObject var session: SessionStore
 //    @ObservedObject var challengeListVM = ChallengeListViewModel()
     @StateObject var userChallengeListVM = UserChallengeListViewModel()
+    @StateObject var inviteListVM = InviteListViewModel()
+    @StateObject var sharedListVM = SharedChallengeListViewModel()
 //    @ObservedObject var categoryListVM = CategoryListViewModel()
     @StateObject var completedChallengeListVM = CompletedChallengeListViewModel()
+    
     @State var presentAddNewItem = false
     @State var isPresented = false
     @State var menuOpen: Bool = false
@@ -52,7 +55,7 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                MyChallengesView(session: session, userChallengeListVM: userChallengeListVM, completedChallengeListVM: completedChallengeListVM)
+                MyChallengesView(session: session, userChallengeListVM: userChallengeListVM, inviteListVM: inviteListVM, sharedListVM: sharedListVM, completedChallengeListVM: completedChallengeListVM)
                     .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
                        HStack {
@@ -147,9 +150,9 @@ struct UserChallengeInviteCard: View {
     }
 }
 
-struct SharedUserChallengeInviteCard: View {
-    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
-    @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
+struct ChallengeInviteCard: View {
+    @ObservedObject var inviteCellVM: InviteCellViewModel
+   
     @State var invitedBy = ""
     var body: some View {
         HStack(alignment: .center) {
@@ -160,10 +163,10 @@ struct SharedUserChallengeInviteCard: View {
             .padding(.all, 20)
         
         VStack(alignment: .leading) {
-                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                Text("\($inviteCellVM.invite.challengeTitle.wrappedValue)")
                     .font(.system(size: 24, weight: .bold, design: .default))
                     .foregroundColor(.white)
-            Text("Challenged by Hannah")
+            Text("Challenged by \($inviteCellVM.invite.challengerUsername.wrappedValue)")
                     
 //                HStack {
 //                    Text("daily")
