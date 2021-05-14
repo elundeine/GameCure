@@ -20,6 +20,7 @@ import SDWebImageSwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
+    
 //    @ObservedObject var challengeListVM = ChallengeListViewModel()
     @StateObject var userChallengeListVM = UserChallengeListViewModel()
     @StateObject var inviteListVM = InviteListViewModel()
@@ -55,7 +56,7 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                MyChallengesView(session: session, userChallengeListVM: userChallengeListVM, inviteListVM: inviteListVM, sharedListVM: sharedListVM, completedChallengeListVM: completedChallengeListVM)
+                MyChallengesView(session: session, repository: <#Repository#>, userChallengeListVM: userChallengeListVM, inviteListVM: inviteListVM, sharedListVM: sharedListVM, completedChallengeListVM: completedChallengeListVM)
                     .listStyle(PlainListStyle())
             }.navigationBarItems(leading:
                        HStack {

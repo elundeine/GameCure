@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class InviteCellViewModel: ObservableObject, Identifiable {
-    @Published var repository = Repository()
+    @Published var repository : Repository
     
     @Published var invite: Invite
     
@@ -29,7 +29,7 @@ class InviteCellViewModel: ObservableObject, Identifiable {
     
     static func newInvite() -> InviteCellViewModel {
         print("here")
-        return InviteCellViewModel(invite: Invite(challengedUserId: "", challengerUserId: "", challengerUsername: "", challengeId: "", challengeTitle: "", challengeDescription: "", durationDays: 0, shared: false))
+        return InviteCellViewModel(invite: Invite(challengedUserId: "", challengerUserId: "", challengerUsername: "", challengeId: "", challengeTitle: "", challengeDescription: "", durationDays: 0, shared: false), repository: Repository())
     }
     
     static func newInvite( challengedUserId: String, challengerUserId: String, challengerUsername: String, challengeId: String, challengeTitle: String, challengeDescription: String, durationDays: Int, shared: Bool) -> Invite {
@@ -43,8 +43,9 @@ class InviteCellViewModel: ObservableObject, Identifiable {
     }
     
     
-    init(invite: Invite) {
+    init(invite: Invite, repository: Repository) {
         self.invite = invite
+        self.repository = repository
         
         $invite
             .map { invite in

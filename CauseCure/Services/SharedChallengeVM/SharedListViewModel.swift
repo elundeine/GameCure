@@ -14,12 +14,13 @@ class SharedChallengeListViewModel: ObservableObject {
 
         @EnvironmentObject var session: SessionStore
     //    @Published var repository = Repository()
-        @Published var repository = Repository()
+        @Published var repository : Repository
         @Published var sharedChallengeCellViewModels = [SharedChallengeCellViewModel]()
         
         private var cancellabels = Set<AnyCancellable>()
         
-        init() {
+    init(repository: Repository) {
+        self.repository = repository
             repository.$userSharedChallenges.map { sharedChallenge in
                 sharedChallenge.map { sharedChallenge in
                         SharedChallengeCellViewModel(sharedChallenge: sharedChallenge)

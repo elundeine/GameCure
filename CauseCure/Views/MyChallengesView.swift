@@ -9,12 +9,22 @@ import SwiftUI
 
 struct MyChallengesView: View {
     @ObservedObject var session: SessionStore
-    @ObservedObject var userChallengeListVM : UserChallengeListViewModel
-    @ObservedObject var inviteListVM : InviteListViewModel
-    @ObservedObject var sharedListVM : SharedChallengeListViewModel
-    @ObservedObject var completedChallengeListVM : CompletedChallengeListViewModel
+    @ObservedObject var repository: Repository
+    @StateObject var userChallengeListVM : UserChallengeListViewModel
+    @StateObject var inviteListVM : InviteListViewModel
+    @StateObject var sharedListVM : SharedChallengeListViewModel
+    @StateObject var completedChallengeListVM : CompletedChallengeListViewModel
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     
+    init(session: SessionStore, repository: Repository) {
+        self.session = session
+        self.repository = repository
+        _userChallengeListVM = StateObject(wrappedValue: UserChallengeListViewModel(repository: repository))
+        _inviteListVM = StateObject(wrappedValue: InviteListViewModel(repository: repository))
+        _sharedListVM = StateObject(wrappedValue: SharedChallengeListViewModel(repository: repository))
+        _completedChallengeListVM = StateObject(wrappedValue: CompletedChallengeListViewModel(repository: repository))
+    }
+
     func headerView(type: String) -> some View{
         return HStack {
             Text("\(type)")
@@ -84,7 +94,7 @@ struct MyChallengesView: View {
 //            }
             ForEach(userChallengeListVM.userChallengeCellViewModels) { userChallengeCellVM in
                 ZStack{
-                    NavigationLink(destination: UserChallengeCellDetail(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
+                    NavigationLink(destination: UserChallengeCellDetail(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId ==   userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0), repository: repository))) {
                     EmptyView()
                 }.opacity(0.0)
                 .buttonStyle(PlainButtonStyle())

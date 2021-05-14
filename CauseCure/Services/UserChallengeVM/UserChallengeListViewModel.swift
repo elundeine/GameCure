@@ -13,15 +13,14 @@ import SwiftUI
 class UserChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
 //    @Published var repository = Repository()
-    @Published var repository = Repository()
+    @Published var repository : Repository
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
-    @Published var userChallengeInvites = [UserChallengeCellViewModel]()
-    @Published var userSharedChallengeInvites = [UserChallengeCellViewModel]()
-    @Published var userSharedChallengeCellViewModels = [UserChallengeCellViewModel]()
+   
     
     private var cancellabels = Set<AnyCancellable>()
     
-    init() {
+    init(repository: Repository) {
+        self.repository = repository
         repository.$userChallenges.map { userChallenge in
             userChallenge.map { userChallenge in
                     UserChallengeCellViewModel(userChallenge: userChallenge)

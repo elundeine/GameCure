@@ -13,7 +13,7 @@ import SwiftUI
 import Swift
 
 class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
-    @Published var repository = Repository()
+    @Published var repository : Repository
     
     @Published var completedChallenge: CompletedChallenge
     
@@ -86,9 +86,9 @@ class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
     }
 
     
-    init(completedChallenge: CompletedChallenge) {
+    init(completedChallenge: CompletedChallenge, repository: Repository) {
         self.completedChallenge = completedChallenge
-        
+        self.repository = repository
       
         $completedChallenge
             .compactMap { completedChallenge in

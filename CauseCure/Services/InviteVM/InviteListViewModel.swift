@@ -12,14 +12,15 @@ import SwiftUI
 class InviteListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
 //    @Published var repository = Repository()
-    @Published var repository = Repository()
+    @Published var repository : Repository
     @Published var invites = [InviteCellViewModel]()
     
     
     
     private var cancellabels = Set<AnyCancellable>()
     
-    init() {
+    init(repository: Repository) {
+        self.repository = repository
         repository.$invites.map { invite in
             invite.map { invite in
                 InviteCellViewModel(invite: invite)
