@@ -55,11 +55,11 @@ struct CustomTabView: View {
             TabView(selection: $selectedTab) {
                 HomeView(repository: repository, session: session)
                     .tag("house.fill")
-                ExploreView()
+                ExploreView(session: session, repository: repository)
                     .tag("magnifyingglass")
                 PaymentCheck()
                     .tag("gamecontroller.fill")
-                ChatView(session: self.session, repository: self.repository)
+                ChatView(session: session, repository: repository)
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")

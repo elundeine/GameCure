@@ -60,6 +60,7 @@ class Repository: ObservableObject {
         db.collection("completedChallenges").whereField("userId", isEqualTo: userId)
           .addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
+                print("found completed challenge for user")
               self.completedUserChallenges = querySnapshot.documents.compactMap { document -> CompletedChallenge? in
                 try? document.data(as: CompletedChallenge.self)
               }
@@ -82,19 +83,19 @@ class Repository: ObservableObject {
         
         
     //creating a snapshot for all users in order to search for users.
-//    private func loadUsers() {
-////        print("before db collection")
-//        db.collection("users").addSnapshotListener { (querySnapshot, error) in
-////            print("loading user")
-//            if let querySnapshot = querySnapshot {
-//
-////                  print("in querySnapshot of users")
-//              self.users = querySnapshot.documents.compactMap { document -> User? in
-//                try? document.data(as: User.self)
-//              }
-//            }
-//        }
-//    }
+    private func loadUsers() {
+//        print("before db collection")
+        db.collection("users").addSnapshotListener { (querySnapshot, error) in
+//            print("loading user")
+            if let querySnapshot = querySnapshot {
+
+//                  print("in querySnapshot of users")
+              self.users = querySnapshot.documents.compactMap { document -> User? in
+                try? document.data(as: User.self)
+              }
+            }
+        }
+    }
     
     private func loadMessages() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -107,25 +108,11 @@ class Repository: ObservableObject {
         }
     }
     
-    
-//    private func loadChallengesForUser() {
-//        guard let userId = Auth.auth().currentUser?.uid else { return }
-////        print(userId)
-//          db.collection("challenges")
-//            .whereField("userIds", arrayContains: userId)
-//            .addSnapshotListener { (querySnapshot, error) in
-//              if let querySnapshot = querySnapshot {
-//                self.userChallenges = querySnapshot.documents.compactMap { document -> Challenge? in
-//                  try? document.data(as: Challenge.self)
-//                }
-//              }
-//            }
-//        }
     private func loadChallengesForUser() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 //        print(userId)
           db.collection("activeChallenges")
-            .whereField("userId", arrayContains: userId)
+            .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
               if let querySnapshot = querySnapshot {
                 self.userChallenges = querySnapshot.documents.compactMap { document -> ActiveChallenge? in
@@ -224,8 +211,10 @@ class Repository: ObservableObject {
         do {
             print("adding")
             let result = try db.collection("challenges").addDocument(from: challenge)
+            addChallengeToUser(challenge: challenge, challengeId: result.documentID)
             print(result.documentID)
             updateCategory(challengeId: result.documentID, challengeName: challenge.title, category: challenge.category)
+         
         } catch {
             fatalError("Unable to encode challenge: \(error.localizedDescription)")
         }
@@ -246,11 +235,12 @@ class Repository: ObservableObject {
             ])
     }
     
-    func addChallengeToUser(_ challenge: Challenge) {
+    func addChallengeToUser(challenge: Challenge, challengeId: String) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
+        print("working?")
         do {
             print("adding")
-            let result = try db.collection("activeChallenges").addDocument(from: ActiveChallenge(title: challenge.title, challengeId: challenge.id ?? "", durationDays: challenge.durationDays, interval: challenge.interval, description: challenge.description, completed: false, challengeCreater: challenge.challengeCreater, userId: userId))
+            let result = try db.collection("activeChallenges").addDocument(from: ActiveChallenge(title: challenge.title, challengeId: challengeId, durationDays: challenge.durationDays, interval: challenge.interval, description: challenge.description, completed: false, challengeCreater: challenge.challengeCreater, userId: userId))
             print(result.documentID)
         } catch {
             fatalError("Unable to encode challenge: \(error.localizedDescription)")
@@ -366,9 +356,9 @@ class Repository: ObservableObject {
         let group = DispatchGroup()
         guard let userId = Auth.auth().currentUser?.uid else { return }
         let userRef = db.collection("users").document(userId)
-        let userDocRef = Firestore.firestore().collection("users").document(userId )
-        let challengeRef = Firestore.firestore().collection("challenges").document(challenge.challengeId ?? "")
-        userDocRef.getDocument { (document, error) in
+        
+        let challengeRef = db.collection("challenges").document(challenge.challengeId)
+        userRef.getDocument { (document, error) in
             print("get user document")
             if let document = document, document.exists {
                 let dataDescription = document.data()
@@ -413,9 +403,9 @@ class Repository: ObservableObject {
                     group.leave()
                     print("group leave")
                     group.notify(queue: DispatchQueue.global()) {
-                    print("non of the user completedChallenges is equal to \(challenge.id), we create a new Completed Challenges Collection")
+                    print("non of the user completedChallenges is equal to \(challenge.challengeId), we create a new Completed Challenges Collection")
                         let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, username: username, timeInterval: Date().timeIntervalSince1970)
-                        userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(challenge.challengeId)"])
+                        userRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(challenge.challengeId)"])
                     challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": "\(userId)"])
                     print("Completed Challenges Collection was created id: \(newCompletedChallengesID)")
                     }
@@ -424,7 +414,7 @@ class Repository: ObservableObject {
                 
                 print("user \(userId) has never completed a challenge")
                 let newCompletedChallengesID = self.addNewCompletedChallenge(challenge, userId: userId, username: username, timeInterval: Date().timeIntervalSince1970)
-                userDocRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.id])
+                userRef.updateData(["completedChallenges.\(newCompletedChallengesID)": challenge.challengeId])
                 challengeRef.updateData(["completedChallenges.\(newCompletedChallengesID)": userId])
                 print("first Completed Challenges Collection was created id: \(newCompletedChallengesID)")
             
@@ -441,7 +431,7 @@ class Repository: ObservableObject {
         do {
             print("adding")
             
-            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.id ?? "", userId: userId, username: username, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
+            let result = try self.db.collection("completedChallenges").addDocument(from: CompletedChallenge(challengeId: challenge.challengeId , userId: userId, username: username, completed: [timeInterval], timesCompleted: 1, firstCompleted: timeInterval, challengeDuration: challenge.durationDays))
             print(result.documentID)
             return result.documentID
         } catch {

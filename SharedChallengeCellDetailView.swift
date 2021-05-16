@@ -10,10 +10,11 @@ import AlertX
 
 struct SharedChallengeCellDetailView: View {
         @ObservedObject var session: SessionStore
+        @ObservedObject var repository: Repository
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
         @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
-        @ObservedObject var userListVM = UserListViewModel()
+        @StateObject var userListVM : UserListViewModel
         
         @State var challengeDone = false
         @State var showCompleteChallengeAlert = false
@@ -29,7 +30,14 @@ struct SharedChallengeCellDetailView: View {
         @State var recommendChallengeToFriendPresented = false
         @State var challengeFriendPresented = false
         @State var challengeDays = [0.0]
-    
+    init(session: SessionStore, repository: Repository, userChallengeCellVM: UserChallengeCellViewModel, completedChallengeCellVM: CompletedChallengeCellViewModel, sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel ) {
+        self.session = session
+        self.repository = repository
+        self.userChallengeCellVM = userChallengeCellVM
+        self.completedChallengeCellVM = completedChallengeCellVM
+        self.sharedCompletedChallengeCellVM = sharedCompletedChallengeCellVM
+        _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
+    }
     func completeChallenge() {
             print("completing challenge")
         

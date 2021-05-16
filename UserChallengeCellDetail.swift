@@ -10,9 +10,10 @@ import AlertX
 
 struct UserChallengeCellDetail: View {
         @ObservedObject var session: SessionStore
+        @ObservedObject var repository : Repository
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
-        @ObservedObject var userListVM = UserListViewModel()
+        @StateObject var userListVM : UserListViewModel
         
         @State var challengeDone = false
         @State var showCompleteChallengeAlert = false
@@ -25,7 +26,13 @@ struct UserChallengeCellDetail: View {
         @State var showModal = false
         @State var recommendChallengeToFriendPresented = false
         @State var challengeFriendPresented = false
-    
+    init(session: SessionStore, repository: Repository, userChallengeCellVM: UserChallengeCellViewModel, completedChallengeCellVM: CompletedChallengeCellViewModel) {
+        self.session = session
+        self.repository = repository
+        self.userChallengeCellVM = userChallengeCellVM
+        self.completedChallengeCellVM = completedChallengeCellVM
+        _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
+    }
     
     func completeChallenge() {
             print("completing challenge")
@@ -60,9 +67,10 @@ struct UserChallengeCellDetail: View {
     }
     
     func progressSetup() {
-        print("Mike completed: \(completedChallengeCellVM.completedChallenge.id)")
+        
 //        if (completedChallengeCellVM.checkIfChallengeIsOver() == false) {
             if completedChallengeCellVM.completedChallenge.timesCompleted != 0 {
+                print("completed before!!!")
                 let timesCompletedTemp = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
                 self.timesCompleted = timesCompletedTemp / 100
                 let duration = userChallengeCellVM.userChallenge.durationDays

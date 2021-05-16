@@ -24,7 +24,7 @@ struct SignInView: View {
             return "Please fill in a valid email and password"
             
         }
-        print ("nil error")
+        
         return nil
     }
     

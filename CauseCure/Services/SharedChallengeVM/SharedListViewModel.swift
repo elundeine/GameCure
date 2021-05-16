@@ -13,7 +13,6 @@ import SwiftUI
 class SharedChallengeListViewModel: ObservableObject {
 
         @EnvironmentObject var session: SessionStore
-    //    @Published var repository = Repository()
         @Published var repository : Repository
         @Published var sharedChallengeCellViewModels = [SharedChallengeCellViewModel]()
         

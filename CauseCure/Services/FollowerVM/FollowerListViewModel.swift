@@ -15,16 +15,17 @@ import SwiftUI
 //NOT USED ATM
 class FollowerListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
-    @Published var repository = Repository()
+    @Published var repository : Repository
     @Published var followerCellViewModels = [FollowerCellViewModel]()
     
     
     private var cancellabels = Set<AnyCancellable>()
     
-    init() {
+    init(repository: Repository) {
+        self.repository = repository
         repository.$following.map { follow in
                 follow.map { follow in
-                    FollowerCellViewModel(follow: follow)
+                    FollowerCellViewModel(follow: follow, repository: repository)
                 }
             }
             .assign(to: \.followerCellViewModels, on: self)

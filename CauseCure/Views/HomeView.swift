@@ -85,7 +85,7 @@ struct HomeView: View {
                             }.foregroundColor(Color.black)
                         }
                        )
-            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView()}
+            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(repository: repository, session: session)}
                .navigationBarTitle(Text("My Dashboard"))
                    }
             
@@ -100,6 +100,8 @@ enum InputError: Error {
   case empty
 }
 struct PendingInvitationModalView: View {
+        @ObservedObject var repository: Repository
+        @ObservedObject var session: SessionStore
             @Environment(\.presentationMode) var presentationMode
             var body: some View {
                 //TODO: add dismiss button
@@ -111,7 +113,7 @@ struct PendingInvitationModalView: View {
                     }.padding()
                     
                 }
-                   AddCreateChallenge()
+                    AddCreateChallenge(session: session, repository: repository)
                 
                 
             }

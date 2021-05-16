@@ -9,10 +9,16 @@ import SwiftUI
 
 struct UserSearch: View {
         @ObservedObject var userSearch = UserSearchService()
+        @ObservedObject var repository : Repository
         //    @Binding var challenges : [Challenge]
         @State var txt = ""
         @State private var showCancelButton: Bool = false
+    
+    func followUser(user: User) {
+        self.repository.followUser(userIdToFollow: user.uid ?? "", usernameToFollow: user.username ?? "")
+        }
         var body: some View {
+            VStack{
             VStack {
                 HStack{
                     Image(systemName: "magnifyingglass")
@@ -48,14 +54,28 @@ struct UserSearch: View {
             NavigationView{
 //            Text("Results").font(.subheadline)
             List(self.userSearch.users.filter { $0.username.lowercased().contains(self.txt.lowercased())}) { i in
-                NavigationLink(destination: UserProfile(userCellVM: UserCellViewModel(user: i))) {
+                VStack {
+                    Button(action: {
+                        self.followUser(user: i)
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                           
+                        }
+                    }.padding()
+                }
+                NavigationLink(destination: UserProfile(userCellVM: UserCellViewModel(user: i, repository: repository))) {
                                     Text(i.username)
+                                    
                                 }
                             }.frame(height: UIScreen.main.bounds.height / 5)
                 
                         }
 
                     }
+            }
             }
 
     

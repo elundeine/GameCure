@@ -17,8 +17,10 @@ struct ContentView: View {
     var body: some View {
         Group {
             if (session.session == nil) {
+                Text("\(session.session?.username ?? "session nil")")
                 SignInView(session: session)
             } else {
+                Text("\(session.session?.username ?? "")")
                 TabBar(session: session)
             }
         }.onAppear(perform: listen)

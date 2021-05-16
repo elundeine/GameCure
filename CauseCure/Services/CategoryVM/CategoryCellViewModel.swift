@@ -9,7 +9,7 @@ import Combine
 import FirebaseAuth
 
 class CategoryCellViewModel: ObservableObject, Identifiable {
-    @Published var repository = Repository()
+    @Published var repository : Repository
     
     @Published var category: ChallengeCategory
     
@@ -18,8 +18,9 @@ class CategoryCellViewModel: ObservableObject, Identifiable {
     private var cancellables = Set<AnyCancellable>()
 
     
-    init(category: ChallengeCategory) {
+    init(category: ChallengeCategory, repository: Repository) {
         self.category = category
+        self.repository = repository
         $category
             .compactMap { category in
                 category.name
