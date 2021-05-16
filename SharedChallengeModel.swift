@@ -16,11 +16,11 @@ struct SharedChallenge: Codable, Identifiable, Hashable {
     var challengeId: String
     var durationDays: Int
     var interval: String
-    var searchName: [String]
-    var completedChallenge: [String : String]?
     var description: String
-    var userId: String
+    var userIds: [String]
     var challengeCreator: String
+    var challengedUserId: String
+    var challengedUsername: String
     var challengerUserId: String
     var challengerUsername: String
     @ServerTimestamp var createdTime: Timestamp?

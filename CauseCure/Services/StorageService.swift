@@ -114,8 +114,7 @@ class StorageService {
                     }
                     
                     let firestoreUserId = AuthService.getUserId(userId: userId)
-                    let user = User.init(uid: userId, email: email, profileImageUrl: metaImageUrl, username: username, experience: 0, searchName: username.splitStringtoArray(), bio: "", loggedInDates: [""], completedTour: false)
-                     
+                    let user = User.init(uid: userId, email: email, profileImageUrl: metaImageUrl, username: username, experience: 0, searchName: username.splitStringtoArray(), bio: "", loggedInDates: [], following: [], followers: [], completedChallenges: [:], completedTour: false, doneChallenges: [], chats: [:], description: nil, stats: nil)
                     guard let dict = try?user.asDictionary() else { return }
                     
                     firestoreUserId.setData(dict) {

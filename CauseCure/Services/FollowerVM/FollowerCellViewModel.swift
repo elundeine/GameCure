@@ -24,6 +24,7 @@ class FollowerCellViewModel: ObservableObject, Identifiable {
     init(follow: User, repository: Repository) {
         self.follow = follow
         self.repository = repository
+        print("follow init")
         $follow
             .compactMap { follow in
                 follow.uid

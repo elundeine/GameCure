@@ -73,12 +73,12 @@ struct MyChallengesView: View {
         if(inviteListVM.invites.isEmpty == false) {
                     ForEach(inviteListVM.invites) { invite in
                         ZStack{
-                            NavigationLink(destination: InvitedChallengeView(session: session, inviteCellVM: invite)) {
+                            NavigationLink(destination: InvitedSharedChallengeView(session: session, inviteCellVM: invite)) {
                             EmptyView()
                             }   .opacity(0.0)
                             .buttonStyle(PlainButtonStyle())
                             ChallengeInviteCard(inviteCellVM: invite)
-                    }
+                        }
                 }
             }
 //            if(session.session?.pendingChallengeInvite != nil) {
@@ -102,6 +102,20 @@ struct MyChallengesView: View {
 
                }
             }
+        
+        //TODO
+        ForEach(sharedListVM.sharedChallengeCellViewModels) { sharedChallengeCellVM in
+            ZStack{
+                NavigationLink(destination: SharedChallengeCellDetailView(session: session, repository: repository, sharedChallengeCellVM: sharedChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId == sharedChallengeCellVM.sharedChallenge.challengeId }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0), repository: repository), sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == sharedChallengeCellVM.sharedChallenge.challengeId}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0), repository: repository))) {
+                    {
+                EmptyView()
+            }.opacity(0.0)
+            .buttonStyle(PlainButtonStyle())
+               SharedChallengeCard(sharedChallengeCellVM: sharedChallengeCellVM)
+
+           }
+        }
+        }
 //            ForEach(userChallengeListVM.userSharedChallengeCellViewModels) { userChallengeCellVM in
 //                ZStack{
 //                    NavigationLink(destination: SharedChallengeCellDetailView(session: session, userChallengeCellVM: userChallengeCellVM, completedChallengeCellVM: completedChallengeListVM.completedChallengeCellViewModels.first(where: {$0.challengeId == userChallengeCellVM.id }) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)), sharedCompletedChallengeCellVM: completedChallengeListVM.sharedCompletedChallengeViewModels.first(where: {$0.challengeId == userChallengeCellVM.id}) ?? CompletedChallengeCellViewModel(completedChallenge: CompletedChallenge(id: "", challengeId: "", userId: "", username: session.session?.username ?? "", completed: [0], timesCompleted: 0,firstCompleted: 0.0, challengeDuration: 0)))) {
@@ -217,6 +231,37 @@ struct UserChallengeCard: View {
     }
 }
 
+struct SharedChallengeCard: View {
+    @ObservedObject var sharedChallengeCellVM: SharedChallengeCellViewModel
+    
+    
+    var body: some View {
+        HStack(alignment: .center) {
+        Image("trophy")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100)
+            .padding(.all, 20)
+        
+        VStack(alignment: .leading) {
+                Text("\($sharedChallengeCellVM.sharedChallenge.title.wrappedValue)")
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(.white)
+//                HStack {
+//                    Text("daily")
+//                    .font(.system(size: 16, weight: .bold, design: .default))
+//                    .foregroundColor(.white)
+//                    .padding(.top, 8)
+//                }
+        }.padding(.trailing, 20)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(Color(red: 32/255, green: 36/255, blue: 38/255))
+        .modifier(CardModifier())
+        .padding(.all, 10)
+    }
+}
 
 
 //struct MyChallengesView_Previews: PreviewProvider {

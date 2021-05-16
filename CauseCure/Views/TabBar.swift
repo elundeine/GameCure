@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TabBar: View {
     @ObservedObject var session: SessionStore
-    @ObservedObject var repository = Repository()
+    @ObservedObject var repository : Repository
     //@EnvironmentObject var model: Model
     @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
 //    @State private var needsOnboarding = true

@@ -7,18 +7,20 @@
 
 import SwiftUI
 
-struct InvitedChallengeView: View {
+struct InvitedSharedChallengeView: View {
         @ObservedObject var session: SessionStore
         @ObservedObject var inviteCellVM: InviteCellViewModel
 
         
         func acceptChallenge(){
-            inviteCellVM.repository.acceptSharedChallengeInviteFrom(userId: inviteCellVM.invite.challengerUserId, challengeId: inviteCellVM.id)
+            inviteCellVM.repository.acceptSharedChallengeInviteFrom(userId: session.session?.uid ?? "", invite: inviteCellVM.invite)
         }
         
         func declineChallenge(){
-            inviteCellVM.repository.deleteSharedChallengeInviteFrom(challengeId: inviteCellVM.id)
+            inviteCellVM.repository.deleteInvite(inviteCellVM.invite)
+            
         }
+    
         
         var body: some View {
             VStack{
@@ -52,12 +54,19 @@ struct InvitedChallengeView: View {
                                 .font(.subheadline)
                         }.padding()
                         Divider()
+                        
                         VStack {
                             HStack(alignment: .top) {
                             Spacer()
+                            if (inviteCellVM.invite.shared == true ) {
                             Text("Do you want to do the challenge together with \($inviteCellVM.invite.challengerUsername.wrappedValue)?")
                                 .font(.subheadline)
                                 .bold()
+                            } else {
+                            Text("Do you accept the challenge?")
+                                .font(.subheadline)
+                                .bold()
+                            }
                             Spacer()
                             }
                             HStack(alignment: .top) {

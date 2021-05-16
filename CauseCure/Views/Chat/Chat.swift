@@ -10,7 +10,8 @@ import SwiftUI
 struct ChatView: View {
     @ObservedObject var session: SessionStore
     @ObservedObject var repository : Repository
-    @StateObject var userListVM : UserListViewModel
+ 
+    @StateObject var followerListVM: FollowerListViewModel
 //    @ObservedObject var messageListVM = MessageListViewModel()
     @State var isPresented = false
     //TODO:
@@ -25,7 +26,8 @@ struct ChatView: View {
     init(session: SessionStore, repository: Repository) {
         self.session = session
         self.repository = repository
-        _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
+      
+        _followerListVM = StateObject(wrappedValue: FollowerListViewModel(repository: repository))
     }
     var body: some View {
         VStack{
@@ -36,18 +38,14 @@ struct ChatView: View {
 //                HStack{
 //                        Text("Follower List")
 //                }
-                if session.session != nil {
-                    if session.session!.following != nil {
-                        List {
-                            ForEach(userListVM.userCellViewModels.filter {
-                                session.session!.following!.keys.contains($0.user.uid!)}) {
-                                    userCellVM in
+                  List {
+                    ForEach (followerListVM.followerCellViewModels) { followerCellVM in
                                 ZStack {
 //                                NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
 //                                    EmptyView()
 //                                }.opacity(0.0)
 //                                .buttonStyle(PlainButtonStyle())
-                                FriendCard(userCellVM: userCellVM)
+                                FriendCard(userCellVM: followerCellVM)
                                      
                         
                                 }
@@ -56,11 +54,12 @@ struct ChatView: View {
                         }
                         
                     }
-                }
+                
 
             }
                 
-            }
+            
+        
 
             .navigationBarTitle(Text("Social"))
             .navigationBarItems(trailing:
@@ -75,17 +74,19 @@ struct ChatView: View {
                     }.foregroundColor(Color.black)
                 }
             )
-        }.fullScreenCover(isPresented: $isPresented) { UserFullScreenSearchModalView(repository: repository, userListVM: userListVM)
+        }.fullScreenCover(isPresented: $isPresented) { UserFullScreenSearchModalView(repository: repository)
         }
     }
-     
-}
-}
-
+    }
 struct UserFullScreenSearchModalView: View {
         @Environment(\.presentationMode) var presentationMode
         @ObservedObject var repository : Repository
-        @ObservedObject var userListVM : UserListViewModel
+        @StateObject var userListVM : UserListViewModel
+    
+    init(repository: Repository) {
+        self.repository = repository
+        _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
+    }
         var body: some View {
             //TODO: add dismiss button
             VStack{
@@ -111,3 +112,4 @@ struct UserFullScreenSearchModalView: View {
 //        ChatView(session: <#T##SessionStore#>)
 //    }
 //}
+}

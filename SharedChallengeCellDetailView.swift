@@ -11,9 +11,10 @@ import AlertX
 struct SharedChallengeCellDetailView: View {
         @ObservedObject var session: SessionStore
         @ObservedObject var repository: Repository
-        @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
+        @ObservedObject var sharedChallengeCellVM: SharedChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
         @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
+        @StateObject var followerListVM : FollowerListViewModel
         @StateObject var userListVM : UserListViewModel
         
         @State var challengeDone = false
@@ -30,13 +31,14 @@ struct SharedChallengeCellDetailView: View {
         @State var recommendChallengeToFriendPresented = false
         @State var challengeFriendPresented = false
         @State var challengeDays = [0.0]
-    init(session: SessionStore, repository: Repository, userChallengeCellVM: UserChallengeCellViewModel, completedChallengeCellVM: CompletedChallengeCellViewModel, sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel ) {
+    init(session: SessionStore, repository: Repository, sharedChallengeCellVM: SharedChallengeCellViewModel, completedChallengeCellVM: CompletedChallengeCellViewModel, sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel ) {
         self.session = session
         self.repository = repository
-        self.userChallengeCellVM = userChallengeCellVM
+        self.sharedChallengeCellVM = sharedChallengeCellVM
         self.completedChallengeCellVM = completedChallengeCellVM
         self.sharedCompletedChallengeCellVM = sharedCompletedChallengeCellVM
         _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
+        _followerListVM = StateObject(wrappedValue: FollowerListViewModel(repository: repository))
     }
     func completeChallenge() {
             print("completing challenge")
@@ -45,10 +47,10 @@ struct SharedChallengeCellDetailView: View {
             self.showCompleteChallengeAlert.toggle()
             self.doneToday = true
             self.timesCompleted += 1
-            userChallengeCellVM.repository.completeAChallenge(challenge: userChallengeCellVM.userChallenge, username: session.session?.username ?? "")
+            sharedChallengeCellVM.repository.completeSharedChallenge(challenge: sharedChallengeCellVM.sharedChallenge, username: session.session?.username ?? "")
             let timesCompletedTemp = 100 * self.timesCompleted
              
-            let duration = userChallengeCellVM.userChallenge.durationDays
+            let duration = sharedChallengeCellVM.sharedChallenge.durationDays
             let progress = Float((timesCompletedTemp) / (duration))
             print(progress)
             self.progressValue = progress / 100
@@ -60,15 +62,17 @@ struct SharedChallengeCellDetailView: View {
 //                endChallenge()
         }
     }
+    
+    //TODO
     func stopChallenge() {
         if (timesCompleted > 0) {
-            userChallengeCellVM.repository.challengeDone(challenge: userChallengeCellVM.userChallenge, timesCompleted: timesCompleted)
+//            userChallengeCellVM.repository.challengeDone(challenge: userChallengeCellVM.userChallenge, timesCompleted: timesCompleted)
         } else {
-            userChallengeCellVM.repository.removeChallengefromUser(userChallengeCellVM.userChallenge)
+//            userChallengeCellVM.repository.removeChallengefromUser(userChallengeCellVM.userChallenge)
         }
     }
     func endChallenge() {
-        userChallengeCellVM.repository.challengeDone(challenge: userChallengeCellVM.userChallenge, timesCompleted: timesCompleted)
+//        userChallengeCellVM.repository.challengeDone(challenge: userChallengeCellVM.userChallenge, timesCompleted: timesCompleted)
     }
     
     func progressSetup() {
@@ -79,7 +83,7 @@ struct SharedChallengeCellDetailView: View {
             if completedChallengeCellVM.completedChallenge.timesCompleted != 0 {
                 let timesCompletedTemp = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
                 self.timesCompleted = timesCompletedTemp / 100
-                let duration = userChallengeCellVM.userChallenge.durationDays
+                let duration = sharedChallengeCellVM.sharedChallenge.durationDays
                 let progress = Float((timesCompletedTemp) / (duration))
                 self.progressValue = progress / 100
                 self.doneToday = completedChallengeCellVM.checkIfCompletedToday()
@@ -87,7 +91,7 @@ struct SharedChallengeCellDetailView: View {
             if sharedCompletedChallengeCellVM.completedChallenge.timesCompleted != 0 {
                 let sharedTimesCompletedTemp = 100 * sharedCompletedChallengeCellVM.completedChallenge.timesCompleted!
                 self.sharedTimesCompleted = sharedTimesCompletedTemp / 100
-                let sharedDuration = userChallengeCellVM.userChallenge.durationDays
+                let sharedDuration = sharedChallengeCellVM.sharedChallenge.durationDays
                 let sharedProgress = Float((sharedTimesCompletedTemp) / (sharedDuration))
                 self.sharedProgressValue = sharedProgress / 100
                 self.sharedDoneToday = sharedCompletedChallengeCellVM.checkIfCompletedToday()
@@ -106,7 +110,7 @@ struct SharedChallengeCellDetailView: View {
             ScrollView{
                 VStack {
                     HStack{
-                        Text($userChallengeCellVM.userChallenge.title.wrappedValue)
+                        Text($sharedChallengeCellVM.sharedChallenge.title.wrappedValue)
                             .font(.title)
                     }
                     VStack {
@@ -235,7 +239,7 @@ struct SharedChallengeCellDetailView: View {
                         Spacer()
                     }.padding()
                         HStack{
-                            Text($userChallengeCellVM.userChallenge.description.wrappedValue)
+                            Text($sharedChallengeCellVM.sharedChallenge.description.wrappedValue)
                             Spacer()
                         }
                     }.padding()
@@ -339,7 +343,7 @@ struct SharedChallengeCellDetailView: View {
                         }.padding()
                         HStack(alignment: .top) {
                             Spacer()
-                            Text("by \($userChallengeCellVM.userChallenge.challengeCreater.wrappedValue)")
+                            Text("by \($sharedChallengeCellVM.sharedChallenge.challengeCreator.wrappedValue)")
                                 .font(.subheadline)
                             Spacer()
                           
@@ -360,8 +364,8 @@ struct SharedChallengeCellDetailView: View {
 //
 //                
 //            }
-            .fullScreenCover(isPresented: $showModal) { FriendModalView(session: session, userListVM: userListVM, userChallengeCellVM: userChallengeCellVM, recommendFollower: $recommendChallengeToFriendPresented,challengeFollower: $challengeFriendPresented)
-            }
+//            .fullScreenCover(isPresented: $showModal) { FriendModalView(session: session, userListVM: userListVM, followerListVM: followerListVM, userChallengeCellVM: userChallengeCellVM, recommendFollower: $recommendChallengeToFriendPresented,challengeFollower: $challengeFriendPresented)
+//            }
             
             } else {
                 Text("Congratulations you completed the challenge!")

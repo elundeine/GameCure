@@ -16,12 +16,12 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if (session.session == nil) {
+            if (session.session != nil || session.isLoggedIn == true) {
+                Text("\(session.session?.username ?? "")")
+                TabBar(session: session, repository: Repository())
+            } else {
                 Text("\(session.session?.username ?? "session nil")")
                 SignInView(session: session)
-            } else {
-                Text("\(session.session?.username ?? "")")
-                TabBar(session: session)
             }
         }.onAppear(perform: listen)
         

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InvitedSharedChallengeView: View {
+struct InvitedChallengeView: View {
     @ObservedObject var session: SessionStore
     @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
     @State var invitedBy = ""

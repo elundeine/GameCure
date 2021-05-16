@@ -20,10 +20,8 @@ class SessionStore: ObservableObject {
     
     
     var didChange = PassthroughSubject<SessionStore, Never>()
-    @Published var session: User? {
-        didSet{
-            self.didChange.send(self)
-        }}
+    var isLoggedIn = false { didSet { self.didChange.send(self) }}
+    @Published var session: User? {didSet{self.didChange.send(self)} }
     @Published var messages = [Message]()
     @Published var messagesDictionary = [String:Message]()
     var handle: AuthStateDidChangeListenerHandle?
@@ -35,30 +33,33 @@ class SessionStore: ObservableObject {
         db.collection("users").document(session!.uid!).updateData(["description": descdic, "stats": statsdic])
     }
 
-
+    
     func listen() {
         handle = Auth.auth().addStateDidChangeListener({
             (auth, user) in
-            
+
             if let user = user {
-               
+
                 let firestoreUserId = AuthService.getUserId(userId: user.uid)
                 firestoreUserId.getDocument {
                     (document, error) in
                     if let dict = document?.data() {
                         guard let decodedUser = try? User.init(fromDictionary: dict) else { return }
+                        print("added decodedUser")
+                        print("does this work")
                         self.session = decodedUser
+                        self.isLoggedIn = true
                     }
                 }
-               
-                
+
+
             } else {
+                self.isLoggedIn = false
                 print("session store nil")
                 self.session = nil
             }
         })
     }
-    
 //    func buyStoneCrusherGame(userId: String, experience: Int) -> Bool {
 //        
 //        if (experience >= 50) {

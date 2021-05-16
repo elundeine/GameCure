@@ -14,7 +14,7 @@ struct UserChallengeCellDetail: View {
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
         @StateObject var userListVM : UserListViewModel
-        
+        @StateObject var followerListVM : FollowerListViewModel
         @State var challengeDone = false
         @State var showCompleteChallengeAlert = false
         @State var progressValue: Float = 0.0
@@ -26,12 +26,14 @@ struct UserChallengeCellDetail: View {
         @State var showModal = false
         @State var recommendChallengeToFriendPresented = false
         @State var challengeFriendPresented = false
+    
     init(session: SessionStore, repository: Repository, userChallengeCellVM: UserChallengeCellViewModel, completedChallengeCellVM: CompletedChallengeCellViewModel) {
         self.session = session
         self.repository = repository
         self.userChallengeCellVM = userChallengeCellVM
         self.completedChallengeCellVM = completedChallengeCellVM
         _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
+        _followerListVM = StateObject(wrappedValue: FollowerListViewModel(repository: repository))
     }
     
     func completeChallenge() {
@@ -323,7 +325,7 @@ struct UserChallengeCellDetail: View {
 ////
 ////
 ////            }
-            .fullScreenCover(isPresented: $showModal) { FriendModalView(session: session, userListVM: userListVM, userChallengeCellVM: userChallengeCellVM, recommendFollower: $recommendChallengeToFriendPresented,challengeFollower: $challengeFriendPresented)
+            .fullScreenCover(isPresented: $showModal) { FriendModalView(session: session, userListVM: userListVM, followerListVM: followerListVM, userChallengeCellVM: userChallengeCellVM, recommendFollower: $recommendChallengeToFriendPresented,challengeFollower: $challengeFriendPresented)
             }
             
             } else {
@@ -358,21 +360,22 @@ struct ProgressBar: View {
 struct FriendModalView: View {
         @ObservedObject var session: SessionStore
         @ObservedObject var userListVM: UserListViewModel
+        @ObservedObject var followerListVM: FollowerListViewModel
         @Environment(\.presentationMode) var presentationMode
         @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
         @State var challengeFriendAlert = false
         @Binding var recommendFollower: Bool
         @Binding var challengeFollower: Bool
     
-    func recommendChallengeToFollower(userID: String) {
+    func recommendChallengeToFollower(userID: String, username: String) {
         print("User \(userID) was recommended challenged")
-        userListVM.repository.sendChallengeInvite(challengedUserId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id, challengeTitle: userChallengeCellVM.userChallenge.title, challengeDescription: userChallengeCellVM.userChallenge.description, durationDays: userChallengeCellVM.userChallenge.durationDays, shared: false)
+        userListVM.repository.sendChallengeInvite(challengedUserId: userID, challengedUsername: username, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.challengeId, challengeTitle: userChallengeCellVM.userChallenge.title, challengeDescription: userChallengeCellVM.userChallenge.description, challengeCreater: userChallengeCellVM.userChallenge.challengeCreater, challengeInterval: userChallengeCellVM.userChallenge.interval, durationDays: userChallengeCellVM.userChallenge.durationDays, shared: false)
         
         self.challengeFriendAlert = true
     }
-    func challengeFollower(userID: String) {
+    func challengeFollower(userID: String, username: String) {
         print("User \(userID) was challenged")
-        userListVM.repository.sendChallengeInvite(challengedUserId: userID, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.id, challengeTitle: userChallengeCellVM.userChallenge.title, challengeDescription: userChallengeCellVM.userChallenge.description, durationDays: userChallengeCellVM.userChallenge.durationDays, shared: true)
+        userListVM.repository.sendChallengeInvite(challengedUserId: userID, challengedUsername: username, myUsername: session.session?.username ?? "", challengeId: userChallengeCellVM.challengeId, challengeTitle: userChallengeCellVM.userChallenge.title, challengeDescription: userChallengeCellVM.userChallenge.description, challengeCreater: userChallengeCellVM.userChallenge.challengeCreater, challengeInterval: userChallengeCellVM.userChallenge.interval, durationDays: userChallengeCellVM.userChallenge.durationDays, shared: true)
         
         self.challengeFriendAlert = true
     }
@@ -390,26 +393,22 @@ struct FriendModalView: View {
                 
             }
             Text("Challenge a Follower").font(.title)
-            if(session.session?.followers != nil) {
-            }
             List {
-                ForEach(userListVM.userCellViewModels.filter {
-                            session.session!.followers!.keys.contains($0.user.uid!)}) {
+                ForEach(followerListVM.followerCellViewModels) {
                     userCellVM in
-                    ZStack {
-                        EmptyView()
-                    }.opacity(0.0)
-                    .buttonStyle(PlainButtonStyle())
+                    
+                    Text("follower")
                     FriendCard(userCellVM: userCellVM)
                         .onTapGesture {
-                            challengeFollower(userID: userCellVM.id)
+                            challengeFollower(userID: userCellVM.id, username: userCellVM.follow.username)
                         }
-                }
+                
             }
         }
         Spacer()
         .alert(isPresented: $challengeFriendAlert) {
             Alert(title: Text("Sent out a challenge invite!"), message: Text("The challenge invitation is now displayed in your followers dashboard."), dismissButton: .default(Text("Ok")))
+        }
         }
     } else {
     VStack{
@@ -422,24 +421,21 @@ struct FriendModalView: View {
             
         }
         Text("Recommend to a Follower").font(.title)
-        if(session.session?.followers != nil) {
+        
         List {
             
             //
-            ForEach(userListVM.userCellViewModels.filter {
-                        session.session!.followers!.keys.contains($0.user.uid!)}) {
+            ForEach(followerListVM.followerCellViewModels) {
                 userCellVM in
-                ZStack {
-                    EmptyView()
-                }.opacity(0.0)
-                .buttonStyle(PlainButtonStyle())
+                
+                
                 FriendCard(userCellVM: userCellVM)
                     .onTapGesture {
-                        recommendChallengeToFollower(userID: userCellVM.id)
+                        recommendChallengeToFollower(userID: userCellVM.id, username: userCellVM.follow.username)
                     }
             }
         }
-    }
+    
     }
     Spacer()
     .alert(isPresented: $challengeFriendAlert) {

@@ -29,12 +29,12 @@ class InviteCellViewModel: ObservableObject, Identifiable {
     
     static func newInvite() -> InviteCellViewModel {
         print("here")
-        return InviteCellViewModel(invite: Invite(challengedUserId: "", challengerUserId: "", challengerUsername: "", challengeId: "", challengeTitle: "", challengeDescription: "", durationDays: 0, shared: false), repository: Repository())
+        return InviteCellViewModel(invite: Invite(challengedUserId: "", challengedUsername: "", challengerUserId: "", challengerUsername: "", challengeId: "", challengeTitle: "", challengeDescription: "", challengeCreater: "", challengeInterval: "", durationDays: 0, shared: false), repository: Repository())
     }
     
-    static func newInvite( challengedUserId: String, challengerUserId: String, challengerUsername: String, challengeId: String, challengeTitle: String, challengeDescription: String, durationDays: Int, shared: Bool) -> Invite {
+    static func newInvite( challengedUserId: String, challengerUserId: String, challengedUsername: String, challengerUsername: String, challengeId: String, challengeTitle: String, challengeDescription: String, challengeCreater: String, challengeInterval: String, durationDays: Int, shared: Bool) -> Invite {
         print("here")
-        return Invite(challengedUserId: challengedUserId, challengerUserId: challengerUserId, challengerUsername: challengerUsername, challengeId: challengeId, challengeTitle: challengeTitle, challengeDescription: challengeDescription, durationDays: durationDays, shared: shared)    }
+        return Invite(challengedUserId: challengedUserId, challengedUsername: challengedUsername, challengerUserId: challengerUserId, challengerUsername: challengerUsername, challengeId: challengeId, challengeTitle: challengeTitle, challengeDescription: challengeDescription, challengeCreater: challengeCreater, challengeInterval: challengeInterval, durationDays: durationDays, shared: shared)    }
     
     func getUsernameFor (id : String) -> String {
     
