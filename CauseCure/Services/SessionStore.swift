@@ -24,6 +24,7 @@ class SessionStore: ObservableObject {
     @Published var session: User? {didSet{self.didChange.send(self)} }
     @Published var messages = [Message]()
     @Published var messagesDictionary = [String:Message]()
+    @Published var needsOnboarding = false
     var handle: AuthStateDidChangeListenerHandle?
     let db = Firestore.firestore()
 
