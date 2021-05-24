@@ -10,9 +10,10 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct SharedChallenge: Codable, Identifiable, Hashable {
+struct SharedActiveChallenge: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var title: String
+    var userId: String
     var challengeId: String
     var durationDays: Int
     var interval: String

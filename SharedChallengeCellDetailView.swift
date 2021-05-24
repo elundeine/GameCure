@@ -12,8 +12,8 @@ struct SharedChallengeCellDetailView: View {
         @ObservedObject var session: SessionStore
         @ObservedObject var repository: Repository
         @ObservedObject var sharedChallengeCellVM: SharedChallengeCellViewModel
-        @ObservedObject var completedChallengeCellVM: CompletedChallengeCellViewModel
-        @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
+        @ObservedObject var completedChallengeCellVM: SharedCompletedChallengeCellViewModel
+        @ObservedObject var sharedCompletedChallengeCellVM: SharedCompletedChallengeCellViewModel
         @StateObject var followerListVM : FollowerListViewModel
         @StateObject var userListVM : UserListViewModel
         
@@ -31,7 +31,7 @@ struct SharedChallengeCellDetailView: View {
         @State var recommendChallengeToFriendPresented = false
         @State var challengeFriendPresented = false
         @State var challengeDays = [0.0]
-    init(session: SessionStore, repository: Repository, sharedChallengeCellVM: SharedChallengeCellViewModel, completedChallengeCellVM: CompletedChallengeCellViewModel, sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel ) {
+    init(session: SessionStore, repository: Repository, sharedChallengeCellVM: SharedChallengeCellViewModel, completedChallengeCellVM: SharedCompletedChallengeCellViewModel, sharedCompletedChallengeCellVM: SharedCompletedChallengeCellViewModel ) {
         self.session = session
         self.repository = repository
         self.sharedChallengeCellVM = sharedChallengeCellVM

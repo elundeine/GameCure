@@ -15,7 +15,7 @@ import FirebaseAuth
 class SharedChallengeCellViewModel: ObservableObject, Identifiable {
     @Published var repository : Repository
     
-    @Published var sharedChallenge: SharedChallenge
+    @Published var sharedChallenge: SharedActiveChallenge
     
     var id = ""
     var challengeId = ""
@@ -34,16 +34,16 @@ class SharedChallengeCellViewModel: ObservableObject, Identifiable {
     
     static func newChallenge() -> SharedChallengeCellViewModel {
         print("here")
-        return SharedChallengeCellViewModel(sharedChallenge: SharedChallenge(title: "", challengeId: "", durationDays: 0, interval: "", description: "", userIds: [""], challengeCreator: "", challengedUserId: "", challengedUsername: "", challengerUserId: "", challengerUsername: ""), repository: Repository())    }
+        return SharedChallengeCellViewModel(sharedChallenge: SharedActiveChallenge(title: "", userId: "", challengeId: "", durationDays: 0, interval: "", description: "", userIds: [""], challengeCreator: "", challengedUserId: "", challengedUsername: "", challengerUserId: "", challengerUsername: ""), repository: Repository())    }
     
     static func newChallenge(title: String, challengeId: String, durationDays: Int, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String) -> SharedChallengeCellViewModel {
         print("here")
 
-        return SharedChallengeCellViewModel(sharedChallenge: SharedChallenge(title: title, challengeId: challengeId, durationDays: durationDays, interval: interval, description: description, userIds:  [Auth.auth().currentUser?.uid ?? ""], challengeCreator: challengeCreater, challengedUserId: "", challengedUsername: "", challengerUserId: "", challengerUsername: ""), repository: Repository())
+        return SharedChallengeCellViewModel(sharedChallenge: SharedActiveChallenge(title: "", userId: "", challengeId: "", durationDays: 0, interval: "", description: "", userIds: [""], challengeCreator: "", challengedUserId: "", challengedUsername: "", challengerUserId: "", challengerUsername: ""), repository: Repository()) 
     }
     
     
-    init(sharedChallenge: SharedChallenge, repository: Repository) {
+    init(sharedChallenge: SharedActiveChallenge, repository: Repository) {
         self.sharedChallenge = sharedChallenge
         self.repository = repository
         
