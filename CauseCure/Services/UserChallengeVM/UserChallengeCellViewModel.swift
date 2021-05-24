@@ -11,11 +11,13 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 class UserChallengeCellViewModel: ObservableObject, Identifiable {
-    @Published var repository: Repository
+
+    @Published var repository : Repository
     
-    @Published var userChallenge: Challenge
+    @Published var userChallenge: ActiveChallenge
     
     var id = ""
+    var challengeId = ""
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -31,13 +33,17 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     
     static func newChallenge() -> UserChallengeCellViewModel {
         print("here")
-        return UserChallengeCellViewModel(userChallenge: Challenge(title: "", category: "", durationDays: 7, interval: "", searchName: [""], description: "", completed: false, challengeCreater: Auth.auth().currentUser?.uid ?? "" ), repository: Repository())
+
+        return UserChallengeCellViewModel(userChallenge: ActiveChallenge(title: "", challengeId: "", durationDays: 0, interval: "", description: "", completed: false, challengeCreater: "", userId: ""), repository: Repository())
+
     }
     
-    static func newChallenge(title: String, durationDays: Int, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String) -> UserChallengeCellViewModel {
+    static func newChallenge(title: String, challengeId: String, durationDays: Int, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String) -> UserChallengeCellViewModel {
         print("here")
 
-        return UserChallengeCellViewModel(userChallenge: Challenge(title: title, category: "", durationDays: durationDays, interval: interval, searchName: searchName, description: description, completed: completed, challengeCreater: challengeCreater), repository: Repository())
+
+        return UserChallengeCellViewModel(userChallenge: ActiveChallenge(title: title, challengeId: challengeId, durationDays: durationDays, interval: interval, description: description, completed: completed, challengeCreater: challengeCreater, userId: challengeCreater), repository: Repository())
+
     }
     
     func getUsernameFor (id : String) -> String {
@@ -47,16 +53,12 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
     }
     
     
-    init(userChallenge: Challenge, repository: Repository) {
-        
+
+    init(userChallenge: ActiveChallenge, repository: Repository) {
         self.userChallenge = userChallenge
         self.repository = repository
-        $userChallenge
-            .map { userChallenge in
-                userChallenge.completed ? "checkmark.circle.fill" : "bell.circle.fill"
-            }
-            .assign(to: \.completionStateIconName, on: self)
-            .store(in: &cancellables)
+        
+
         
 //        $userChallenge
 //            .map { userChallenge in
@@ -106,6 +108,13 @@ class UserChallengeCellViewModel: ObservableObject, Identifiable {
                 userChallenge.id
             }
             .assign(to: \.id, on: self)
+            
+            .store(in: &cancellables)
+        $userChallenge
+            .compactMap { userChallenge in
+                userChallenge.challengeId
+            }
+            .assign(to: \.challengeId, on: self)
             
             .store(in: &cancellables)
         $userChallenge

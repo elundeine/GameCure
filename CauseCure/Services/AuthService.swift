@@ -10,7 +10,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseStorage
 import FirebaseFirestore
-
+import SwiftUI
 
 // MARK: Setup Service of Firebase User Authentication
 class AuthService {
@@ -21,7 +21,7 @@ class AuthService {
         return storeRoot.collection("users").document(userId)
     }
     
-    static func signUp(username: String, email: String, password: String, imageData: Data, onSuccess: @escaping(_ user: User) -> Void,onError: @escaping(_ errorMessage: String)-> Void) {
+    static func signUp(username: String, email: String, password: String, imageData: Data, onSuccess: @escaping(_ user: User) -> Void, onError: @escaping(_ errorMessage: String)-> Void) {
      
         Auth.auth().createUser(withEmail: email, password: password) {
             (authData, error) in
@@ -41,6 +41,7 @@ class AuthService {
             StorageService.saveProfileImage(userId: userId, username: username, email: email, imageData: imageData, metaData: metadata, storageProfileImageRef: storageProfileUserId, onSuccess: onSuccess, onError: onError)
             
         }
+        
     }
     
 //    func signInn(email:String,password:String,handler : @escaping AuthDataResultCallback){

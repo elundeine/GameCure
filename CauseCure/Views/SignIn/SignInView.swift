@@ -23,6 +23,7 @@ struct SignInView: View {
             return "Please fill in a valid email and password"
             
         }
+
         return nil
     }
     
@@ -89,7 +90,7 @@ struct SignInView: View {
                     }
                 HStack{
                     Text("New?").font(.system(size: 20))
-                    NavigationLink(destination: SignUpView()) {
+                    NavigationLink(destination: SignUpView(session: self.session)) {
                         Text("Create an Account").font(.system(size: 20, weight: .semibold))
                             .foregroundColor(.blue)
                     }

@@ -19,9 +19,10 @@ import SDWebImageSwiftUI
 
 
 struct HomeView: View {
-    @ObservedObject var repository : Repository
-    @EnvironmentObject var session: SessionStore
 
+    @ObservedObject var repository: Repository
+    @ObservedObject var session: SessionStore
+    
     @State var presentAddNewItem = false
     @State var isPresented = false
     @State var menuOpen: Bool = false
@@ -40,6 +41,7 @@ struct HomeView: View {
         session.listen()
     }
     
+    
     func openMenu() {
            self.menuOpen.toggle()
        }
@@ -50,7 +52,9 @@ struct HomeView: View {
         ZStack{
         NavigationView {
             VStack (alignment: .leading) {
-                MyChallengesView(repository: repository, session: session)
+
+                MyChallengesView(session: session, repository: repository)
+
                     .listStyle(PlainListStyle())
 
             }.navigationBarItems(leading:
@@ -81,7 +85,9 @@ struct HomeView: View {
                             }.foregroundColor(Color.black)
                         }
                        )
-            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(repository: repository)}
+
+            .fullScreenCover(isPresented: $isPresented) { PendingInvitationModalView(repository: repository, session: session)}
+
                .navigationBarTitle(Text("My Dashboard"))
                    }
             
@@ -96,7 +102,10 @@ enum InputError: Error {
   case empty
 }
 struct PendingInvitationModalView: View {
-            @ObservedObject var repository: Repository
+
+        @ObservedObject var repository: Repository
+        @ObservedObject var session: SessionStore
+
             @Environment(\.presentationMode) var presentationMode
             var body: some View {
                 //TODO: add dismiss button
@@ -108,7 +117,9 @@ struct PendingInvitationModalView: View {
                     }.padding()
                     
                 }
-                   AddCreateChallenge(repository: repository)
+
+                    AddCreateChallenge(session: session, repository: repository)
+
                 
                 
             }
@@ -147,9 +158,9 @@ struct UserChallengeInviteCard: View {
     }
 }
 
-struct SharedUserChallengeInviteCard: View {
-    @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
-    @ObservedObject var sharedCompletedChallengeCellVM: CompletedChallengeCellViewModel
+struct ChallengeInviteCard: View {
+    @ObservedObject var inviteCellVM: InviteCellViewModel
+   
     @State var invitedBy = ""
     var body: some View {
         HStack(alignment: .center) {
@@ -160,10 +171,10 @@ struct SharedUserChallengeInviteCard: View {
             .padding(.all, 20)
         
         VStack(alignment: .leading) {
-                Text("\($userChallengeCellVM.userChallenge.title.wrappedValue)")
+                Text("\($inviteCellVM.invite.challengeTitle.wrappedValue)")
                     .font(.system(size: 24, weight: .bold, design: .default))
                     .foregroundColor(.white)
-            Text("Challenged by Hannah")
+            Text("Challenged by \($inviteCellVM.invite.challengerUsername.wrappedValue)")
                     
 //                HStack {
 //                    Text("daily")

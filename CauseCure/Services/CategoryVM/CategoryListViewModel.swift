@@ -18,7 +18,9 @@ class CategoryListViewModel: ObservableObject {
     
     private var cancellabels = Set<AnyCancellable>()
     
-    init(repository: Repository){
+
+
+    init(repository: Repository) {
         self.repository = repository
         repository.$challengeCategories.map { categories in
                 categories.map { category in

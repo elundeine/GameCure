@@ -10,8 +10,7 @@ import FirebaseStorage
 import SDWebImageSwiftUI
 import Combine
 
-struct MyProfile: View {
-    @State var session: SessionStore
+struct MyProfile: View {	
     @State private var imageURL = URL(string: "")
     
     @State private var profileImage: Image?
@@ -57,6 +56,8 @@ struct MyProfile: View {
     @State private var showFinishedChallenges: Bool
     @State private var showCurrentChallenges: Bool
     @State private var showActiveSince: Bool
+    
+    @State private var session: SessionStore
     
     init(editProfile: Binding<Bool>, session: SessionStore ){
         _session = State(initialValue: session)
@@ -166,6 +167,7 @@ struct MyProfile: View {
     func saveChanges(){
         session.addDescriptionStats(description: DescriptionModel(description: description, showDescription: showDescription, age: age, showAge: showAge, numberOfStones: numberOfStones, showNumberOfStones: showNumberOfStones, biggestStone: biggestStone, showBiggestStone: showBiggestStone, mood: mood, showMood: showMood, title: title, showTitle: showTitle),stats: StatsModel(challengesFinished: showFinishedChallenges, currentChallenges: showCurrentChallenges, activeSince: showActiveSince))
         StorageService.updateProfileImage(userId: session.session!.uid!, imageData: imageData, metaData: StorageMetadata(), storageProfileImageRef: StorageService.storageProfileId(userId: session.session!.uid!), onSuccess: {_ in }, onError: {_ in })
+        self.editProfile = false
     }
     
     var body: some View {

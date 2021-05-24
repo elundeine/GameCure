@@ -10,7 +10,7 @@ import Combine
 import FirebaseAuth
 
 class UserCellViewModel: ObservableObject, Identifiable {
-    @Published var repository = Repository()
+    @Published var repository : Repository
 
     @Published var user: User
 
@@ -24,7 +24,8 @@ class UserCellViewModel: ObservableObject, Identifiable {
 
     
     
-    init(user: User) {
+    init(user: User, repository: Repository) {
+        self.repository = repository
         self.user = user
         print("user cell")
         $user

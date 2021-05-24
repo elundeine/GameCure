@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct AddCreateChallenge: View {
-    @EnvironmentObject var session: SessionStore
-    @ObservedObject var challengeListVM = ChallengeListViewModel()
-    @ObservedObject var categoryListVM : CategoryListViewModel
+
+    @ObservedObject var session: SessionStore
+    @ObservedObject var repository: Repository
+    @StateObject var categoryListVM : CategoryListViewModel
+
     
     @State private var title = ""
     @State private var durationDays = 7
@@ -34,10 +36,14 @@ struct AddCreateChallenge: View {
     @State private var selectedDuration = 0
     var durationOptions = ["1 Week","2 Weeks","3 Weeks", "4 Weeks"]
    // static func newChallenge(title: String, durationDays: String, interval: String, searchName: [String], description: String, completed: Bool, challengeCreater: String)
-    init(repository: Repository){
-        self.categoryListVM = CategoryListViewModel(repository: repository)
-    }
+
     
+    init(session: SessionStore, repository: Repository) {
+        self.session = session
+        self.repository = repository
+        _categoryListVM = StateObject(wrappedValue: CategoryListViewModel(repository: repository))
+    }
+
     func listen() {
         session.listen()
     }
@@ -51,7 +57,9 @@ struct AddCreateChallenge: View {
             self.durationDays = 28
         }
         DispatchQueue.main.async {
-            self.challengeListVM.addChallenge(challenge: Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
+            
+            self.repository.addChallenge(Challenge(title: self.title, category: self.selectedCategory, durationDays: self.durationDays, interval: "1", searchName: self.title.splitStringtoArray(), description: self.description, completed: self.completed, challengeCreater: session.session?.username ?? "", userIds: [session.session?.uid ?? ""]))
+            
         }
     }
     
@@ -157,22 +165,3 @@ struct MyTextFieldStyle: TextFieldStyle {
             
     }
 }
-
-//struct AddCreateChallenge_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddCreateChallenge()
-//    }
-//}
-
-
-//if presentAddNewItem {
-//    ChallengeCell(challengeCellVM: ChallengeCellViewModel.newChallenge()) { result in
-//        if case .success(let challenge) = result {
-//            print("success")
-//          self.challengeListVM.addChallenge(challenge: challenge)
-//        }
-//        self.presentAddNewItem.toggle()
-//      }
-//
-//}
-//}.listStyle(PlainListStyle())

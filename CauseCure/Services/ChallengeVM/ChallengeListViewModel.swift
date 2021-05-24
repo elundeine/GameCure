@@ -28,7 +28,6 @@ class ChallengeListViewModel: ObservableObject {
             .store(in: &cancellabels)
     }
     
-    
     func addChallenge(challenge: Challenge) {
         repository.addChallenge(challenge)
 //        let challengeVM = ChallengeCellViewModel(challenge: challenge)

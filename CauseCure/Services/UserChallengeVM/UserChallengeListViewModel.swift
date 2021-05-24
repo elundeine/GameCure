@@ -12,15 +12,17 @@ import SwiftUI
 
 class UserChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
-    @Published var repository: Repository
+
+    @Published var repository : Repository
+
     @Published var userChallengeCellViewModels = [UserChallengeCellViewModel]()
-    @Published var userChallengeInvites = [UserChallengeCellViewModel]()
-    @Published var userSharedChallengeInvites = [UserChallengeCellViewModel]()
-    @Published var userSharedChallengeCellViewModels = [UserChallengeCellViewModel]()
+   
     
     private var cancellabels = Set<AnyCancellable>()
     
-    init(repository: Repository){
+
+    init(repository: Repository) {
+
         self.repository = repository
         repository.$userChallenges.map { userChallenge in
             userChallenge.map { userChallenge in
@@ -30,28 +32,6 @@ class UserChallengeListViewModel: ObservableObject {
             .assign(to: \.userChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
         
-            repository.$userChallengeInvites.map { userChallenge in
-            userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge, repository: repository)
-                }
-            }
-            .assign(to: \.userChallengeInvites, on: self)
-            .store(in: &cancellabels)
-        
-            repository.$userSharedChallengeInvites.map { userChallenge in
-            userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge, repository: repository)
-                }
-            }
-            .assign(to: \.userSharedChallengeInvites, on: self)
-            .store(in: &cancellabels)
-            repository.$userSharedChallenges.map { userChallenge in
-            userChallenge.map { userChallenge in
-                    UserChallengeCellViewModel(userChallenge: userChallenge, repository: repository)
-                }
-            }
-            .assign(to: \.userSharedChallengeCellViewModels, on: self)
-            .store(in: &cancellabels)
     }
     
     

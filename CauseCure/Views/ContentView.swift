@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var session : SessionStore
     
     func listen() {
         session.listen()
@@ -16,19 +16,19 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            Text(session.session?.username ?? "NICHT VERGEBEN")
-            if (session.session != nil) {
-                TabBar()
+
+            if (session.session != nil || session.isLoggedIn == true) {
+                TabBar(session: session, repository: Repository())
             } else {
-                SignInView()
+                SignInView(session: session)
             }
         }
         .onAppear(perform: listen)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

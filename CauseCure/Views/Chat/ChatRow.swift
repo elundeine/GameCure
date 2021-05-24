@@ -73,11 +73,11 @@ struct ChatViewRow : View {
 }
 
 struct FriendCard: View {
-    @ObservedObject var userCellVM: UserCellViewModel
+    @ObservedObject var userCellVM: FollowerCellViewModel
     
     var body: some View {
         HStack(alignment: .center) {
-        WebImage(url: URL(string: userCellVM.user.profileImageUrl))
+        WebImage(url: URL(string: userCellVM.follow.profileImageUrl))
             .resizable()
             .aspectRatio(contentMode: .fit)
             .clipShape(Circle())
@@ -85,7 +85,7 @@ struct FriendCard: View {
             .padding(.all, 20)
         
         VStack(alignment: .leading) {
-                Text("\(userCellVM.user.username)")
+                Text("\(userCellVM.follow.username)")
                     .font(.system(size: 24, weight: .bold, design: .default))
                     .foregroundColor(.white)
 //                HStack {

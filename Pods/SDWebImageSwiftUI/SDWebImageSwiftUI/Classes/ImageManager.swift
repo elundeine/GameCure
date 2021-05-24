@@ -115,30 +115,13 @@ public final class ImageManager : ObservableObject {
 }
 
 // Completion Handler
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ImageManager {
     /// Provide the action when image load fails.
     /// - Parameters:
     ///   - action: The action to perform. The first arg is the error during loading. If `action` is `nil`, the call has no effect.
     public func setOnFailure(perform action: ((Error) -> Void)? = nil) {
         self.failureBlock = action
-    }
-    
-    /// Provide the action when image load successes.
-    /// - Parameters:
-    ///   - action: The action to perform. The first arg is the loaded image. If `action` is `nil`, the call has no effect.
-    public func setOnSuccess(perform action: @escaping (PlatformImage) -> Void) {
-        self.successBlock = { image, _, _ in
-            action(image)
-        }
-    }
-    
-    /// Provide the action when image load successes.
-    /// - Parameters:
-    ///   - action: The action to perform. The first arg is the loaded image, the second arg is the cache type loaded from. If `action` is `nil`, the call has no effect.
-    public func setOnSuccess(perform action: @escaping (PlatformImage, SDImageCacheType) -> Void) {
-        self.successBlock = { image, _, cacheType in
-            action(image, cacheType)
-        }
     }
     
     /// Provide the action when image load successes.
@@ -157,4 +140,5 @@ extension ImageManager {
 }
 
 // Indicator Reportor
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ImageManager: IndicatorReportable {}

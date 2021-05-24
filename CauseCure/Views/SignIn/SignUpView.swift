@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @ObservedObject var session : SessionStore
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
@@ -55,6 +56,17 @@ struct SignUpView: View {
         AuthService.signUp(username: username, email: email, password: password, imageData: imageData, onSuccess: {
             (user) in
             self.clear()
+
+            self.session.needsOnboarding = true
+            let firestoreUserId = AuthService.getUserId(userId: user.uid ?? "")
+            firestoreUserId.getDocument {
+                (document, error) in
+                if let dict = document?.data() {
+                    guard let decodedUser = try? User.init(fromDictionary: dict) else {return }
+                    self.session.session = decodedUser
+                }
+            }
+
             
         }) {
             (errorMessage) in
@@ -138,8 +150,8 @@ struct SignUpView: View {
     }
 }
 
-struct SignUpView_Previews: PreviewProvider {
+/*struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        //SignUpView(self.session)
     }
-}
+}*/

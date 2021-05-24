@@ -22,7 +22,7 @@ class UserListViewModel: ObservableObject {
         self.repository = repository
         repository.$users.map { user in
             user.map { user in
-                UserCellViewModel(user: user)
+                UserCellViewModel(user: user, repository: repository)
             }
         }
         .assign(to: \.userCellViewModels, on: self)

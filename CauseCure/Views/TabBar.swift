@@ -9,21 +9,22 @@ import SwiftUI
 
 
 struct TabBar: View {
-    @EnvironmentObject var session: SessionStore
-    @ObservedObject var repository = Repository()
 
-    @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
-//    @State private var needsOnboarding = true
+    @ObservedObject var session: SessionStore
+    @ObservedObject var repository : Repository
+    
+
     
     func onAppear() {
         UITableView.appearance().backgroundColor = .white
     }
     var body: some View {
             VStack{
-                CustomTabView(repository: repository).environmentObject(session)
+
+                CustomTabView(session: session, repository: repository)
             }
             .onAppear(perform: onAppear)
-            .sheet(isPresented: $needsOnboarding){
+            .sheet(isPresented: $session.needsOnboarding){
                 OnboardingView()
             }
     }
@@ -43,8 +44,9 @@ private enum Tab: String, Equatable, CaseIterable{
 
 }
 struct CustomTabView: View {
-    @EnvironmentObject var session: SessionStore
-    @ObservedObject var repository: Repository
+
+    @ObservedObject var session: SessionStore
+    @ObservedObject var repository : Repository
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
@@ -52,13 +54,13 @@ struct CustomTabView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             
             TabView(selection: $selectedTab) {
-                HomeView(repository: repository)
+                HomeView(repository: repository, session: session)
                     .tag("house.fill")
-                ExploreView(repository: repository)
+                ExploreView(session: session, repository: repository)
                     .tag("magnifyingglass")
                 PaymentCheck()
                     .tag("gamecontroller.fill")
-                ChatView(session: self.session, repository: self.repository)
+                ChatView(session: session, repository: repository)
                     .tag("message.fill")
                 Community()
                     .tag("person.3.fill")

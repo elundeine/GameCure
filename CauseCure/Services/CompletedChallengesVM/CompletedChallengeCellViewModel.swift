@@ -16,11 +16,12 @@ class CompletedChallengeListViewModel: ObservableObject {
     @EnvironmentObject var session: SessionStore
     @Published var repository : Repository
     @Published var completedChallengeCellViewModels = [CompletedChallengeCellViewModel]()
-    @Published var sharedCompletedChallengeViewModels = [CompletedChallengeCellViewModel]()
-    
+    @Published var sharedCompletedChallengeViewModels = [SharedCompletedChallengeCellViewModel]()
+    @Published var friendCompletedChallengeViewModels = [SharedCompletedChallengeCellViewModel]()
     private var cancellabels = Set<AnyCancellable>()
     
-    init(repository: Repository){
+
+    init(repository: Repository) {
         self.repository = repository
         repository.$completedUserChallenges.map { completedChallenge in
             completedChallenge.map { completedChallenge in
@@ -29,12 +30,21 @@ class CompletedChallengeListViewModel: ObservableObject {
             }
             .assign(to: \.completedChallengeCellViewModels, on: self)
             .store(in: &cancellabels)
-        repository.$sharedCompletedUserChallenges.map { completedChallenge in
-            completedChallenge.map { completedChallenge in
-                CompletedChallengeCellViewModel(completedChallenge: completedChallenge, repository: repository)
+
+        repository.$sharedCompletedUserChallenges.map { sharedCompletedChallenge in
+            sharedCompletedChallenge.map { sharedCompletedChallenge in
+                SharedCompletedChallengeCellViewModel(completedChallenge: sharedCompletedChallenge, repository: repository)
                 }
             }
             .assign(to: \.sharedCompletedChallengeViewModels, on: self)
+            .store(in: &cancellabels)
+        
+        repository.$friendsCompletedUserChallenges.map { sharedCompletedChallenge in
+            sharedCompletedChallenge.map { sharedCompletedChallenge in
+                SharedCompletedChallengeCellViewModel(completedChallenge: sharedCompletedChallenge, repository: repository)
+                }
+            }
+            .assign(to: \.friendCompletedChallengeViewModels, on: self)
             .store(in: &cancellabels)
     }
     

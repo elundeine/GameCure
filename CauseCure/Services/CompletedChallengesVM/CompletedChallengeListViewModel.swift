@@ -99,9 +99,11 @@ class CompletedChallengeCellViewModel: ObservableObject, Identifiable {
         $completedChallenge
             .compactMap { completedChallenge in
                 if Calendar.current.isDate(Date(), equalTo: Date(timeIntervalSince1970: self.completedChallenge.firstCompleted), toGranularity: .day) {
+                    print("\(completedChallenge.id)")
                     print("was completed today")
                     return true
                 } else {
+                    print("\(completedChallenge.id)")
                     print("not completed today")
                     return false
                 }

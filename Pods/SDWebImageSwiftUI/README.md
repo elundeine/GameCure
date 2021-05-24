@@ -36,8 +36,6 @@ Besides all these features, we do optimization for SwiftUI, like Binding, View M
 
 This framework is under heavily development, it's recommended to use [the latest release](https://github.com/SDWebImage/SDWebImageSwiftUI/releases) as much as possible (including SDWebImage dependency).
 
-The v1.0.0 version is now **released**, which provide all the function above, with the stable API, fully documentation and unit test.
-
 This framework follows [Semantic Versioning](https://semver.org/). Each source-break API changes will bump to a major version.
 
 ## Changelog
@@ -50,12 +48,33 @@ All issue reports, feature requests, contributions, and GitHub stars are welcome
 
 ## Requirements
 
-+ Xcode 11+
++ Xcode 12+
 + iOS 13+
 + macOS 10.15+
 + tvOS 13+
 + watchOS 6+
-+ Swift 5.1+
++ Swift 5.2+
+
+## SwiftUI 2.0 Compatibility
+
+iOS 14(macOS 11) introduce the SwiftUI 2.0, which keep the most API compatible, but changes many internal behaviors, which breaks the SDWebImageSwiftUI's function.
+
+From v2.0.0, we adopt SwiftUI 2.0 and iOS 14(macOS 11)'s behavior. You can use `WebImage` and `AnimatedImage` inside the new `LazyVStack`.
+
+```swift
+var body: some View {
+    ScrollView {
+        LazyVStack {
+            ForEach(urls, id: \.self) { url in
+                AnimatedImage(url: url)
+            }
+        }
+    }
+}
+```
+
+Note: However, many differences behavior between iOS 13/14's is hard to fixup. Due to maintain issue, in the future release, we will drop the iOS 13 supports and always match SwiftUI 2.0's behavior.
+
 
 ## Installation
 
@@ -65,7 +84,7 @@ SDWebImageSwiftUI is available through [Swift Package Manager](https://swift.org
 
 + For App integration
 
-For App integration, you should using Xcode 11 or higher, to add this package to your App target. To do this, check [Adding Package Dependencies to Your App](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app?language=objc) about the step by step tutorial using Xcode.
+For App integration, you should using Xcode 12 or higher, to add this package to your App target. To do this, check [Adding Package Dependencies to Your App](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app?language=objc) about the step by step tutorial using Xcode.
 
 + For downstream framework
 
@@ -74,7 +93,7 @@ For downstream framework author, you should create a `Package.swift` file into y
 ```swift
 let package = Package(
     dependencies: [
-        .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "1.0")
+        .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "2.0.0")
     ],
 )
 ```
@@ -128,9 +147,9 @@ var body: some View {
 }
 ```
 
-Note: This `WebImage` using `Image` for internal implementation, which is the best compatible for SwiftUI layout and animation system. But unlike SwiftUI's `Image` which does not support animated image or vector image, `WebImage` supports animated image as well.
+Note: This `WebImage` using `Image` for internal implementation, which is the best compatible for SwiftUI layout and animation system. But unlike SwiftUI's `Image` which does not support animated image or vector image, `WebImage` supports animated image as well (by defaults from v2.0.0).
 
-Note: The `WebImage` animation provide common use case, so it's still recommend to use `AnimatedImage` for advanced controls like progressive animation rendering.
+However, The `WebImage` animation provide simple common use case, so it's still recommend to use `AnimatedImage` for advanced controls like progressive animation rendering, or vector image rendering.
 
 ```swift
 @State var isAnimating: Bool = true
@@ -139,7 +158,19 @@ var body: some View {
     // The initial value of binding should be true
     .customLoopCount(1) // Custom loop count
     .playbackRate(2.0) // Playback speed rate
+    .playbackMode(.bounce) // Playback normally to the end, then reversely back to the start
     // `WebImage` supports advanced control just like `AnimatedImage`, but without the progressive animation support
+}
+```
+
+Note: For indicator, you can custom your own as well. For example, iOS 14/watchOS 7 introduce the new `ProgressView`, which can replace our built-in `ProgressIndicator/ActivityIndicator` (where watchOS does not provide).
+
+```swift
+WebImage(url: url)
+.indicator {
+    Indicator { _, _ in
+        ProgressView()
+    }
 }
 ```
 

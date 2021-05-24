@@ -13,7 +13,6 @@ import Firebase
 struct CauseCureApp: App {
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
-    
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(SessionStore())
@@ -22,7 +21,7 @@ struct CauseCureApp: App {
     }
 }
 
-// AppDelegate to setup Firebase connection
+// AppDelegate to setup Firebase connection 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         print("Firebase...")

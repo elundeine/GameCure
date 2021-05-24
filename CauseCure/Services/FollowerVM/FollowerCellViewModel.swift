@@ -12,7 +12,7 @@ import FirebaseAuth
 
 //NOT USED ATM
 class FollowerCellViewModel: ObservableObject, Identifiable {
-    @Published var repository = Repository()
+    @Published var repository : Repository
     
     @Published var follow: User
     
@@ -21,8 +21,10 @@ class FollowerCellViewModel: ObservableObject, Identifiable {
     private var cancellables = Set<AnyCancellable>()
 
     
-    init(follow: User) {
+    init(follow: User, repository: Repository) {
         self.follow = follow
+        self.repository = repository
+        print("follow init")
         $follow
             .compactMap { follow in
                 follow.uid

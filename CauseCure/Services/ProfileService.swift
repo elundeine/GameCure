@@ -44,9 +44,9 @@ class ProfileService: ObservableObject {
             if let document = document, document.exists {
                 let dataDescription = document.data()
                 if dataDescription?["following"] != nil {
-                    let following = dataDescription!["following"] as! Dictionary<String, String>
-                    for (key, _) in following {
-                        followingIds.append(key)
+                    let following = dataDescription!["following"] as! Array<String>
+                    for followingId in following {
+                        followingIds.append(followingId)
                     }
                 }
             }

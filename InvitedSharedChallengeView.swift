@@ -9,17 +9,18 @@ import SwiftUI
 
 struct InvitedSharedChallengeView: View {
         @ObservedObject var session: SessionStore
-        @ObservedObject var userChallengeCellVM: UserChallengeCellViewModel
-        @State var invitedBy = ""
-        @State var invitedById = ""
+        @ObservedObject var inviteCellVM: InviteCellViewModel
+
         
         func acceptChallenge(){
-            userChallengeCellVM.repository.acceptSharedChallengeInviteFrom(userId: invitedBy, challengeId: userChallengeCellVM.id)
+            inviteCellVM.repository.acceptSharedChallengeInviteFrom(userId: session.session?.uid ?? "", invite: inviteCellVM.invite)
         }
         
         func declineChallenge(){
-            userChallengeCellVM.repository.deleteSharedChallengeInviteFrom(challengeId: userChallengeCellVM.id)
+            inviteCellVM.repository.deleteInvite(inviteCellVM.invite)
+            
         }
+    
         
         var body: some View {
             VStack{
@@ -29,9 +30,9 @@ struct InvitedSharedChallengeView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100)
-                        Text($userChallengeCellVM.userChallenge.title.wrappedValue)
+                        Text($inviteCellVM.invite.challengeTitle.wrappedValue)
                         .font(.title)
-                        Text($userChallengeCellVM.userChallenge.description.wrappedValue)
+                        Text($inviteCellVM.invite.challengeDescription.wrappedValue)
                     Divider()
                         
                     }
@@ -41,7 +42,7 @@ struct InvitedSharedChallengeView: View {
                                 .font(.subheadline)
                                 .bold()
                             Spacer()
-                            Text("\($userChallengeCellVM.userChallenge.durationDays.wrappedValue) days")
+                            Text("\($inviteCellVM.invite.durationDays.wrappedValue) days")
                                 .font(.subheadline)
                         }.padding()
                         HStack(alignment: .top) {
@@ -49,16 +50,23 @@ struct InvitedSharedChallengeView: View {
                                 .font(.subheadline)
                                 .bold()
                             Spacer()
-                            Text("Hannah")
+                            Text("\($inviteCellVM.invite.challengerUsername.wrappedValue)")
                                 .font(.subheadline)
                         }.padding()
                         Divider()
+                        
                         VStack {
                             HStack(alignment: .top) {
                             Spacer()
-                            Text("Do you want to do the challenge together with Hannah?")
+                            if (inviteCellVM.invite.shared == true ) {
+                            Text("Do you want to do the challenge together with \($inviteCellVM.invite.challengerUsername.wrappedValue)?")
                                 .font(.subheadline)
                                 .bold()
+                            } else {
+                            Text("Do you accept the challenge?")
+                                .font(.subheadline)
+                                .bold()
+                            }
                             Spacer()
                             }
                             HStack(alignment: .top) {
