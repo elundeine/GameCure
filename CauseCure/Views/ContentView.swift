@@ -19,7 +19,6 @@ struct ContentView: View {
             if (session.session != nil || session.isLoggedIn == true) {
                 TabBar(session: session, repository: Repository())
             } else {
-                Text("\(session.session?.username ?? "session nil")")
                 SignInView(session: session)
             }
         }.onAppear(perform: listen)
