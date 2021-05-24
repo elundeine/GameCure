@@ -12,8 +12,8 @@ struct TabBar: View {
     @EnvironmentObject var session: SessionStore
     
     //@EnvironmentObject var model: Model
-    @AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
-//    @State private var needsOnboarding = true
+    //@AppStorage("needsOnboarding") private var needsOnboarding: Bool = true
+    //@State private var needsOnboarding = true
     
     func onAppear() {
         UITableView.appearance().backgroundColor = .white
@@ -23,7 +23,7 @@ struct TabBar: View {
                 CustomTabView().environmentObject(SessionStore())
             }
             .onAppear(perform: onAppear)
-            .sheet(isPresented: $needsOnboarding){
+            .sheet(isPresented: $session.needsOnboarding){
                 OnboardingView()
             }
     }

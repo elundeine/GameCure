@@ -56,6 +56,7 @@ struct SignUpView: View {
         AuthService.signUp(username: username, email: email, password: password, imageData: imageData, onSuccess: {
             (user) in
             self.clear()
+            self.session.needsOnboarding = true
             let firestoreUserId = AuthService.getUserId(userId: user.uid ?? "")
             firestoreUserId.getDocument {
                 (document, error) in
