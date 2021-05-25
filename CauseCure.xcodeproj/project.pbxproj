@@ -91,6 +91,15 @@
 		D5C1DC9A25A4450C00F2DF4E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1DC9925A4450C00F2DF4E /* ChatRow.swift */; };
 		D5DEDF2C2580EAF7006A39B0 /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */; };
 		D5DEDF2F2580EE69006A39B0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DEDF2E2580EE69006A39B0 /* Repository.swift */; };
+		D5F253CA265BF9CF006AA07B /* DashboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253C9265BF9CF006AA07B /* DashboardRepository.swift */; };
+		D5F253CF265BF9F2006AA07B /* InviteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253CD265BF9F2006AA07B /* InviteListViewModel.swift */; };
+		D5F253D0265BF9F2006AA07B /* InviteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253CE265BF9F2006AA07B /* InviteCellViewModel.swift */; };
+		D5F253D5265BFA16006AA07B /* SharedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253D3265BFA16006AA07B /* SharedCellViewModel.swift */; };
+		D5F253D6265BFA16006AA07B /* SharedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253D4265BFA16006AA07B /* SharedListViewModel.swift */; };
+		D5F253D9265BFA61006AA07B /* SharedChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253D8265BFA61006AA07B /* SharedChallengeModel.swift */; };
+		D5F253DC265BFA70006AA07B /* ActiveChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253DB265BFA6F006AA07B /* ActiveChallengeModel.swift */; };
+		D5F253DF265BFA78006AA07B /* DashboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253DE265BFA78006AA07B /* DashboardModel.swift */; };
+		D5F253E2265BFA89006AA07B /* InviteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F253E1265BFA89006AA07B /* InviteModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -180,6 +189,15 @@
 		D5C1DC9925A4450C00F2DF4E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 		D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		D5DEDF2E2580EE69006A39B0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		D5F253C9265BF9CF006AA07B /* DashboardRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardRepository.swift; sourceTree = "<group>"; };
+		D5F253CD265BF9F2006AA07B /* InviteListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteListViewModel.swift; sourceTree = "<group>"; };
+		D5F253CE265BF9F2006AA07B /* InviteCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCellViewModel.swift; sourceTree = "<group>"; };
+		D5F253D3265BFA16006AA07B /* SharedCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedCellViewModel.swift; sourceTree = "<group>"; };
+		D5F253D4265BFA16006AA07B /* SharedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedListViewModel.swift; sourceTree = "<group>"; };
+		D5F253D8265BFA61006AA07B /* SharedChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedChallengeModel.swift; sourceTree = "<group>"; };
+		D5F253DB265BFA6F006AA07B /* ActiveChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveChallengeModel.swift; sourceTree = "<group>"; };
+		D5F253DE265BFA78006AA07B /* DashboardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardModel.swift; sourceTree = "<group>"; };
+		D5F253E1265BFA89006AA07B /* InviteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,9 +273,13 @@
 				D53C948125801BF10001244E /* UserModel.swift */,
 				D5DEDF2B2580EAF7006A39B0 /* ChallengeModel.swift */,
 				D51932FF2591261200681EC3 /* ChallengeCategoryModel.swift */,
-				D5985DA22598E3B50074D025 /* CompletedChallengeModel.swift */,
 				D54FF90C25BB132300AF8260 /* SharedCompletedChallengeModel.swift */,
+				D5F253D8265BFA61006AA07B /* SharedChallengeModel.swift */,
+				D5985DA22598E3B50074D025 /* CompletedChallengeModel.swift */,
+				D5F253DB265BFA6F006AA07B /* ActiveChallengeModel.swift */,
+				D5F253DE265BFA78006AA07B /* DashboardModel.swift */,
 				D535748A261886E300CF61F7 /* MessageModel.swift */,
+				D5F253E1265BFA89006AA07B /* InviteModel.swift */,
 				D5BA4B7C259893B600706AD1 /* ChatModel.swift */,
 				D5C1DC5D25A3AC7E00F2DF4E /* PostModel.swift */,
 			);
@@ -272,6 +294,7 @@
 				D5C1DC6025A3AE6E00F2DF4E /* PostService.swift */,
 				D5C1DC6325A3BB1200F2DF4E /* PostCardService.swift */,
 				D5642C9825B8373F00D039C7 /* MessageService.swift */,
+				D5F253C9265BF9CF006AA07B /* DashboardRepository.swift */,
 				D5BA4B982598972A00706AD1 /* ChatService.swift */,
 				D53C948D25801FAB0001244E /* StorageService.swift */,
 				D579942725A99DFC0005A263 /* ProfileService.swift */,
@@ -279,10 +302,12 @@
 				D579941125A76B910005A263 /* ChallengeService.swift */,
 				D55E6E72262DCADA00771331 /* UserSearchService.swift */,
 				D5DEDF2E2580EE69006A39B0 /* Repository.swift */,
+				D5F253CC265BF9F2006AA07B /* InviteVM */,
 				D579941625A8AA310005A263 /* CompletedChallengesVM */,
 				D5611AFF25A4C3B100443FA5 /* MessageVM */,
 				D5C1DC3A25A3931C00F2DF4E /* FollowerVM */,
 				D51C8CCA2596A68900F8FB3D /* CategoryVM */,
+				D5F253D2265BFA16006AA07B /* SharedChallengeVM */,
 				D51C8CC82596A65400F8FB3D /* ChallengeVM */,
 				D51C8CC72596A63B00F8FB3D /* UserVM */,
 				D51C8CCC2596A69500F8FB3D /* UserChallengeVM */,
@@ -477,6 +502,25 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		D5F253CC265BF9F2006AA07B /* InviteVM */ = {
+			isa = PBXGroup;
+			children = (
+				D5F253CD265BF9F2006AA07B /* InviteListViewModel.swift */,
+				D5F253CE265BF9F2006AA07B /* InviteCellViewModel.swift */,
+			);
+			path = InviteVM;
+			sourceTree = "<group>";
+		};
+		D5F253D2265BFA16006AA07B /* SharedChallengeVM */ = {
+			isa = PBXGroup;
+			children = (
+				D5F253D3265BFA16006AA07B /* SharedCellViewModel.swift */,
+				D5F253D4265BFA16006AA07B /* SharedListViewModel.swift */,
+			);
+			name = SharedChallengeVM;
+			path = CauseCure/Services/SharedChallengeVM;
+			sourceTree = SOURCE_ROOT;
+		};
 		D5F58EAD259DEEAA000FC898 /* UserProfiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,6 +670,7 @@
 				D579942225A8CDCD0005A263 /* PostCard.swift in Sources */,
 				D5825FAE2584CC7E0011AC33 /* Modifiers.swift in Sources */,
 				D5642C9925B8373F00D039C7 /* MessageService.swift in Sources */,
+				D5F253D0265BF9F2006AA07B /* InviteCellViewModel.swift in Sources */,
 				D594D63425800097003B44DD /* ButtonModifier.swift in Sources */,
 				D51933002591261200681EC3 /* ChallengeCategoryModel.swift in Sources */,
 				D579941B25A8AA6A0005A263 /* CompletedChallengeCellViewModel.swift in Sources */,
@@ -663,15 +708,19 @@
 				D51C8CC225969FD900F8FB3D /* UserCellViewModel.swift in Sources */,
 				D51933062591266200681EC3 /* CategoryListViewModel.swift in Sources */,
 				D594A8FC258F5E9E00CCAEC7 /* SideMenuView.swift in Sources */,
+				D5F253D9265BFA61006AA07B /* SharedChallengeModel.swift in Sources */,
 				0F970470259BD1AF00C4AE29 /* Description.swift in Sources */,
+				D5F253D6265BFA16006AA07B /* SharedListViewModel.swift in Sources */,
 				D54FF90D25BB132300AF8260 /* SharedCompletedChallengeModel.swift in Sources */,
 				D579941225A76B910005A263 /* ChallengeService.swift in Sources */,
 				D589C095257FF7F2005A5464 /* SignInView.swift in Sources */,
 				D56292AD259359ED002762D7 /* UserChallengeListViewModel.swift in Sources */,
 				D53C949C258032130001244E /* HomeView.swift in Sources */,
+				D5F253DF265BFA78006AA07B /* DashboardModel.swift in Sources */,
 				D564F09D25B2340D007D226C /* Lines.swift in Sources */,
 				D54FF90325BAED9F00AF8260 /* SharedChallengeCellDetailView.swift in Sources */,
 				D589C0A4257FF921005A5464 /* Chat.swift in Sources */,
+				D5F253D5265BFA16006AA07B /* SharedCellViewModel.swift in Sources */,
 				D589C0A7257FFA12005A5464 /* FormField.swift in Sources */,
 				D594D63D258005C4003B44DD /* ImagePicker.swift in Sources */,
 				D53C949925802DC30001244E /* SessionStore.swift in Sources */,
@@ -681,14 +730,18 @@
 				D53C948A25801F8B0001244E /* AuthService.swift in Sources */,
 				D589C082257FEF20005A5464 /* CauseCureApp.swift in Sources */,
 				D5611AFA25A4B89300443FA5 /* ChatLogView.swift in Sources */,
+				D5F253DC265BFA70006AA07B /* ActiveChallengeModel.swift in Sources */,
 				D51932FD25911E8A00681EC3 /* CustomSearchBar.swift in Sources */,
 				D5611B0125A4C3D000443FA5 /* MessageListViewModel.swift in Sources */,
 				D51933032591264900681EC3 /* CategoryCellViewModel.swift in Sources */,
+				D5F253E2265BFA89006AA07B /* InviteModel.swift in Sources */,
 				D50E41E325AF4A9C00B8DC22 /* InvitedChallengeView.swift in Sources */,
 				D594A8FF258F5EE800CCAEC7 /* SideMenuContent.swift in Sources */,
 				D5C1DC6425A3BB1200F2DF4E /* PostCardService.swift in Sources */,
+				D5F253CF265BF9F2006AA07B /* InviteListViewModel.swift in Sources */,
 				D53C948625801CB40001244E /* Extensions.swift in Sources */,
 				D546A2BC25861CBF00A06C3C /* MyProfile.swift in Sources */,
+				D5F253CA265BF9CF006AA07B /* DashboardRepository.swift in Sources */,
 				D579942825A99DFC0005A263 /* ProfileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -824,7 +877,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;
@@ -851,7 +904,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Lukas Ebeling (JUVH346UH3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"CauseCure/Preview Content\"";
 				DEVELOPMENT_TEAM = JUVH346UH3;
 				ENABLE_PREVIEWS = YES;

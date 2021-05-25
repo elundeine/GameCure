@@ -12,7 +12,7 @@ struct ChatView: View {
 
     @ObservedObject var repository : Repository
  
-    @StateObject var followerListVM: FollowerListViewModel
+    @StateObject var followerListVM : FollowerListViewModel
 
 //    @ObservedObject var messageListVM = MessageListViewModel()
     @State var isPresented = false
@@ -33,67 +33,62 @@ struct ChatView: View {
     }
     var body: some View {
         VStack{
-        NavigationView{
-            ZStack{
-                Color.white.edgesIgnoringSafeArea(.all)
-            VStack (alignment: .leading) {
-//                HStack{
-//                        Text("Follower List")
-//                }
-                  List {
-                    ForEach (followerListVM.followerCellViewModels) { followerCellVM in
+            NavigationView{
+                ZStack{
+                    Color.white.edgesIgnoringSafeArea(.all)
+                    VStack (alignment: .leading) {
+                        //                HStack{
+                        //                        Text("Follower List")
+                        //                }
+                        List {
+                            ForEach (followerListVM.followerCellViewModels) { followerCellVM in
                                 ZStack {
-//                                NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
-//                                    EmptyView()
-//                                }.opacity(0.0)
-//                                .buttonStyle(PlainButtonStyle())
-                                FriendCard(userCellVM: followerCellVM)
-                                     
-                        
+                                    
+                                    //TODO: OPEN CHAT
+                                    //                                NavigationLink(destination: ChatLogView(messageListVM: messageListVM, session: self.session)) {
+                                    //                                    EmptyView()
+                                    //                                }.opacity(0.0)
+                                    //                                .buttonStyle(PlainButtonStyle())
+                                    FollowerCard(userCellVM: followerCellVM)
+                                    
+                                    
                                 }
-                            
+                                
                             }
                         }
-                        
                     }
-                
-
-            }
-                
-            
-        
-
-            .navigationBarTitle(Text("Social"))
-            .navigationBarItems(trailing:
-                HStack {
-                    Button(action:  {
-                        withAnimation{
-                            self.isPresented.toggle()
-                        }
-                        }) {
-                            Image(systemName: "magnifyingglass")
-                        
-                    }.foregroundColor(Color.black)
                 }
-            )
-        }.fullScreenCover(isPresented: $isPresented) { UserFullScreenSearchModalView(repository: repository)
+                .navigationBarTitle(Text("Social"))
+                .navigationBarItems(trailing:
+                                        HStack {
+                                            Button(action:  {
+                                                withAnimation{
+                                                    self.isPresented.toggle()
+                                                }
+                                            }) {
+                                                Image(systemName: "magnifyingglass")
+                                                
+                                            }.foregroundColor(Color.black)
+                                        }
+                )
+            }.fullScreenCover(isPresented: $isPresented) { UserFullScreenSearchModalView(repository: repository)
+            }
         }
     }
-    }
 struct UserFullScreenSearchModalView: View {
-        @Environment(\.presentationMode) var presentationMode
-        @ObservedObject var repository : Repository
-
-        @StateObject var userListVM : UserListViewModel
+    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var repository : Repository
+    
+    @StateObject var userListVM : UserListViewModel
     
     init(repository: Repository) {
         self.repository = repository
         _userListVM = StateObject(wrappedValue: UserListViewModel(repository: repository))
     }
-
-        var body: some View {
-            //TODO: add dismiss button
-            VStack{
+    
+    var body: some View {
+        //TODO: add dismiss button
+        VStack{
             HStack {
                 Spacer()
                 Image(systemName: "xmark").onTapGesture {
@@ -101,16 +96,16 @@ struct UserFullScreenSearchModalView: View {
                 }.padding()
                 
             }
-                Text("Search for other Users").font(.title)
-                UserSearch(repository: repository)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.white)
-                    .edgesIgnoringSafeArea(.all)
-            }
-           Spacer()
-            
+            Text("Add new Users").font(.title)
+            UserSearch(repository: repository)
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .edgesIgnoringSafeArea(.all)
         }
+        Spacer()
+        
     }
+}
 //struct Chat_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ChatView(session: <#T##SessionStore#>)

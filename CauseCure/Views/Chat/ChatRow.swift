@@ -72,7 +72,7 @@ struct ChatViewRow : View {
     }
 }
 
-struct FriendCard: View {
+struct FollowerCard: View {
     @ObservedObject var userCellVM: FollowerCellViewModel
     
     var body: some View {
@@ -103,10 +103,3 @@ struct FriendCard: View {
         .padding(.all, 10)
     }
 }
-
-//struct  FriendCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FriendCard(userCellVM: UserCellViewModel(user: User(uid: "1", email: "2", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/gamecure-81680.appspot.com/o/profile%2FcmUJHayeYoeD5qaT4xfUBFFZCeL2?alt=media&token=41b0910e-2c84-471c-bb59-a40ca1765817", username: "TheDude", experience: 1000, searchName: ["a"], bio: "the dudes bio", loggedInDates: [""], following: ["" : ""], followers: ["" : ""], completedChallenges: ["" : ""]?, completedTour: true)))
-//    }
-//}
-

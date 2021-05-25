@@ -401,7 +401,7 @@ struct FriendModalView: View {
                     userCellVM in
                     
                     Text("follower")
-                    FriendCard(userCellVM: userCellVM)
+                    FollowerCard(userCellVM: userCellVM)
                         .onTapGesture {
                             challengeFollower(userID: userCellVM.id, username: userCellVM.follow.username)
                         }
@@ -432,7 +432,7 @@ struct FriendModalView: View {
                 userCellVM in
                 
                 
-                FriendCard(userCellVM: userCellVM)
+                FollowerCard(userCellVM: userCellVM)
                     .onTapGesture {
                         recommendChallengeToFollower(userID: userCellVM.id, username: userCellVM.follow.username)
                     }

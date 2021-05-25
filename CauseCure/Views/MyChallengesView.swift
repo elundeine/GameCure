@@ -11,19 +11,20 @@ struct MyChallengesView: View {
     @ObservedObject var session: SessionStore
     @ObservedObject var repository: Repository
     @StateObject var userChallengeListVM : UserChallengeListViewModel
-
     @StateObject var inviteListVM : InviteListViewModel
     @StateObject var sharedListVM : SharedChallengeListViewModel
     @StateObject var completedChallengeListVM : CompletedChallengeListViewModel
     @AppStorage("selectedTab") private var selectedTab = "house.fill"
     
-    init(session: SessionStore, repository: Repository) {
+    @Binding var isPresented : Bool
+    init(session: SessionStore, repository: Repository, isPresented: Binding<Bool>) {
         self.session = session
         self.repository = repository
         _userChallengeListVM = StateObject(wrappedValue: UserChallengeListViewModel(repository: repository))
         _inviteListVM = StateObject(wrappedValue: InviteListViewModel(repository: repository))
         _sharedListVM = StateObject(wrappedValue: SharedChallengeListViewModel(repository: repository))
         _completedChallengeListVM = StateObject(wrappedValue: CompletedChallengeListViewModel(repository: repository))
+        self._isPresented = isPresented
     }
 
 
@@ -35,7 +36,7 @@ struct MyChallengesView: View {
     }
 
     var body: some View {
-        if(userChallengeListVM.userChallengeCellViewModels.isEmpty && inviteListVM.repository.invites == nil) {
+        if(userChallengeListVM.userChallengeCellViewModels.isEmpty && inviteListVM.repository.invites.isEmpty) {
             HStack() {
                 Spacer()
                 VStack(){
@@ -56,7 +57,7 @@ struct MyChallengesView: View {
                     .cornerRadius(8)
                     Spacer()
                     Button(action: {
-                            selectedTab = "plus.circle.fill"
+                        self.isPresented = true
                     }) {
                         Text("Create a Challenge")
                             .font(Font.title2.bold().lowercaseSmallCaps())

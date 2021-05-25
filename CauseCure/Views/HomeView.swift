@@ -37,14 +37,14 @@ struct HomeView: View {
     func performOnAppear() {
         listen()
     }
+    
     func listen() {
         session.listen()
     }
     
-    
     func openMenu() {
            self.menuOpen.toggle()
-       }
+    }
     
     var body: some View {
         
@@ -53,7 +53,7 @@ struct HomeView: View {
         NavigationView {
             VStack (alignment: .leading) {
 
-                MyChallengesView(session: session, repository: repository)
+                MyChallengesView(session: session, repository: repository, isPresented: self.$isPresented)
 
                     .listStyle(PlainListStyle())
 

@@ -48,8 +48,7 @@ class SessionStore: ObservableObject {
                     (document, error) in
                     if let dict = document?.data() {
                         guard let decodedUser = try? User.init(fromDictionary: dict) else { return }
-                        print("added decodedUser")
-                        print("does this work")
+    
                         self.session = decodedUser
                         self.isLoggedIn = true
                     }
