@@ -11,10 +11,17 @@ struct Community: View {
     @EnvironmentObject var session: SessionStore
     @StateObject var profileService = ProfileService()
     @State var isPresented = false
+    
+    func update() {
+        self.profileService.loadFollowingPosts(userId: Auth.auth().currentUser!.uid)
+    }
     var body: some View {
         NavigationView {
             VStack (alignment: .leading) {
                 ScrollView{
+                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+                        self.update()
+                    }
                     VStack{
                         ForEach(self.profileService.followingPosts.sorted(by: {$0.date > $1.date}), id:\.postId) {
                             (post) in
@@ -23,22 +30,13 @@ struct Community: View {
                             PostCard(post: post)
                         }
                     }
-                }
+                }.coordinateSpace(name: "pullToRefresh")
                 .onAppear{
                     self.profileService.loadFollowingPosts(userId: Auth.auth().currentUser!.uid)
                 }
             }
             .navigationBarTitle("Explore")
-            .navigationBarItems(leading: HStack{
-                Button(action:  {
-                    withAnimation{
-                        self.profileService.loadFollowingPosts(userId: Auth.auth().currentUser!.uid)
-                    }
-                }) {
-                    Image(systemName: "arrow.clockwise.icloud.fill")
-                    
-                }.foregroundColor(Color.black)
-            } ,
+            .navigationBarItems(
                                 trailing:
                                     HStack {
                                         Button(action:  {
@@ -52,31 +50,66 @@ struct Community: View {
                                     }
             )
         }.fullScreenCover(isPresented: $isPresented) { PostFullScreenModalView()
-        }
+        }.onAppear(perform: update)
     }
 }
-    struct PostFullScreenModalView: View {
+struct PostFullScreenModalView: View {
             @Environment(\.presentationMode) var presentationMode
             var body: some View {
                 //TODO: add dismiss button
                 VStack{
                 HStack {
                     Spacer()
-                    Text("Dismiss").onTapGesture {
+                    Image(systemName: "xmark.circle.fill")
+                    .onTapGesture {
                         presentationMode.wrappedValue.dismiss()
                     }.padding()
                     
                 }
                 
-                Post()
+                    Post(presentationMode: presentationMode)
                     .background(Color.white)
                     .edgesIgnoringSafeArea(.all)
                 }
                 Spacer()
                 
-            }
         }
-
+}
+struct PullToRefresh: View {
+    
+    var coordinateSpaceName: String
+    var onRefresh: ()->Void
+    
+    @State var needRefresh: Bool = false
+    
+    var body: some View {
+        GeometryReader { geo in
+            if (geo.frame(in: .named(coordinateSpaceName)).midY > 50) {
+                Spacer()
+                    .onAppear {
+                        needRefresh = true
+                    }
+            } else if (geo.frame(in: .named(coordinateSpaceName)).maxY < 10) {
+                Spacer()
+                    .onAppear {
+                        if needRefresh {
+                            needRefresh = false
+                            onRefresh()
+                        }
+                    }
+            }
+            HStack {
+                Spacer()
+                if needRefresh {
+                    ProgressView()
+                } else {
+                    
+                }
+                Spacer()
+            }
+        }.padding(.top, -50)
+    }
+}
 //
 //struct Community_Previews: PreviewProvider {
 //    static var previews: some View {

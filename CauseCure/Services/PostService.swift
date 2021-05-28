@@ -54,6 +54,7 @@ class PostService {
         guard let userId = Auth.auth().currentUser?.uid else {
             return [""]
         }
+        followingIds.append(userId)
         let userDocRef = Firestore.firestore().collection("users").document(userId)
         
         userDocRef.getDocument { (document, error) in

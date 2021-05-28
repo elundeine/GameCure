@@ -54,6 +54,18 @@ class ChallengeService: ObservableObject {
         }
     }
     
+    func addChallengeToUser(challenge: Challenge, challengeId: String) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        print("working?")
+        do {
+            print("adding")
+            let result = try db.collection("activeChallenges").addDocument(from: ActiveChallenge(title: challenge.title, challengeId: challengeId, durationDays: challenge.durationDays, interval: challenge.interval, description: challenge.description, completed: false, challengeCreater: challenge.challengeCreater, userId: userId))
+            print(result.documentID)
+        } catch {
+            fatalError("Unable to encode challenge: \(error.localizedDescription)")
+        }
+    }
+    
     func updateCategory(challengeId: String, challengeName: String, category: String) {
 //            print("updating")
             db.collection("challengecategories").document(category).updateData([

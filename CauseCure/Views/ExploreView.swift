@@ -16,7 +16,6 @@ struct ExploreView: View {
     
     @State var isPresented = false
     @State var menuOpen = false
-
     init(session: SessionStore, repository: Repository) {
         self.session = session
         self.repository = repository

@@ -14,14 +14,17 @@ struct ChallengeCellDetail: View {
     @State var myChallenge: Bool = false
     @State var challengeCompletedIncrement = 0
     @State var showCompleteChallengeAlert = false
-    
+    @State var addedToMyChallenges = false
+    @AppStorage("selectedTab") private var selectedTab = "magnifyingglass"
     func completeChallenge() {
         challengeCellVM.repository.completeAChallenge(challenge: challengeCellVM.challenge, username: session.session?.username ?? "")
     }
     
     func addToMyChallenges() {
-        challengeCellVM.repository.addUserToChallenge(challengeId: challengeCellVM.challenge.id ?? "")
+        challengeCellVM.repository.addChallengeToUser(challenge: challengeCellVM.challenge, challengeId: challengeCellVM.challenge.id ?? "")
+        selectedTab = "house.fill"
     }
+    
     var body: some View {
         VStack{
             VStack {

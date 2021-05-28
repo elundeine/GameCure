@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import UIKit
 
 
 struct Post: View {
+    @Binding var presentationMode: PresentationMode
     @State private var postImage: Image?
     @State private var pickedImage: Image?
     @State private var showingActionSheet = false
@@ -19,7 +21,6 @@ struct Post: View {
     @State private var showingAlert = false
     @State private var alertTitle: String  = "Oh no 😭"
     @State private var text = ""
-    
     
     func loadImage() {
         guard let inputImage = pickedImage else { return }
@@ -57,6 +58,7 @@ struct Post: View {
             self.showingAlert = true
             return
         }
+        presentationMode.dismiss()
     }
     
     
@@ -81,7 +83,7 @@ struct Post: View {
                 .padding(4)
                 .background(RoundedRectangle(cornerRadius: 8).stroke(Color.black))
                 .padding(.horizontal)
-            Button(action: uploadPost) {
+                            Button(action: uploadPost) {
                 Text("Upload Post").font(.title).modifier(ButtonModifier())
             }.alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle), message: Text(error), dismissButton: .default(Text("Ok")))
@@ -102,7 +104,7 @@ struct Post: View {
                     self.showingImagePicker = true
                 }, .cancel()
             ] )
-        }
+        }.onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
     }
 }
     
@@ -112,3 +114,19 @@ struct Post: View {
 //        Post()
 //    }
 //}
+extension UIApplication {
+    func addTapGestureRecognizer() {
+        guard let window = windows.first else { return }
+        let tapGesture = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
+        tapGesture.cancelsTouchesInView = false
+        tapGesture.delegate = self
+        tapGesture.name = "MyTapGesture"
+        window.addGestureRecognizer(tapGesture)
+    }
+ }
+
+extension UIApplication: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false // set to `false` if you don't want to detect tap during other gestures
+    }
+}
