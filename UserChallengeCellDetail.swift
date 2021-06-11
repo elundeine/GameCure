@@ -72,7 +72,7 @@ struct UserChallengeCellDetail: View {
     
     func progressSetup() {
         
-//        if (completedChallengeCellVM.checkIfChallengeIsOver() == false) {
+        if (completedChallengeCellVM.checkIfChallengeIsOver() == false) {
             if completedChallengeCellVM.completedChallenge.timesCompleted != 0 {
                 print("completed before!!!")
                 let timesCompletedTemp = 100 * completedChallengeCellVM.completedChallenge.timesCompleted!
@@ -89,11 +89,11 @@ struct UserChallengeCellDetail: View {
             } else {
                 
             }
-//        } else {
-//            self.challengeDone = true
-//            endChallenge()
-//
-//        }
+        } else {
+            self.challengeDone = true
+            endChallenge()
+
+        }
         
     }
         var body: some View {

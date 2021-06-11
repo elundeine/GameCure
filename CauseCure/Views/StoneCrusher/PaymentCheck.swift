@@ -29,24 +29,10 @@ struct PaymentCheck: View {
     
     var body: some View {
         VStack{
-            
-        if (playing == true) {
             StoneCrusher(playing: $playing)
-        } else {
-            NavigationView{
-            PaymentCard()
-                .onTapGesture {
-                    paymentCheck()
-                }
-                
-                .navigationBarTitle(Text("StoneCrusher"))
-            }
-        }
-            
-        } .alert(isPresented: $insufficientPayment) {
-            Alert(title: Text("Not enough CauseCoins"), message: Text("You dont have enough CauseCoins to play StoneCrusher. Complete Challenges to collect more CauseCoins."), dismissButton: .default(Text("Ok")))
         }
     }
+    
 }
 struct PaymentCard: View {
     
